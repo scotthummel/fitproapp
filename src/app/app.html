@@ -1,0 +1,43 @@
+<!--<ion-split-pane [hidden]="!isLoggedIn">-->
+
+  <!--<ion-menu [content]="content">-->
+    <!--<ion-nav [root]="sideRoot"></ion-nav>-->
+  <!--</ion-menu>-->
+
+  <!--<ion-nav [root]="root" main #content></ion-nav>-->
+
+<!--</ion-split-pane>-->
+
+<!--<div [hidden]="isLoggedIn">-->
+    <!--<img class="main-logo" src="assets/images/fitpro.png">-->
+<!--</div>-->
+
+<!--<ion-content padding [hidden]="isLoggedIn">-->
+  <!--<ion-card>-->
+
+    <!--<ion-card-header class="card-header">-->
+      <!--Login-->
+    <!--</ion-card-header>-->
+
+    <!--<ion-card-content>-->
+
+      <!--<form [formGroup]="authenticate">-->
+        <!--<ion-label fixed>Email</ion-label>-->
+        <!--<ion-input formControlName="email" type="text" validateEmail></ion-input>-->
+
+        <!--<ion-label fixed>Password</ion-label>-->
+        <!--<ion-input formControlName="password" type="password"></ion-input>-->
+
+        <!--<button ion-button full (click)="login(authenticate.value)" [disabled]="!authenticate.valid">Login</button>-->
+      <!--</form>-->
+
+      <!--<button ion-button (click)="signInWithFacebook()">Login with Facebook</button>-->
+      <!--<button ion-button (click)="register()">Register</button>-->
+
+    <!--</ion-card-content>-->
+
+  <!--</ion-card>-->
+
+<!--</ion-content>-->
+
+<ion-nav [root]="rootPage"></ion-nav>

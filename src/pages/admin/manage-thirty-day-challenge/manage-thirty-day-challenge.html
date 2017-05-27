@@ -1,0 +1,45 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <img class="logo" src="assets/images/fitpro_menu_bar_icon.png"> FitPro Tracker
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header class="card-header">
+      Manage 30-Day Challenges
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-input #name placeholder="Enter Challenge Name"></ion-input>
+      <button ion-button (click)="addChallenge(name.value)">Add 30-Day Challenge</button>
+
+      <ion-list>
+        <ion-item-sliding *ngFor="let challenge of challenges | async">
+          <ion-item>
+            {{ challenge.name }}
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button (click)="deleteChallenge(challenge.$key)">Delete</button>
+            <button ion-button (click)="manageChallenge(challenge.$key)">Manage</button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

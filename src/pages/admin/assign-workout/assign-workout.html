@@ -1,0 +1,176 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <img class="logo" src="assets/images/fitpro_menu_bar_icon.png"> FitPro Tracker
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <ion-card>
+
+    <ion-card-header class="card-header">
+      Assign Workout
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="workout">
+        <ion-searchbar (ionInput)="getClients($event)"></ion-searchbar>
+        <ion-list radio-group formControlName="user_id">
+          <ion-item *ngFor="let user of users" class="item item-radio">
+            <ion-label>{{ user.first_name }} {{ user.last_name}}</ion-label>
+            <ion-radio [value]="user.id" color="dark" (click)="getParts()"></ion-radio>
+          </ion-item>
+        </ion-list>
+
+        <div [hidden]="shouldHideParts">
+          <ion-list>
+            <ion-item>
+              <ion-label>Body Part</ion-label>
+              <ion-select formControlName="part" [(ngModel)]="bodyPart" (ionChange)="getExerciseSelect()" cancelText="Cancel" okText="Choose">
+                <ion-option *ngFor="let part of parts" value="{{ part.id }}" checked="true">{{ part.body_part }}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <div [hidden]="shouldHideExercises">
+          <ion-list>
+            <ion-item>
+              <ion-label>Exercises</ion-label>
+              <ion-select formControlName="exercise" (ionChange)="getRepSchemeSelector()" cancelText="Cancel" okText="Choose">
+                <ion-option *ngFor="let exercise of exercises" value="{{ exercise.id }}" checked="true">{{ exercise.exercise_name }}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+
+          <ion-item>
+            <ion-label>Workout Date</ion-label>
+            <ion-datetime displayFormat="M/D/YYYY" pickerFormat="M D YYYY" formControlName="due_at" [(ngModel)]="dueAt"></ion-datetime>
+          </ion-item>
+        </div>
+
+        <div formGroupName="rep_scheme">
+            <div [hidden]="shouldHideRepSchemeSelector">
+                <ion-list>
+                    <ion-item>
+                        <ion-label>Rep Scheme</ion-label>
+                        <ion-select formControlName="scheme" [(ngModel)]="repScheme" (ionChange)="getRepScheme()" cancelText="Cancel" okText="Choose">
+                            <ion-option value="chose_cluster_reps">Cluster Reps</ion-option>
+                            <ion-option value="chose_countdown">Countdown</ion-option>
+                            <ion-option value="chose_drop_set">Drop Set</ion-option>
+                            <ion-option value="chose_eccentric">Eccentric</ion-option>
+                            <ion-option value="chose_ladders">Ladders</ion-option>
+                            <ion-option value="chose_peak">Peak</ion-option>
+                            <ion-option value="chose_pyramid">Pyramid</ion-option>
+                            <ion-option value="chose_sets">Sets/Reps</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-list>
+            </div>
+
+            <div>
+              <ion-grid>
+                <ion-row [hidden]="shouldHideReps">
+                  <ion-col width-50>
+                    <ion-item>
+                      <ion-label stacked>Sets</ion-label>
+                      <ion-input formControlName="sets" type="text" [(ngModel)]="sets"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col width-50>
+                    <ion-item>
+                      <ion-label stacked>Reps</ion-label>
+                      <ion-input formControlName="reps" type="text" [(ngModel)]="reps"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row [hidden]="shouldHideDropSet">
+                  <ion-col width-50>
+                    <ion-item>
+                      <ion-label stacked>Reps (DropSet)</ion-label>
+                      <ion-input formControlName="drop_reps" type="text" [(ngModel)]="dropSetReps"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col width-50>
+                    <ion-item>
+                      <ion-label stacked>Weight (Drop Set)</ion-label>
+                      <ion-input formControlName="drop_weight" type="text" [(ngModel)]="dropSetWeight"></ion-input>
+                    </ion-item>
+                  </ion-col>
+              </ion-row>
+            </ion-grid>
+
+              <ion-item [hidden]="shouldHideCountdown">
+                <ion-label>Countdown</ion-label>
+                <ion-textarea formControlName="countdown" [(ngModel)]="countdown"></ion-textarea>
+              </ion-item>
+
+              <ion-item [hidden]="shouldHidePyramid">
+                <ion-label>Pyramid</ion-label>
+                <ion-textarea formControlName="pyramid" [(ngModel)]="pyramid" validatePyramid="rep_scheme.scheme"></ion-textarea>
+              </ion-item>
+
+              <ion-grid [hidden]="shouldHideCluster">
+                <ion-row>
+                  <ion-col width-50>
+                    <ion-item>
+                      <ion-label stacked>Cluster Reps</ion-label>
+                      <ion-input formControlName="cluster_reps" type="text" [(ngModel)]="clusterReps" validateCluster="rep_scheme.scheme"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col width-50>
+                    <ion-item>
+                      <ion-label stacked>Cluster Weight</ion-label>
+                      <ion-input formControlName="cluster_weight" type="text" [(ngModel)]="clusterWeight"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+              <ion-item [hidden]="shouldHideLadders">
+                <ion-label>Ladders</ion-label>
+                <ion-textarea formControlName="ladders" [(ngModel)]="ladders"></ion-textarea>
+              </ion-item>
+
+              <ion-grid [hidden]="shouldHidePartial">
+                <ion-row>
+                  <ion-col width-50>
+                    <ion-item>
+                      <ion-label stacked>Partial Reps</ion-label>
+                      <ion-input formControlName="partial_reps" type="text" [(ngModel)]="partialReps"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col width-50>
+                    <ion-item>
+                      <ion-label stacked>Partial Reps Weight</ion-label>
+                      <ion-input formControlName="partial_weight" type="text" [(ngModel)]="partialWeight"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+              <ion-item [hidden]="shouldHideEccentric">
+                <ion-label>Eccentric</ion-label>
+                <ion-textarea formControlName="eccentric" [(ngModel)]="eccentric"></ion-textarea>
+              </ion-item>
+
+              <ion-item [hidden]="shouldHidePeak">
+                <ion-label>Peak Contraction</ion-label>
+                <ion-textarea formControlName="peak_contraction" [(ngModel)]="peakContraction"></ion-textarea>
+              </ion-item>
+
+            </div>
+
+        </div>
+        <button ion-button (click)="assignWorkout(workout.value)" block [disabled]="!workout.valid">Assign Workout</button>
+      </form>
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

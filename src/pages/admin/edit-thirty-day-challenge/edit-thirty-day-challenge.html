@@ -1,0 +1,78 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <img class="logo" src="assets/images/fitpro_menu_bar_icon.png"> FitPro Tracker
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header class="card-header">
+      Edit Challenge: {{ challenge.name }}
+    </ion-card-header>
+
+    <ion-card-content>
+      <h1>Update Name</h1>
+      <ion-input #name placeholder="Name" [(ngModel)]="challenge.name"></ion-input>
+      <button ion-button (click)="updateName(name.value)">Update</button>
+
+      <hr />
+
+      <h1>Add Day</h1>
+      <ion-input #theme placeholder="Theme"></ion-input>
+      <ion-label>One Point</ion-label>
+      <ckeditor #onePt
+        [(ngModel)]="ckEditorContent"
+        debounce="500">
+        <ckgroup
+            [name]="basicstyles"
+        >
+          <ckbutton [name]="bold"[command]="bold"></ckbutton>
+        </ckgroup>
+
+      </ckeditor>
+
+      <ion-label>Two Points</ion-label>
+
+      <ckeditor #twoPts
+                [(ngModel)]="ckEditorContent2"
+      debounce="500">
+      </ckeditor>
+
+      <ion-label>Three Points</ion-label>
+
+      <ckeditor #threePts
+                [(ngModel)]="ckEditorContent3"
+      debounce="500">
+      </ckeditor>
+      <button ion-button (click)="addDay(theme.value, onePt.value, twoPts.value, threePts.value)">Add Day</button>
+
+      <hr />
+
+      <h1>Days</h1>
+      <ion-list>
+        <ion-item-sliding *ngFor="let day of days | async">
+          <ion-item>
+            {{ day.theme }}
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button (click)="deleteDay(challenge.$key, day.$key)">Delete</button>
+            <button ion-button (click)="manageDay(challenge.$key, day.$key)">Manage</button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

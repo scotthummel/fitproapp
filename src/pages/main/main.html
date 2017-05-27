@@ -1,0 +1,25 @@
+<ion-split-pane>
+
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-navbar color="dark">
+      <ion-title>Menu</ion-title>
+      <ion-buttons start>
+        <button ion-button icon-only (click)="logout()">
+          <ion-icon name="log-out"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  <ion-list>
+    <ion-item *ngFor="let page of pages" (click)="navigate(page.component)">{{ page.title }}</ion-item>
+  </ion-list>
+  <ion-list-header *ngIf="isAdmin">Admin</ion-list-header>
+  <ion-list *ngIf="isAdmin">
+    <ion-item *ngFor="let admin of adminPages" (click)="navigate(admin.component)">{{ admin.title }}</ion-item>
+  </ion-list>
+</ion-menu>
+
+<ion-nav [root]="root" main #content></ion-nav>
+
+</ion-split-pane>

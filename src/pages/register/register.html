@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Create Account
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
+
+    <ion-item padding>
+      <ion-label floating>FirstName</ion-label>
+      <ion-input formControlName="firstName" type="text"
+        [class.invalid]="!signupForm.controls.firstName.valid && signupForm.controls.firstName.dirty">
+      </ion-input>
+    </ion-item>
+    <ion-item class="error-message"
+      *ngIf="!signupForm.controls.firstName.valid  && signupForm.controls.firstName.dirty" no-lines>
+      <p>Please provide a first name</p>
+    </ion-item>
+
+    <ion-item padding>
+      <ion-label floating>Last Name</ion-label>
+      <ion-input formControlName="lastName" type="text"
+                 [class.invalid]="!signupForm.controls.lastName.valid && signupForm.controls.lastName.dirty">
+      </ion-input>
+    </ion-item>
+    <ion-item class="error-message"
+              *ngIf="!signupForm.controls.lastName.valid  && signupForm.controls.lastName.dirty" no-lines>
+      <p>Please provide a last name</p>
+    </ion-item>
+
+    <ion-item padding>
+      <ion-label floating>Email</ion-label>
+      <ion-input formControlName="email" type="email"
+        [class.invalid]="!signupForm.controls.email.valid && signupForm.controls.email.dirty">
+      </ion-input>
+    </ion-item>
+    <ion-item class="error-message"
+      *ngIf="!signupForm.controls.email.valid  && signupForm.controls.email.dirty" no-lines>
+      <p>Please enter a valid email.</p>
+    </ion-item>
+
+    <ion-item padding>
+      <ion-label floating>Password</ion-label>
+      <ion-input formControlName="password" type="password"
+        [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
+      </ion-input>
+    </ion-item>
+    <ion-item class="error-message"
+      *ngIf="!signupForm.controls.password.valid  && signupForm.controls.password.dirty" no-lines>
+      <p>Your password needs more than 6 characters.</p>
+    </ion-item>
+
+    <button ion-button block type="submit" [disabled]="!signupForm.valid">
+      Create Account
+    </button>
+  </form>
+</ion-content>
