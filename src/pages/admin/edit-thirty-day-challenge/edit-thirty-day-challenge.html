@@ -31,28 +31,37 @@
       <ion-input #theme placeholder="Theme"></ion-input>
       <ion-label>One Point</ion-label>
       <ckeditor #onePt
-        [(ngModel)]="ckEditorContent"
-        debounce="500">
-        <ckgroup
-            [name]="basicstyles"
-        >
-          <ckbutton [name]="bold"[command]="bold"></ckbutton>
-        </ckgroup>
-
+        [(ngModel)]="ckEditorContent">
+        <ckbutton [name]="'saveButton'"
+                  [command]="'saveCmd'"
+                  (click)="save($event)"
+                  [label]="'Save Document'"
+                  [toolbar]="'clipboard,1'">
+        </ckbutton>
       </ckeditor>
 
       <ion-label>Two Points</ion-label>
 
       <ckeditor #twoPts
-                [(ngModel)]="ckEditorContent2"
-      debounce="500">
+                [(ngModel)]="ckEditorContent2">
+        <ckbutton [name]="'saveButton'"
+                  [command]="'saveCmd'"
+                  (click)="save($event)"
+                  [label]="'Save Document'"
+                  [toolbar]="'clipboard,1'">
+        </ckbutton>
       </ckeditor>
 
       <ion-label>Three Points</ion-label>
 
       <ckeditor #threePts
-                [(ngModel)]="ckEditorContent3"
-      debounce="500">
+                [(ngModel)]="ckEditorContent3">
+        <ckbutton [name]="'saveButton'"
+                  [command]="'saveCmd'"
+                  (click)="save($event)"
+                  [label]="'Save Document'"
+                  [toolbar]="'clipboard,1'">
+        </ckbutton>
       </ckeditor>
       <button ion-button (click)="addDay(theme.value, onePt.value, twoPts.value, threePts.value)">Add Day</button>
 
@@ -60,12 +69,12 @@
 
       <h1>Days</h1>
       <ion-list>
-        <ion-item-sliding *ngFor="let day of days | async">
+        <ion-item-sliding *ngFor="let day of days">
           <ion-item>
             {{ day.theme }}
           </ion-item>
           <ion-item-options side="right">
-            <button ion-button (click)="deleteDay(challenge.$key, day.$key)">Delete</button>
+            <button ion-button color="danger" (click)="deleteDay(challenge.$key, day.$key)">Delete</button>
             <button ion-button (click)="manageDay(challenge.$key, day.$key)">Manage</button>
           </ion-item-options>
         </ion-item-sliding>

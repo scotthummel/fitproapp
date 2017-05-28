@@ -28,7 +28,7 @@ export class Login {
       this.firebaseService.loginUser(this.loginForm.value.email, this.loginForm.value.password)
         .then(authData => {
           this.loading.dismiss().then(() => {
-            this.navCtrl.setRoot('Main');
+            this.navCtrl.setRoot('home');
           });
         }, error => {
           this.loading.dismiss().then(() => {

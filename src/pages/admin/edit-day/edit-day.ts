@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabaseModule } from "angularfire2/database";
+import {AngularFireDatabase, AngularFireDatabaseModule} from "angularfire2/database";
 
 @Component({
   selector: 'page-edit-day',
@@ -11,27 +11,25 @@ export class EditDay {
   dayKey;
   day;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afd: AngularFireDatabaseModule) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afd: AngularFireDatabase) {
     this.challengeKey = navParams.get('challengeKey');
     this.dayKey = navParams.get('dayKey');
 
-    // this.afd.object('/challenges/' + this.challengeKey + '/days/' + this.dayKey)
-    //   .subscribe(day => this.day = day);
-
-
+    this.afd.object('/challenges/' + this.challengeKey + '/days/' + this.dayKey)
+      .subscribe(day => this.day = day);
   }
 
   ionViewDidLoad() {
   }
 
   editDay(theme, onePoint, twoPoints, threePoints) {
-    // const ref = this.afd.list('/challenges/' + this.challengeKey + '/days/' + this.dayKey);
-    // ref.update({
-    //   theme: theme,
-    //   onePoint: onePoint,
-    //   twoPoints: twoPoints,
-    //   threePoints: threePoints
-    // });
+    const ref = this.afd.object('/challenges/' + this.challengeKey + '/days/' + this.dayKey);
+    ref.update({
+      theme: theme,
+      onePoint: onePoint,
+      twoPoints: twoPoints,
+      threePoints: threePoints
+    });
   }
 
 }

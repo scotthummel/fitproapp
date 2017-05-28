@@ -31,7 +31,7 @@
             {{ challenge.name }}
           </ion-item>
           <ion-item-options side="right">
-            <button ion-button (click)="deleteChallenge(challenge.$key)">Delete</button>
+            <button ion-button color="danger" (click)="deleteChallenge(challenge.$key)">Delete</button>
             <button ion-button (click)="manageChallenge(challenge.$key)">Manage</button>
           </ion-item-options>
         </ion-item-sliding>

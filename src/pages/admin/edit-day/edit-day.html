@@ -22,10 +22,41 @@
 
     <ion-card-content>
       <h1>Edit Day</h1>
+      <ion-label>Theme</ion-label>
+
       <ion-input #theme placeholder="Theme" [(ngModel)]="day.theme"></ion-input>
-      <ion-textarea #onePt placeholder="One point" [(ngModel)]="day.onePoint"></ion-textarea>
-      <ion-textarea #twoPts placeholder="Two points" [(ngModel)]="day.twoPoints"></ion-textarea>
-      <ion-textarea #threePts placeholder="Three points" [(ngModel)]="day.threePoints"></ion-textarea>
+      <ion-label>One Point</ion-label>
+
+      <ckeditor #onePt
+                [(ngModel)]="day.onePoint">
+        <ckbutton [name]="'saveButton'"
+                  [command]="'saveCmd'"
+                  (click)="save($event)"
+                  [label]="'Save Document'"
+                  [toolbar]="'clipboard,1'">
+        </ckbutton>
+      </ckeditor>
+      <ion-label>Two Points</ion-label>
+
+      <ckeditor #twoPts
+                [(ngModel)]="day.twoPoints">
+        <ckbutton [name]="'saveButton'"
+                  [command]="'saveCmd'"
+                  (click)="save($event)"
+                  [label]="'Save Document'"
+                  [toolbar]="'clipboard,1'">
+        </ckbutton>
+      </ckeditor>
+      <ion-label>Three Points</ion-label>
+      <ckeditor #threePts
+                [(ngModel)]="day.threePoints">
+        <ckbutton [name]="'saveButton'"
+                  [command]="'saveCmd'"
+                  (click)="save($event)"
+                  [label]="'Save Document'"
+                  [toolbar]="'clipboard,1'">
+        </ckbutton>
+      </ckeditor>
       <button ion-button (click)="editDay(theme.value, onePt.value, twoPts.value, threePts.value)">Edit Day</button>
     </ion-card-content>
 

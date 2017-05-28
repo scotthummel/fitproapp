@@ -12,6 +12,8 @@ import {Home} from "../home/home";
 import { AssignWorkout}  from "../admin/assign-workout/assign-workout";
 import { ManageThirtyDayChallenge } from "../admin/manage-thirty-day-challenge/manage-thirty-day-challenge";
 import {FirebaseService} from "../../providers/firebase-service";
+import {AngularFireAuth} from "angularfire2/auth";
+import {AngularFireDatabase} from "angularfire2/database";
 
 @IonicPage()
 @Component({
@@ -24,8 +26,17 @@ export class Main {
   public adminPages;
   public isAdmin;
   public root: any = Home;
+  public user;
+  public client;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService, private afAuth: AngularFireAuth, private afd: AngularFireDatabase) {
+    this.afAuth.authState.subscribe(user => {
+      this.user = user;
+      this.afd.object('users/' + user.uid).subscribe(client => {
+        this.isAdmin = client.hasOwnProperty('isAdmin');
+      });
+    });
+  }
 
   navigate(page){
     this.root = page;
@@ -51,8 +62,6 @@ export class Main {
       { title: 'Assign Workout', component: AssignWorkout },
       { title: '30-Day Challenge', component: ManageThirtyDayChallenge }
     ];
-
-    this.isAdmin = true;
   }
 
 }
