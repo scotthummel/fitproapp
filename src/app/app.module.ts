@@ -206,7 +206,7 @@ import { SidePage } from "../pages/side-page/side-page";
 import { CommonService } from "../shared/common.service";
 import { FitproApi } from "../shared/fitpro-api.service";
 import {Home} from "../pages/home/home";
-import {Calendar} from "../pages/calendar/calendar";
+import {CalendarPage } from "../pages/calendar/calendar";
 import {Intake} from "../pages/intake/intake";
 import {LiftTracker} from "../pages/lift-tracker/lift-tracker";
 import {InjuryTracker} from "../pages/injury-tracker/injury-tracker";
@@ -221,6 +221,8 @@ import {EditDay} from "../pages/admin/edit-day/edit-day";
 import { CKEditorModule } from 'ng2-ckeditor';
 import {Main} from "../pages/main/main";
 import {Login} from "../pages/login/login";
+import { NgCalendarModule } from 'ionic2-calendar';
+
 
 
 export const firebaseConfig = {
@@ -235,12 +237,10 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    Page,
     Main,
     Login,
-    SidePage,
     Home,
-    Calendar,
+    CalendarPage,
     Intake,
     LiftTracker,
     InjuryTracker,
@@ -259,10 +259,11 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    NgCalendarModule,
     IonicModule.forRoot(MyApp, {}, {
       links: [
         {component: Home, segment: 'home'},
-        {component: Calendar, segment: 'calendar'},
+       // {component: CalendarComponent, segment: 'calendar'},
         {component: Intake, segment: 'intake'},
         {component: LiftTracker, segment: 'lift-tracker'},
         {component: InjuryTracker, segment: 'injury-tracker'},
@@ -279,12 +280,10 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    Page,
-    SidePage,
     Main,
     Login,
     Home,
-    Calendar,
+    CalendarPage,
     Intake,
     LiftTracker,
     InjuryTracker,

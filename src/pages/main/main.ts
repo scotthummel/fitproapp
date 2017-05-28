@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {Page} from "../page/page";
-import {SidePage} from "../side-page/side-page";
 import {YouTube} from "../youtube/youtube";
 import {Notes} from "../notes/notes";
 import {ThirtyDayChallenge} from "../30-day-challenge/30-day-challenge";
@@ -9,7 +7,7 @@ import {ProgressPictures} from "../progress-pictures/progress-pictures";
 import {InjuryTracker} from "../injury-tracker/injury-tracker";
 import {LiftTracker} from "../lift-tracker/lift-tracker";
 import {Intake} from "../intake/intake";
-import {Calendar} from "../calendar/calendar";
+import { CalendarPage } from "../calendar/calendar";
 import {Home} from "../home/home";
 import { AssignWorkout}  from "../admin/assign-workout/assign-workout";
 import { ManageThirtyDayChallenge } from "../admin/manage-thirty-day-challenge/manage-thirty-day-challenge";
@@ -40,7 +38,7 @@ export class Main {
   ionViewDidLoad() {
     this.pages = [
       { title: 'Home', component: Home },
-      { title: 'Calendar', component: Calendar },
+      { title: 'Calendar', component: CalendarPage },
       { title: 'Intake', component: Intake },
       { title: 'Lift Tracker', component: LiftTracker },
       { title: 'Injury Tracker', component: InjuryTracker },

@@ -5,7 +5,7 @@ import {ProgressPictures} from "../progress-pictures/progress-pictures";
 import {InjuryTracker} from "../injury-tracker/injury-tracker";
 import {LiftTracker} from "../lift-tracker/lift-tracker";
 import {Intake} from "../intake/intake";
-import {Calendar} from "../calendar/calendar";
+import {CalendarPage} from "../calendar/calendar";
 import {Home} from "../home/home";
 import {CommonService} from "../../shared/common.service";
 import { Component } from '@angular/core';
@@ -25,7 +25,7 @@ export class SidePage {
     public adminPages;
     public user;
     public isAdmin;
-    public root: any = Calendar;
+    //public root: any = Calendar;
 
     constructor(public navCtrl: NavController) {
 
@@ -39,29 +39,29 @@ export class SidePage {
       //this.common.notifyOther({page: page});
       switch(page) {
         case 'calendar':
-          this.root = Calendar;
+          //this.root = Calendar;
           break;
       }
     }
 
     ionViewDidLoad() {
-        this.pages = [
-          { title: 'Home', component: Home },
-          { title: 'Calendar', component: Calendar },
-          { title: 'Intake', component: Intake },
-          { title: 'Lift Tracker', component: LiftTracker },
-          { title: 'Injury Tracker', component: InjuryTracker },
-          { title: 'Progress Pictures', component: ProgressPictures },
-          { title: '30-day Challenge', component: ThirtyDayChallenge },
-          { title: 'Notes', component: Notes },
-          { title: 'YouTube', component: YouTube }
-        ];
-        this.adminPages = [
-          { title: 'Assign Workout', component: AssignWorkout },
-          { title: '30-Day Challenge', component: ManageThirtyDayChallenge }
-        ];
-
-        this.isAdmin = true;
+        // this.pages = [
+        //   { title: 'Home', component: Home },
+        //   { title: 'Calendar', component: Calendar },
+        //   { title: 'Intake', component: Intake },
+        //   { title: 'Lift Tracker', component: LiftTracker },
+        //   { title: 'Injury Tracker', component: InjuryTracker },
+        //   { title: 'Progress Pictures', component: ProgressPictures },
+        //   { title: '30-day Challenge', component: ThirtyDayChallenge },
+        //   { title: 'Notes', component: Notes },
+        //   { title: 'YouTube', component: YouTube }
+        // ];
+        // this.adminPages = [
+        //   { title: 'Assign Workout', component: AssignWorkout },
+        //   { title: '30-Day Challenge', component: ManageThirtyDayChallenge }
+        // ];
+        //
+        // this.isAdmin = true;
     }
 
 }
