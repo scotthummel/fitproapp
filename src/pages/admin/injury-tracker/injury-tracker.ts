@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {AngularFireDatabase} from "angularfire2/database";
 @Component({
@@ -52,7 +52,7 @@ export class NewInjury {
   public bodyParts;
   public clients;
 
-  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, public afd: AngularFireDatabase) {}
+  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, public afd: AngularFireDatabase, public toastCtrl: ToastController) {}
 
   ionViewDidLoad() {
     this.afd.list('/bodyParts')
@@ -90,6 +90,12 @@ export class NewInjury {
 
   addInjury(key, bodyPart, injury) {
     this.firebaseService.addInjury(key, bodyPart, injury);
+
+    let toast = this.toastCtrl.create({
+      message: 'Injury added successfully',
+      duration: 3000
+    });
+    toast.present();
   }
 
 }

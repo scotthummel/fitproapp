@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import {NavController, NavParams, ToastController} from 'ionic-angular';
 //import { AngularFire } from "angularfire2";
 import { EditDay } from "../edit-day/edit-day";
 import {FirebaseService} from "../../../providers/firebase-service";
@@ -17,7 +17,7 @@ export class EditThirtyDayChallenge {
   ckEditorContent2;
   ckEditorContent3;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService, public afd: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService, public afd: AngularFireDatabase, public toastCtrl: ToastController) {
     this.key = navParams.get('key');
     this.firebaseService.authState.subscribe(user => {
       if (user) {
@@ -41,6 +41,12 @@ export class EditThirtyDayChallenge {
     this.afd.object('/challenges/' + this.key).update({
       name: name,
     });
+
+    let toast = this.toastCtrl.create({
+      message: 'Name updated successfully',
+      duration: 3000
+    });
+    toast.present();
   }
 
   addDay(theme, onePt, twoPts, threePts) {
@@ -66,6 +72,12 @@ export class EditThirtyDayChallenge {
         });
       }
     });
+
+    let toast = this.toastCtrl.create({
+      message: 'Day added successfully',
+      duration: 3000
+    });
+    toast.present();
   }
 
   deleteDay(key) {

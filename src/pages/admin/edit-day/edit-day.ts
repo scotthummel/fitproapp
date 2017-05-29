@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import {AngularFireDatabase} from "angularfire2/database";
 
 @Component({
@@ -11,7 +11,7 @@ export class EditDay {
   dayKey;
   day;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afd: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afd: AngularFireDatabase, public toastCtrl: ToastController) {
     this.challengeKey = navParams.get('challengeKey');
     this.dayKey = navParams.get('dayKey');
 
@@ -30,6 +30,12 @@ export class EditDay {
       twoPoints: twoPoints,
       threePoints: threePoints
     });
+
+    let toast = this.toastCtrl.create({
+      message: 'Day updated successfully',
+      duration: 3000
+    });
+    toast.present();
   }
 
 }

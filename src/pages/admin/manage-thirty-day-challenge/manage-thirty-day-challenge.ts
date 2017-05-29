@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 //import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { EditThirtyDayChallenge } from "../edit-thirty-day-challenge/edit-thirty-day-challenge";
 import {FirebaseService} from "../../../providers/firebase-service";
@@ -19,7 +19,7 @@ export class ManageThirtyDayChallenge {
 
   challenges: Observable<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService, public toastCtrl: ToastController) {
 
   }
 
@@ -29,6 +29,12 @@ export class ManageThirtyDayChallenge {
 
   addChallenge(name) {
     this.firebaseService.addChallenge(name);
+
+    let toast = this.toastCtrl.create({
+      message: 'Challenge added successfully',
+      duration: 3000
+    });
+    toast.present();
   }
 
   deleteChallenge(key) {

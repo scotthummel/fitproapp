@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {IonicPage, NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {AngularFireDatabase} from "angularfire2/database";
 
@@ -49,7 +49,7 @@ export class NewNote {
   public clients;
   public shouldHideButton = true;
 
-  constructor(public navCtrl: NavController, public firebaseService: FirebaseService) {}
+  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, public toastCtrl: ToastController) {}
 
   ionViewDidLoad() {
   }
@@ -75,6 +75,12 @@ export class NewNote {
 
   addNote(key, note) {
     this.firebaseService.addNote(key, note);
+
+    let toast = this.toastCtrl.create({
+      message: 'Note added successfully',
+      duration: 3000
+    });
+    toast.present();
   }
 
 }

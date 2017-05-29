@@ -1,4 +1,4 @@
-import { MenuController, AlertController } from "ionic-angular";
+import { MenuController, AlertController } from "ionic-angular/index";
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
