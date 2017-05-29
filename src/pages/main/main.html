@@ -11,7 +11,7 @@
       </ion-buttons>
     </ion-navbar>
   </ion-header>
-  <ion-list>
+  <ion-list style="margin-top:60px;">
     <ion-item *ngFor="let page of pages" (click)="navigate(page.component)">{{ page.title }}</ion-item>
   </ion-list>
   <ion-list-header *ngIf="isAdmin">Admin</ion-list-header>

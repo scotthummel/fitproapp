@@ -33,6 +33,7 @@ export class Main {
     this.afAuth.authState.subscribe(user => {
       this.user = user;
       this.afd.object('users/' + user.uid).subscribe(client => {
+        this.client = client;
         this.isAdmin = client.hasOwnProperty('isAdmin');
       });
     });

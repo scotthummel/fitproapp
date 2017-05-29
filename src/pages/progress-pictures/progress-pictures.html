@@ -20,7 +20,10 @@
     </ion-card-header>
 
     <ion-card-content>
+      <button ion-button (click)="takePicture()">Take Picture</button>
 
+      <img [src]="base64Image" *ngIf="base64Image" />
+      {{ base64Image }}
 
     </ion-card-content>
 

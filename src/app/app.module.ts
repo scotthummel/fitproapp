@@ -222,6 +222,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import {Main} from "../pages/main/main";
 import {Login} from "../pages/login/login";
 import { NgCalendarModule } from 'ionic2-calendar';
+import { Camera } from '@ionic-native/camera';
 
 
 
@@ -301,7 +302,7 @@ export const firebaseConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseService,
-    // CommonService,
+    Camera
     // FitproApi,
   ]
 })
