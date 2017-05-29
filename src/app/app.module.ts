@@ -210,7 +210,7 @@ import {CalendarPage } from "../pages/calendar/calendar";
 import {Intake, IntakeHistory, NewIntake} from "../pages/admin/intake/intake";
 import {LiftTracker} from "../pages/lift-tracker/lift-tracker";
 import {InjuryHistory, InjuryTracker, NewInjury} from "../pages/admin/injury-tracker/injury-tracker";
-import {ProgressPictures, NewPicture, PictureHistory} from "../pages/progress-pictures/progress-pictures";
+import {ProgressPictures, NewPicture, PictureHistory} from "../pages/admin/progress-pictures/progress-pictures";
 import {ThirtyDayChallenge} from "../pages/30-day-challenge/30-day-challenge";
 import {NewNote, Notes, NotesHistory} from "../pages/admin/notes/notes";
 import {YouTube} from "../pages/youtube/youtube";

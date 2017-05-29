@@ -3,7 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {YouTube} from "../youtube/youtube";
 import {Notes} from "../admin/notes/notes";
 import {ThirtyDayChallenge} from "../30-day-challenge/30-day-challenge";
-import {ProgressPictures} from "../progress-pictures/progress-pictures";
+import {ProgressPictures} from "../admin/progress-pictures/progress-pictures";
 import {InjuryTracker} from "../admin/injury-tracker/injury-tracker";
 import {LiftTracker} from "../lift-tracker/lift-tracker";
 import {Intake} from "../admin/intake/intake";

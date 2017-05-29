@@ -144,7 +144,7 @@ export class AssignWorkout {
       return true;
   }
 
-  getClients(ev: any) {
+  //getClients(ev: any) {
     // set val to the value of the searchbar
     // let val = ev.target.value;
     //
@@ -174,7 +174,7 @@ export class AssignWorkout {
     //     })
     //   });
     // }
-  }
+  //}
 
   getExercises(bodyPartId) {
     // this.fitpro.getExercisesByBodyPartId(bodyPartId).subscribe(data => {
