@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {AngularFireDatabase} from "angularfire2/database";
+import {EditNote} from "../edit-note/edit-note";
 
 @Component({
   selector: 'page-new-notes',
@@ -121,13 +122,21 @@ export class NewNote {
           </div>
           
           <div *ngIf="notes">
+            <hr />
+            <h2>Notes</h2>
             <ion-list>
-              <ion-item *ngFor="let text of notes">
-                <blockquote>
-                  {{ text.note }}<br />
-                  <cite>&mdash; {{ text.datestamp }}</cite>
-                </blockquote>
-              </ion-item>
+              <ion-item-sliding *ngFor="let text of notes">
+                <ion-item>
+                  <blockquote>
+                    {{ text.note }}<br />
+                    <cite>&mdash; {{ text.datestamp }}</cite>
+                  </blockquote>
+                </ion-item>
+                <ion-item-options side="right">
+                  <button ion-button color="danger" (click)="deleteNote(text.$key)">Delete</button>
+                  <button ion-button (click)="manageNote(text.$key)">Manage</button>
+                </ion-item-options>
+              </ion-item-sliding>
             </ion-list>
           </div>
         </ion-card-content>
@@ -178,6 +187,16 @@ export class NotesHistory {
         notes.push(item);
       });
       this.notes = notes;
+    });
+  }
+
+  deleteNote(key) {
+    this.firebaseService.deleteNote(key);
+  }
+
+  manageNote(key) {
+    this.navCtrl.push(EditNote, {
+      key: key
     });
   }
 }

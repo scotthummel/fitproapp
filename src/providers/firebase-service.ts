@@ -76,6 +76,14 @@ export class FirebaseService {
     });
   }
 
+  deleteInjury(key) {
+    this.afd.list('/injuries').remove(key);
+  }
+
+  deleteNote(key) {
+    this.afd.list('/notes').remove(key);
+  }
+
   addBodyParts() {
     let parts = [
       {

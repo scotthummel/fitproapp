@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import {NavController, ToastController} from 'ionic-angular';
+import {AlertController, NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {AngularFireDatabase} from "angularfire2/database";
+import {EditInjury} from "../edit-injury/edit-injury";
 @Component({
   selector: 'page-new-injury',
   template: `
@@ -133,17 +134,10 @@ export class NewInjury {
           <div [hidden]="shouldHideButton">
             <button ion-button (click)="getInjuries(key)">Get Injuries</button>
           </div>
+          
+          <hr />
 
-          <div *ngIf="injuries">
-            <ion-list>
-              <ion-item *ngFor="let injury of injuries">
-                <blockquote>
-                  {{ injury.bodyPart }}: {{ injury.injury }}<br />
-                  <cite>&mdash; {{ injury.datestamp }}</cite>
-                </blockquote>
-              </ion-item>
-            </ion-list>
-          </div>
+          c
 
         </ion-card-content>
 
@@ -157,7 +151,7 @@ export class InjuryHistory {
   public injuries;
   public shouldHideButton = true;
 
-  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, public afd: AngularFireDatabase) {}
+  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, public afd: AngularFireDatabase, public alertCtrl: AlertController) {}
 
   ionViewDidLoad() {
   }
@@ -193,6 +187,16 @@ export class InjuryHistory {
         injuries.push(item);
       });
       this.injuries = injuries;
+    });
+  }
+
+  deleteInjury(key) {
+    this.firebaseService.deleteInjury(key);
+  }
+
+  manageInjury(key) {
+    this.navCtrl.push(EditInjury, {
+      key: key
     });
   }
 

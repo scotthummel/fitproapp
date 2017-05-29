@@ -1,0 +1,37 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <img class="logo" src="assets/images/fitpro_menu_bar_icon.png"> FitPro Tracker
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header class="card-header">
+      Edit Injury
+    </ion-card-header>
+
+    <ion-card-content>
+      <h1>Edit Injury</h1>
+
+      <ion-list>
+        <ion-item>
+          <ion-label>Injury</ion-label>
+          <ion-textarea #hurt placeholder="Describe injury" value="{{ injury.injury }}"></ion-textarea>
+        </ion-item>
+      </ion-list>
+
+      <button ion-button (click)="editInjury(injury.$key, hurt.value)">Edit Injury</button>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

@@ -216,6 +216,8 @@ import {Main} from "../pages/main/main";
 import {Login} from "../pages/login/login";
 import { NgCalendarModule } from 'ionic2-calendar';
 import { Camera } from '@ionic-native/camera';
+import {EditInjury} from "../pages/admin/edit-injury/edit-injury";
+import {EditNote} from "../pages/admin/edit-note/edit-note";
 
 
 
@@ -242,6 +244,7 @@ export const firebaseConfig = {
     InjuryTracker,
     NewInjury,
     InjuryHistory,
+    EditInjury,
     ProgressPictures,
     NewPicture,
     PictureHistory,
@@ -249,6 +252,7 @@ export const firebaseConfig = {
     Notes,
     NewNote,
     NotesHistory,
+    EditNote,
     YouTube,
     AssignWorkout,
     ManageThirtyDayChallenge,
@@ -293,12 +297,14 @@ export const firebaseConfig = {
     InjuryTracker,
     NewInjury,
     InjuryHistory,
+    EditInjury,
     ProgressPictures,
     NewPicture,
     PictureHistory,
     ThirtyDayChallenge,
     Notes,
     NewNote,
+    EditNote,
     NotesHistory,
     YouTube,
     AssignWorkout,
