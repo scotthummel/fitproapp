@@ -3,11 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 //import { AngularFire } from "angularfire2";
 import { EditDay } from "../edit-day/edit-day";
 import {FirebaseService} from "../../../providers/firebase-service";
-import {Observable} from "rxjs/Observable";
-import {
-  AngularFireDatabase, AngularFireDatabaseModule, FirebaseListObservable,
-  FirebaseObjectObservable
-} from "angularfire2/database";
+import {AngularFireDatabase} from "angularfire2/database";
 
 @Component({
   selector: 'page-edit-thirty-day-challenge',

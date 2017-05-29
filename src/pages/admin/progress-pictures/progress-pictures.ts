@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {NavController} from "ionic-angular";
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'page-new-picture',

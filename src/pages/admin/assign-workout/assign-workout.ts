@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { FitproApi } from "../../../shared/fitpro-api.service";
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import * as _ from 'lodash';
+//import * as _ from 'lodash';
 
 @Component({
   selector: 'assign-workout',

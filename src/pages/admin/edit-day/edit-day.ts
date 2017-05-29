@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import {AngularFireDatabase, AngularFireDatabaseModule} from "angularfire2/database";
+import {AngularFireDatabase} from "angularfire2/database";
 
 @Component({
   selector: 'page-edit-day',

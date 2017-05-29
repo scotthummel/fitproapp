@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 //import { AngularFireAuthModule, FirebaseAuthState, AuthMethods } from 'angularfire2';
-import *  as firebase from 'firebase';
-import { Platform } from 'ionic-angular';
-import { Facebook } from 'ionic-native';
 
 @Injectable()
 export class AuthService {

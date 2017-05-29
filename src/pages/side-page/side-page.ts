@@ -1,18 +1,5 @@
-import {YouTube} from "../youtube/youtube";
-import {Notes} from "../admin/notes/notes";
-import {ThirtyDayChallenge} from "../30-day-challenge/30-day-challenge";
-import {ProgressPictures} from "../progress-pictures/progress-pictures";
-import {InjuryTracker} from "../admin/injury-tracker/injury-tracker";
-import {LiftTracker} from "../lift-tracker/lift-tracker";
-import {Intake} from "../admin/intake/intake";
-import {CalendarPage} from "../calendar/calendar";
-import {Home} from "../home/home";
-import {CommonService} from "../../shared/common.service";
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { AssignWorkout}  from "../admin/assign-workout/assign-workout";
-import { ManageThirtyDayChallenge } from "../admin/manage-thirty-day-challenge/manage-thirty-day-challenge";
+import {NavController} from "ionic-angular";
+import {Component} from "@angular/core";
 
 @Component({
   selector: 'page-side-page',

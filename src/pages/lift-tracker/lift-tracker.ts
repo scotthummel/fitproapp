@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
-import { FitproApi } from "../../shared/fitpro-api.service";
-import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-lift-tracker',

@@ -193,18 +193,11 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
 import { MyApp } from './app.component';
-
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
-
 import { HttpModule } from '@angular/http';
-import { Page } from "../pages/page/page";
-import { SidePage } from "../pages/side-page/side-page";
-import { CommonService } from "../shared/common.service";
-import { FitproApi } from "../shared/fitpro-api.service";
 import {Home} from "../pages/home/home";
 import {CalendarPage } from "../pages/calendar/calendar";
 import {Intake, IntakeHistory, NewIntake} from "../pages/admin/intake/intake";

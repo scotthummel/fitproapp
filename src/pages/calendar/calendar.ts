@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, Inject, LOCALE_ID, ChangeDetectionStrategy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import {IonicPage, NavController, IonicModule} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
 //import { CalendarService } from '../../providers/calendar.service';
 
 // /*
