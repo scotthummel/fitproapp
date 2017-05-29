@@ -207,12 +207,12 @@ import { CommonService } from "../shared/common.service";
 import { FitproApi } from "../shared/fitpro-api.service";
 import {Home} from "../pages/home/home";
 import {CalendarPage } from "../pages/calendar/calendar";
-import {Intake} from "../pages/intake/intake";
+import {Intake, IntakeHistory, NewIntake} from "../pages/admin/intake/intake";
 import {LiftTracker} from "../pages/lift-tracker/lift-tracker";
-import {InjuryTracker} from "../pages/injury-tracker/injury-tracker";
-import {ProgressPictures} from "../pages/progress-pictures/progress-pictures";
+import {InjuryHistory, InjuryTracker, NewInjury} from "../pages/admin/injury-tracker/injury-tracker";
+import {ProgressPictures, NewPicture, PictureHistory} from "../pages/progress-pictures/progress-pictures";
 import {ThirtyDayChallenge} from "../pages/30-day-challenge/30-day-challenge";
-import {Notes} from "../pages/notes/notes";
+import {NewNote, Notes, NotesHistory} from "../pages/admin/notes/notes";
 import {YouTube} from "../pages/youtube/youtube";
 import {AssignWorkout} from "../pages/admin/assign-workout/assign-workout";
 import {ManageThirtyDayChallenge} from "../pages/admin/manage-thirty-day-challenge/manage-thirty-day-challenge";
@@ -243,11 +243,19 @@ export const firebaseConfig = {
     Home,
     CalendarPage,
     Intake,
+    NewIntake,
+    IntakeHistory,
     LiftTracker,
     InjuryTracker,
+    NewInjury,
+    InjuryHistory,
     ProgressPictures,
+    NewPicture,
+    PictureHistory,
     ThirtyDayChallenge,
     Notes,
+    NewNote,
+    NotesHistory,
     YouTube,
     AssignWorkout,
     ManageThirtyDayChallenge,
@@ -286,11 +294,19 @@ export const firebaseConfig = {
     Home,
     CalendarPage,
     Intake,
+    NewIntake,
+    IntakeHistory,
     LiftTracker,
     InjuryTracker,
+    NewInjury,
+    InjuryHistory,
     ProgressPictures,
+    NewPicture,
+    PictureHistory,
     ThirtyDayChallenge,
     Notes,
+    NewNote,
+    NotesHistory,
     YouTube,
     AssignWorkout,
     ManageThirtyDayChallenge,
