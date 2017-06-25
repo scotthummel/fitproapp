@@ -20,7 +20,68 @@ import { NavController } from 'ionic-angular';
           New Intake
         </ion-card-header>
         <ion-card-content>
-
+          <ion-list>
+            <ion-row>
+              <ion-col col-4>
+                <ion-item>
+                  <ion-label floating>Age</ion-label>
+                  <ion-input type="number"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col col-4>
+                <ion-item>
+                  <ion-label floating>Height</ion-label>
+                  <ion-input type="number"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col col-4>
+                <ion-item>
+                  <ion-label floating>Weight</ion-label>
+                  <ion-input type="number"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Injuries/Conditions/Medications</ion-label>
+                  <ion-textarea></ion-textarea>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Current Fitness Routine</ion-label>
+                  <ion-textarea></ion-textarea>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Past Fitness Routine</ion-label>
+                  <ion-textarea></ion-textarea>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Diet Experience</ion-label>
+                  <ion-textarea></ion-textarea>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Goals</ion-label>
+                  <ion-textarea></ion-textarea>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-list>
         </ion-card-content>
       </ion-card>
     </ion-content>
@@ -57,7 +118,7 @@ export class NewIntake {
         </ion-card-header>
 
         <ion-card-content>
-
+          
 
         </ion-card-content>
 
