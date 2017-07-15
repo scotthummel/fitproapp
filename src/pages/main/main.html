@@ -1,6 +1,6 @@
 <ion-split-pane>
 
-<ion-menu [content]="content">
+<ion-menu [content]="content" scroll="false">
   <ion-header>
     <ion-navbar color="dark">
       <ion-title>Menu</ion-title>
@@ -12,12 +12,14 @@
     </ion-navbar>
   </ion-header>
   <ion-list style="margin-top:60px;">
-    <ion-item *ngFor="let page of pages" (click)="navigate(page.component)">{{ page.title }}</ion-item>
+    <ion-item menuClose *ngFor="let page of pages" (click)="navigate(page.component)">{{ page.title }}</ion-item>
   </ion-list>
   <ion-list-header *ngIf="isAdmin">Admin</ion-list-header>
-  <ion-list *ngIf="isAdmin">
-    <ion-item *ngFor="let admin of adminPages" (click)="navigate(admin.component)">{{ admin.title }}</ion-item>
-  </ion-list>
+  <ion-scroll style="width:100%;height:500px" scrollY="true">
+    <ion-list *ngIf="isAdmin" scroll="true">
+      <ion-item menuClose *ngFor="let admin of adminPages" (click)="navigate(admin.component)">{{ admin.title }}</ion-item>
+    </ion-list>
+  </ion-scroll>
 </ion-menu>
 
 <ion-nav [root]="root" main #content></ion-nav>

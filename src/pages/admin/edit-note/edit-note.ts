@@ -26,7 +26,6 @@ export class EditNote {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EditNote');
   }
 
   editNote(key, note) {

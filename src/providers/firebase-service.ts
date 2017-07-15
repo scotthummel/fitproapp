@@ -205,6 +205,46 @@ export class FirebaseService {
   //   });
   // }
 
+  addExercises() {
+    this.afd.list('/bodyParts').subscribe(parts => {
+      parts.forEach(part => {
+        if (part.part == 'Shoulder') {
+          let exercises =  ['Handstand/Pike Push-ups', 'Seated Dumbbell Press', 'Standing Dumbbell press', 'Seated Barbell Press', 'Standing Barbell Press', 'Push Press', 'Arnold Press'];
+          this.afd.list('/exercises').push({ partId : part.$key}).then(exercise => {
+            exercises.forEach(ex => {
+              this.afd.list('/exercises/' + exercise.key + '/exerciseList').push({exercise: ex});
+            });
+          });
+        }
+        // if (part.part == 'Core/Abs') {
+        //   this.afd.list('/exercises').push({ partId: part.$key, exercises: ['Landmine Abs', 'Plank', 'Hanging Leg Raises', 'Ab Rollouts', 'Crunches', 'Obstacle Leg Raises', 'Bicycle Abs']});
+        // }
+        // if (part.part == 'Calf') {
+        //   this.afd.list('/exercises').push({ partId: part.$key, exercises: ['Body Weight Standing Calf Raise', 'Weighted Standing Calf Raise', 'Seated Calf Raise', 'Machine Calf Raise', 'Donkey Calf Raise', 'Single Leg Calf Raise']});
+        // }
+        // if (part.part == 'Tricep') {
+        //   this.afd.list('/exercises').push({ partId: part.$key, exercises: ['Dumbbell Skull Crushers', 'Barbell Skull Crushers', 'Single Dumbbell Overhead Extension', 'Double Dumbbell Overhead Extension', 'Rope Cable Extension', 'Rope Overhead Cable Extension', 'Bar Cable Extension', 'Single Arm Cable Extension', 'Dumbbell Kickbacks', 'Chatarunga (Close Grip) Push-ups', 'Diamond Push-ups', 'Floor Press']});
+        // }
+        // if (part.part == 'Bicep') {
+        //   this.afd.list('/exercises').push({ partId: part.$key, exercises: ['Single Arm Preacher Curls', 'Bilateral Preacher Curls', 'Seated Incline Dumbbell Curl', 'Hammer Curl', 'Dumbbell Curl, Regular', 'Rope Cable Curls', 'Terry Pulls', 'EZ Bar Curl', 'Rainbow Curl', 'Spider Curl', 'Reverse Curl', '21\'s']});
+        // }
+        if (part.part == 'Chest') {
+          let exercises = [{group: 'Benches', groupExercises: ['Flat Dumbbell Bench', 'Incline Dumbbell Bench', 'Decline Dumbbell Bench', 'Flat Barbell Bench', 'Incline Barbell Bench', 'Decline Barbell Bench', 'Push-ups – All Variations']}, {group: 'Flyes', groupExercises: ['FitPro Flyes', 'Down Cable Flyes', 'Up Cable Flyes', 'Flat Bench Dumbbell Flyes', 'Incline Bench Dumbbell Flyes', 'Decline Bench Dumbbell Flyes']}, {group: 'Dips', groupExercises: ['Full Dips', 'Half Dips', 'Bench Dips']}, {group: 'Other', groupExercises: ['Corner Throw']}];
+          this.afd.list('/exercises').push({ partId: part.$key}).then(exercise => {
+            exercises.forEach(ex => {
+              this.afd.list('/exercises/' + exercise.key + '/exerciseList/').push({group: ex.group}).then(group => {
+                ex.groupExercises.forEach(e => {
+                  this.afd.list('/exercises/' + exercise.key + '/exerciseList/' + group.key + '/groupExercises').push({exercise: e});
+                });
+              });
+            });
+          });
+        }
+      });
+    });
+  }
+
+
   getUserData() {
     return this.afd.object('/userProfile/' + this.user.uid);
   }

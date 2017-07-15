@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import {FirebaseService} from "../../../providers/firebase-service";
+import {AngularFireDatabase} from "angularfire2/database";
 //import * as _ from 'lodash';
 
 @Component({
@@ -27,6 +29,7 @@ export class AssignWorkout {
   public shouldHideEccentric = true;
   public shouldHidePeak = true;
   public bodyPart;
+  public exercise;
   public sets;
   public reps;
   public dropSetReps;
@@ -45,18 +48,22 @@ export class AssignWorkout {
   public dueAt;
   public formChanges;
   public repSchemeGroup;
+  public clients;
 
   constructor(
       public navCtrl: NavController,
       public loadingController: LoadingController,
       // public fitpro: FitproApi,
       // public storage: Storage,
-      private fb: FormBuilder
+      private fb: FormBuilder,
+      private firebaseService: FirebaseService,
+      private afd: AngularFireDatabase
   ) {
     this.workout = this.fb.group({
+      key: new FormControl(''),
       user_id: new FormControl('', Validators.required),
       part: new FormControl('', Validators.required),
-      exercise: new FormControl('', Validators.required),
+      ex: new FormControl('', Validators.required),
       due_at: new FormControl('', Validators.required),
       rep_scheme: this.fb.group({
           scheme: new FormControl('', Validators.required),
@@ -135,77 +142,52 @@ export class AssignWorkout {
   }
 
   ionViewDidLoad() {
-    //this.getBodyParts();
+    // this.firebaseService.addExercises();
+    this.getBodyParts();
   }
 
   formFilled() {
       return true;
   }
 
-  //getClients(ev: any) {
-    // set val to the value of the searchbar
-    // let val = ev.target.value;
-    //
-    // // if the value is an empty string don't filter the items
-    // if (val && val.trim() != '') {
-    //   this.storage.get('users').then((data) => {
-    //     if (!data) {
-    //       let loader = this.loadingController.create({
-    //         content: 'Loading...'
-    //       });
-    //
-    //       loader.present().then(() => {
-    //         this.fitpro.getUsers().subscribe(data => {
-    //           this.storage.set('users', JSON.stringify(data));
-    //           loader.dismiss();
-    //           this.users = data.filter((item) => {
-    //             return item.first_name.includes(val) || item.last_name.includes(val) || item.email.includes(val);
-    //           })
-    //         });
-    //       });
-    //     } else {
-    //       this.users = JSON.parse(data);
-    //     }
-    //
-    //     this.users = this.users.filter((item) => {
-    //       return item.first_name.includes(val) || item.last_name.includes(val) || item.email.includes(val);
-    //     })
-    //   });
-    // }
-  //}
+  getClients(event){
+    let val = event.target.value;
+    if (val && val.trim() != '') {
+      this.firebaseService.getClients().subscribe(data => {
+        this.clients = data.filter((item) => {
+          if (item.hasOwnProperty('firstName')) {
+            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+          } else {
+            return item.username.includes(val) || item.email.includes(val);
+          }
+        })
+      });
+    }
+  }
 
   getExercises(bodyPartId) {
-    // this.fitpro.getExercisesByBodyPartId(bodyPartId).subscribe(data => {
-    //   this.exercises = data;
-    // });
+    this.afd.list('/exercises', {
+      query: {
+        orderByChild: 'partId',
+        equalTo: bodyPartId
+      }
+    }).subscribe(exercises => {
+      let exs = [];
+      for (let ex in exercises[0].exerciseList){
+        exs.push(exercises[0].exerciseList[ex]);
+      }
+      this.exercises = exs;
+    });
   }
 
   assignWorkout(values) {
-    // let data = _(values).omitBy(_.isUndefined).omitBy(_.isNull).value();
-    //
-    // this.fitpro.assignWorkout(data).subscribe(data => {
-    //
-    // });
+
   }
 
   getBodyParts() {
-    // this.storage.get('parts').then((data) => {
-    //   if (!data) {
-    //     let loader = this.loadingController.create({
-    //       content: 'Loading...'
-    //     });
-    //
-    //     loader.present().then(() => {
-    //       this.fitpro.getBodyParts().subscribe(data => {
-    //         this.storage.set('parts', JSON.stringify(data));
-    //         loader.dismiss();
-    //         this.parts = data;
-    //       });
-    //     });
-    //   } else {
-    //     this.parts = JSON.parse(data);
-    //   }
-    // });
+    this.afd.list('/bodyParts').subscribe(parts => {
+      this.parts = parts;
+    });
   }
 
   getParts() {
@@ -320,7 +302,6 @@ export class AssignWorkout {
       'validateEqual': 'Password mismatch'
     }
   };
-
 
   onValueChanged(data?: any) {
       if (!this.workout) { return; }

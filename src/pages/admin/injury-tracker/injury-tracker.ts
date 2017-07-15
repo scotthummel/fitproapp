@@ -32,12 +32,12 @@ import {EditInjury} from "../edit-injury/edit-injury";
           </ion-list>
 
           <div [hidden]="shouldHideButton">
-            <ion-list radio-group [(ngModel)]="bodyPart">
-              <ion-item *ngFor="let part of bodyParts" class="item item-radio">
-                <ion-label>{{ part.part }}</ion-label>
-                <ion-radio [value]="part.$key" color="dark"></ion-radio>
+              <ion-item>
+                <ion-label>Body Part</ion-label>
+                <ion-select [(ngModel)]="bodyPart">
+                  <ion-option *ngFor="let part of bodyParts" value="{{ part.$key }}">{{ part.part}}</ion-option>
+                </ion-select>
               </ion-item>
-            </ion-list>
             <ion-textarea #injury placeholder="Describe injury"></ion-textarea>
             <button ion-button (click)="addInjury(key, bodyPart, injury.value)">Add Injury</button>
           </div>
@@ -90,6 +90,7 @@ export class NewInjury {
   }
 
   addInjury(key, bodyPart, injury) {
+    console.log(key, bodyPart, injury);
     this.firebaseService.addInjury(key, bodyPart, injury);
 
     let toast = this.toastCtrl.create({
@@ -135,9 +136,24 @@ export class NewInjury {
             <button ion-button (click)="getInjuries(key)">Get Injuries</button>
           </div>
           
-          <hr />
-
-          c
+          <div *ngIf="injuries">
+            <hr />
+            <h2>Injuries</h2>
+            <ion-list>
+              <ion-item-sliding *ngFor="let injury of injuries">
+                <ion-item>
+                  <blockquote>
+                    {{ injury.injury }}<br />
+                    <cite>&mdash; {{ injury.datestamp }}</cite>
+                  </blockquote>
+                </ion-item>
+                <ion-item-options side="right">
+                  <button ion-button color="danger" (click)="deleteInjury(injury.$key)">Delete</button>
+                  <button ion-button (click)="manageInjury(injury.$key)">Manage</button>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
+          </div>
 
         </ion-card-content>
 

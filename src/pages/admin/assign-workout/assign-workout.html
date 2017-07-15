@@ -20,10 +20,11 @@
     <ion-card-content>
       <form [formGroup]="workout">
         <ion-searchbar (ionInput)="getClients($event)"></ion-searchbar>
-        <ion-list radio-group formControlName="user_id">
-          <ion-item *ngFor="let user of users" class="item item-radio">
-            <ion-label>{{ user.first_name }} {{ user.last_name}}</ion-label>
-            <ion-radio [value]="user.id" color="dark" (click)="getParts()"></ion-radio>
+        <ion-list radio-group formControlName="key">
+          <ion-item *ngFor="let client of clients" class="item item-radio">
+            <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>
+            <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}}</ion-label>
+            <ion-radio [value]="client.$key" color="dark" (click)="getParts()"></ion-radio>
           </ion-item>
         </ion-list>
 
@@ -32,7 +33,7 @@
             <ion-item>
               <ion-label>Body Part</ion-label>
               <ion-select formControlName="part" [(ngModel)]="bodyPart" (ionChange)="getExerciseSelect()" cancelText="Cancel" okText="Choose">
-                <ion-option *ngFor="let part of parts" value="{{ part.id }}" checked="true">{{ part.body_part }}</ion-option>
+                <ion-option *ngFor="let part of parts" value="{{ part.$key }}" checked="true">{{ part.part }}</ion-option>
               </ion-select>
             </ion-item>
           </ion-list>
@@ -42,8 +43,8 @@
           <ion-list>
             <ion-item>
               <ion-label>Exercises</ion-label>
-              <ion-select formControlName="exercise" (ionChange)="getRepSchemeSelector()" cancelText="Cancel" okText="Choose">
-                <ion-option *ngFor="let exercise of exercises" value="{{ exercise.id }}" checked="true">{{ exercise.exercise_name }}</ion-option>
+              <ion-select formControlName="ex" [(ngModel)]="exercise" (ionChange)="getRepSchemeSelector()" cancelText="Cancel" okText="Choose">
+                <ion-option *ngFor="let ex of exercises" value="{{ ex.$key }}" checked="true">{{ ex.exercise }}</ion-option>
               </ion-select>
             </ion-item>
           </ion-list>
