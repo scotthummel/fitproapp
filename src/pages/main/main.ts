@@ -14,6 +14,7 @@ import { ManageThirtyDayChallenge } from "../admin/manage-thirty-day-challenge/m
 import {FirebaseService} from "../../providers/firebase-service";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
+import {Users} from "../admin/users/users";
 
 @IonicPage()
 @Component({
@@ -62,6 +63,7 @@ export class Main {
       { title: 'Injury Tracker', component: InjuryTracker },
       { title: 'Progress Pictures', component: ProgressPictures },
       { title: 'Notes', component: Notes },
+      { title: 'Users', component: Users },
     ];
   }
 
