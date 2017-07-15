@@ -16,12 +16,15 @@ import {AngularFireDatabase} from "angularfire2/database";
 export class EditInjury {
   public key;
   public injury;
+  public bodyPart = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afd: AngularFireDatabase, public toastCtrl: ToastController) {
     this.key = navParams.get('key');
 
     this.afd.object('/injuries/' + this.key)
-      .subscribe(injury => this.injury = injury);
+      .subscribe(injury => {
+        this.injury = injury;
+      });
   }
 
   ionViewDidLoad() {

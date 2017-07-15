@@ -27,6 +27,11 @@
           <ion-label>Injury</ion-label>
           <ion-textarea #hurt placeholder="Describe injury" value="{{ injury.injury }}"></ion-textarea>
         </ion-item>
+
+        <ion-item>
+          <ion-label>Body Part</ion-label>
+          <ion-input [disabled]="true" value="{{ injury.bodyPart }}"></ion-input>
+        </ion-item>
       </ion-list>
 
       <button ion-button (click)="editInjury(injury.$key, hurt.value)">Edit Injury</button>
