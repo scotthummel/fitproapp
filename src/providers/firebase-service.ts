@@ -66,8 +66,8 @@ export class FirebaseService {
     return this.afd.list('/users');
   }
 
-  addNote(key, note) {
-    return this.afd.list('/notes').push({userId: key, note: note, datestamp: new Date().toLocaleString() });
+  addNote(key, note, category) {
+    return this.afd.list('/notes').push({userId: key, note: note, category: category, datestamp: new Date().toLocaleString() });
   }
 
   addInjury(key, bodyPartId, injury) {

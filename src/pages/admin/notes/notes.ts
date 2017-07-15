@@ -25,7 +25,7 @@ import {EditNote} from "../edit-note/edit-note";
         </ion-card-header>
 
         <ion-card-content>
-          <ion-searchbar (ionInput)="getClients($event)"></ion-searchbar>
+          <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
           <ion-list radio-group [(ngModel)]="key">
             <ion-item *ngFor="let client of clients" class="item item-radio">
               <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>
@@ -35,8 +35,21 @@ import {EditNote} from "../edit-note/edit-note";
           </ion-list>
 
           <div [hidden]="shouldHideButton">
-            <ion-textarea #note placeholder="Note"></ion-textarea>
-            <button ion-button (click)="addNote(key, note.value)">Add Note</button>
+            <hr />
+            <ion-item>
+              <ion-label>Category</ion-label>
+              <ion-select [(ngModel)]="category">
+                <ion-option value="Massage">Massage</ion-option>
+                <ion-option value="Chiropractic">Chiropractic</ion-option>
+                <ion-option value="Lift">Lift</ion-option>
+                <ion-option value="Cardio">Cardio</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label>Note</ion-label>
+              <ion-textarea #note placeholder="Note"></ion-textarea>
+            </ion-item>
+            <button ion-button (click)="addNote(key, note.value, category)">Add Note</button>
           </div>  
         </ion-card-content>
 
@@ -74,8 +87,8 @@ export class NewNote {
     return this.shouldHideButton = false;
   }
 
-  addNote(key, note) {
-    this.firebaseService.addNote(key, note);
+  addNote(key, note, category) {
+    this.firebaseService.addNote(key, note, category);
 
     let toast = this.toastCtrl.create({
       message: 'Note added successfully',
@@ -108,7 +121,7 @@ export class NewNote {
         </ion-card-header>
 
         <ion-card-content>
-          <ion-searchbar (ionInput)="getClients($event)"></ion-searchbar>
+          <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
           <ion-list radio-group [(ngModel)]="key">
             <ion-item *ngFor="let client of clients" class="item item-radio">
               <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>

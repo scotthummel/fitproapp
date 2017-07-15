@@ -22,7 +22,7 @@ import {EditInjury} from "../edit-injury/edit-injury";
           New Injury
         </ion-card-header>
         <ion-card-content>
-          <ion-searchbar (ionInput)="getClients($event)"></ion-searchbar>
+          <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
           <ion-list radio-group [(ngModel)]="key">
             <ion-item *ngFor="let client of clients" class="item item-radio">
               <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>
@@ -123,7 +123,7 @@ export class NewInjury {
         </ion-card-header>
 
         <ion-card-content>
-          <ion-searchbar (ionInput)="getClients($event)"></ion-searchbar>
+          <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
           <ion-list radio-group [(ngModel)]="key">
             <ion-item *ngFor="let client of clients" class="item item-radio">
               <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>
