@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Component({
   selector: 'page-new-intake',
@@ -46,7 +47,7 @@ import {FormBuilder, FormControl, Validators} from "@angular/forms";
                 <ion-col col-4>
                   <ion-item>
                     <ion-label floating>Height</ion-label>
-                    <ion-input type="number" formControlName="height"></ion-input>
+                    <ion-input type="text" formControlName="height"></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col col-4>
@@ -111,7 +112,7 @@ export class NewIntake {
   public shouldHideButton = true;
   public intake;
 
-  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, private fb: FormBuilder,) {
+  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, private fb: FormBuilder, private afAuth: AngularFireAuth, public toastCtrl: ToastController) {
     this.intake = this.fb.group({
       age: new FormControl('', Validators.required),
       height: new FormControl('',  Validators.required),
@@ -147,7 +148,15 @@ export class NewIntake {
   }
 
   completeIntake(values) {
+    this.afAuth.authState.subscribe(user => {
+      this.firebaseService.saveIntake(user, values);
+    });
 
+    let toast = this.toastCtrl.create({
+      message: 'Intake completed successfully',
+      duration: 3000
+    });
+    toast.present();
   }
 
 }

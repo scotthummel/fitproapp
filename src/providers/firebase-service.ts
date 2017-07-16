@@ -37,6 +37,10 @@ export class FirebaseService {
     return this.afAuth.auth.sendPasswordResetEmail(email);
   }
 
+  saveIntake(user, values) {
+    return this.afd.list('/users/' + user.uid + '/profile/').push(values);
+  }
+
   getChallenges(){
     return this.afd.list('/challenges/');
   }
@@ -243,14 +247,4 @@ export class FirebaseService {
       });
     });
   }
-
-
-  getUserData() {
-    return this.afd.object('/userProfile/' + this.user.uid);
-  }
-
-  updateUserName(newName) {
-    return this.afd.object('/userProfile/' + this.user.uid).update({name: newName});
-  }
-
 }
