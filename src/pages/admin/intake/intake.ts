@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'page-new-intake',
@@ -33,24 +34,25 @@ import {FirebaseService} from "../../../providers/firebase-service";
           
           <div [hidden]="shouldHideButton">
             <hr />
-            <ion-list>
+            <form [formGroup]="intake">
+              <ion-list>
               <ion-row>
                 <ion-col col-4>
                   <ion-item>
                     <ion-label floating>Age</ion-label>
-                    <ion-input type="number"></ion-input>
+                    <ion-input type="number" formControlName="age"></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col col-4>
                   <ion-item>
                     <ion-label floating>Height</ion-label>
-                    <ion-input type="number"></ion-input>
+                    <ion-input type="number" formControlName="height"></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col col-4>
                   <ion-item>
                     <ion-label floating>Weight</ion-label>
-                    <ion-input type="number"></ion-input>
+                    <ion-input type="number" formControlName="weight"></ion-input>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -58,7 +60,7 @@ import {FirebaseService} from "../../../providers/firebase-service";
                 <ion-col col-12>
                   <ion-item>
                     <ion-label floating>Injuries/Conditions/Medications</ion-label>
-                    <ion-textarea></ion-textarea>
+                    <ion-textarea formControlName="injuries"></ion-textarea>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -66,7 +68,7 @@ import {FirebaseService} from "../../../providers/firebase-service";
                 <ion-col col-12>
                   <ion-item>
                     <ion-label floating>Current Fitness Routine</ion-label>
-                    <ion-textarea></ion-textarea>
+                    <ion-textarea formControlName="currentRoutine"></ion-textarea>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -74,7 +76,7 @@ import {FirebaseService} from "../../../providers/firebase-service";
                 <ion-col col-12>
                   <ion-item>
                     <ion-label floating>Past Fitness Routine</ion-label>
-                    <ion-textarea></ion-textarea>
+                    <ion-textarea formControlName="pastRoutine"></ion-textarea>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -82,7 +84,7 @@ import {FirebaseService} from "../../../providers/firebase-service";
                 <ion-col col-12>
                   <ion-item>
                     <ion-label floating>Diet Experience</ion-label>
-                    <ion-textarea></ion-textarea>
+                    <ion-textarea formControlName="dietExperience"></ion-textarea>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -90,11 +92,13 @@ import {FirebaseService} from "../../../providers/firebase-service";
                 <ion-col col-12>
                   <ion-item>
                     <ion-label floating>Goals</ion-label>
-                    <ion-textarea></ion-textarea>
+                    <ion-textarea formControlName="goals"></ion-textarea>
                   </ion-item>
+                  <button ion-button (click)="completeIntake(intake.value)" block [disabled]="!intake.valid">Complete Intake</button>
                 </ion-col>
               </ion-row>
-            </ion-list>
+              </ion-list>
+            </form>  
           </div>
         </ion-card-content>
       </ion-card>
@@ -105,8 +109,20 @@ export class NewIntake {
 
   public clients;
   public shouldHideButton = true;
+  public intake;
 
-  constructor(public navCtrl: NavController, public firebaseService: FirebaseService) {}
+  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, private fb: FormBuilder,) {
+    this.intake = this.fb.group({
+      age: new FormControl('', Validators.required),
+      height: new FormControl('',  Validators.required),
+      weight: new FormControl('',  Validators.required),
+      injuries: new FormControl(''),
+      currentRoutine: new FormControl(''),
+      pastRoutine: new FormControl(''),
+      dietExperience: new FormControl(''),
+      goals: new FormControl('')
+    })
+  }
 
   ionViewDidLoad() {
   }
@@ -128,6 +144,10 @@ export class NewIntake {
 
   getButton() {
     return this.shouldHideButton = false;
+  }
+
+  completeIntake(values) {
+
   }
 
 }
