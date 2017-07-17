@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, Loading, LoadingController, NavController, AlertController } from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { EmailValidator } from '../../validators/email-validator';
+import {Register} from "../register/register";
 
 @IonicPage()
 @Component({
@@ -49,7 +50,7 @@ export class Login {
   }
 
   goToSignup() {
-    this.navCtrl.push('Register');
+    this.navCtrl.push(Register);
   }
 
   resetPassword() {

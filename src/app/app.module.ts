@@ -219,6 +219,7 @@ import { Camera } from '@ionic-native/camera';
 import {EditInjury} from "../pages/admin/edit-injury/edit-injury";
 import {EditNote} from "../pages/admin/edit-note/edit-note";
 import {Users} from "../pages/admin/users/users";
+import {Register} from "../pages/register/register";
 
 
 
@@ -236,6 +237,7 @@ export const firebaseConfig = {
     MyApp,
     Main,
     Login,
+    Register,
     Home,
     CalendarPage,
     Intake,
@@ -280,7 +282,8 @@ export const firebaseConfig = {
         {component: Notes, segment: 'notes'},
         {component: YouTube, segment: 'youtube'},
         {component: AssignWorkout, segment: 'assign-workout'},
-        {component: ManageThirtyDayChallenge, segment: 'manage-thirty-day-challenge'}
+        {component: ManageThirtyDayChallenge, segment: 'manage-thirty-day-challenge'},
+        {component: Register, segment: 'register'}
       ]
     }),
     CKEditorModule
@@ -290,6 +293,7 @@ export const firebaseConfig = {
     MyApp,
     Main,
     Login,
+    Register,
     Home,
     CalendarPage,
     Intake,
