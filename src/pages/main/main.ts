@@ -63,7 +63,7 @@ export class Main {
       { title: 'Injury Tracker', component: InjuryTracker },
       { title: 'Progress Pictures', component: ProgressPictures },
       { title: 'Notes', component: Notes },
-      { title: 'Users', component: Users },
+      { title: 'Trainers/Clients', component: Users },
     ];
   }
 

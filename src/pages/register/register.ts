@@ -3,6 +3,7 @@ import { EmailValidator } from './../../validators/email-validator';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Loading, LoadingController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Login } from "../login/login";
 
 @IonicPage()
 @Component({
@@ -33,7 +34,7 @@ export class Register {
       this.firebaseService.signUp(this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.firstName, this.signupForm.value.lastName)
         .then(() => {
           this.loading.dismiss().then(() => {
-            this.navCtrl.setRoot('Login');
+            this.navCtrl.setRoot(Login);
           });
         }, (error) => {
           this.loading.dismiss().then(() => {

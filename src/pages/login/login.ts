@@ -29,7 +29,7 @@ export class Login {
       this.firebaseService.loginUser(this.loginForm.value.email, this.loginForm.value.password)
         .then(authData => {
           this.loading.dismiss().then(() => {
-            this.navCtrl.setRoot('home');
+            // this.navCtrl.push('Home');
           });
         }, error => {
           this.loading.dismiss().then(() => {

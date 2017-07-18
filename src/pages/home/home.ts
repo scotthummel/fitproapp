@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import {IonicPage} from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 //import { AngularFire, FirebaseListObservable } from 'angularfire2';
-@IonicPage()
+@IonicPage({
+  name: 'home',
+  segment: 'home'
+})
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
