@@ -34,6 +34,7 @@ import {EditNote} from "../edit-note/edit-note";
                 <ion-option value="Chiropractic">Chiropractic</ion-option>
                 <ion-option value="Lift">Lift</ion-option>
                 <ion-option value="Cardio">Cardio</ion-option>
+                <ion-option value="Body Measurements">Body Measurements</ion-option>
               </ion-select>
             </ion-item>
             <ion-item>

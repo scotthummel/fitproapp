@@ -17,6 +17,9 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {Users} from "../admin/users/users";
 import {About} from "../about/about";
 import {FoodLog} from "../admin/food-log/food-log";
+import {LiftRecords} from "../admin/lift-records/lift-records";
+import {LiveLiftTracker} from "../admin/live-lift-tracker/live-lift-tracker";
+import {ClientPictures} from "../client-pictures/client-pictures";
 
 @IonicPage()
 @Component({
@@ -57,11 +60,16 @@ export class Main {
       { title: 'Calendar', component: CalendarPage },
       { title: 'Lift Tracker', component: LiftTracker },
       { title: '30 Day Challenge', component: ThirtyDayChallenge },
-      { title: 'YouTube', component: YouTube }
+      { title: 'YouTube', component: YouTube },
+      { title: 'Client Pictures', component: ClientPictures },
+      { title: 'Client Records', component: ClientPictures },
+
     ];
     this.adminPages = [
       { title: 'Consultation', component: Intake },
       { title: 'Assign Workout', component: AssignWorkout },
+      { title: 'Lift Tracker', component: LiveLiftTracker },
+      { title: 'Lift Records', component: LiftRecords },
       { title: 'Food Log', component: FoodLog },
       { title: '30 Day Challenge', component: ManageThirtyDayChallenge },
       { title: 'Injury Tracker', component: InjuryTracker },

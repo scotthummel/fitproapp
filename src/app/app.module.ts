@@ -223,7 +223,10 @@ import {Register} from "../pages/register/register";
 import {About} from "../pages/about/about";
 import {FoodLog} from "../pages/admin/food-log/food-log";
 import {Navbar} from "../components/navbar/navbar";
-
+import {ClientPictures} from "../pages/client-pictures/client-pictures";
+import {LiveLiftTracker} from "../pages/admin/live-lift-tracker/live-lift-tracker";
+import {LiftRecords} from "../pages/admin/lift-records/lift-records";
+import {ClientRecords} from "../pages/client-records/client-records";
 
 
 export const firebaseConfig = {
@@ -262,12 +265,16 @@ export const firebaseConfig = {
     NotesHistory,
     EditNote,
     YouTube,
+    ClientPictures,
+    ClientRecords,
     AssignWorkout,
     FoodLog,
     ManageThirtyDayChallenge,
     EditThirtyDayChallenge,
     EditDay,
-    Users
+    Users,
+    LiveLiftTracker,
+    LiftRecords
   ],
   imports: [
     BrowserModule,
@@ -320,12 +327,16 @@ export const firebaseConfig = {
     EditNote,
     NotesHistory,
     YouTube,
+    ClientPictures,
+    ClientRecords,
     AssignWorkout,
     FoodLog,
     ManageThirtyDayChallenge,
     EditThirtyDayChallenge,
     EditDay,
-    Users
+    Users,
+    LiveLiftTracker,
+    LiftRecords
   ],
   providers: [
     StatusBar,

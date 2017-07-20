@@ -83,6 +83,30 @@ import {AngularFireAuth} from "angularfire2/auth";
               <ion-row>
                 <ion-col col-12>
                   <ion-item>
+                    <ion-label floating>Massage Experience</ion-label>
+                    <ion-textarea formControlName="massageExperience"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Yoga Experience</ion-label>
+                    <ion-textarea formControlName="yogaExperience"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Miscellaneous/Notes</ion-label>
+                    <ion-textarea formControlName="MiscNotes"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>  
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
                     <ion-label floating>Goals</ion-label>
                     <ion-textarea formControlName="goals"></ion-textarea>
                   </ion-item>
