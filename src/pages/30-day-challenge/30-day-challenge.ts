@@ -16,7 +16,6 @@ export class ThirtyDayChallenge {
   constructor(public navCtrl: NavController) {}
 
   ionViewDidLoad() {
-    console.log('Hello 30DayChallengePage Page');
   }
 
 }

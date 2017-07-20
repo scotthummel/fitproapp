@@ -15,6 +15,8 @@ import {FirebaseService} from "../../providers/firebase-service";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
 import {Users} from "../admin/users/users";
+import {About} from "../about/about";
+import {FoodLog} from "../admin/food-log/food-log";
 
 @IonicPage()
 @Component({
@@ -51,15 +53,17 @@ export class Main {
   ionViewDidLoad() {
     this.pages = [
       { title: 'Home', component: Home },
+      { title: 'About', component: About },
       { title: 'Calendar', component: CalendarPage },
       { title: 'Lift Tracker', component: LiftTracker },
-      { title: '30-day Challenge', component: ThirtyDayChallenge },
+      { title: '30 Day Challenge', component: ThirtyDayChallenge },
       { title: 'YouTube', component: YouTube }
     ];
     this.adminPages = [
-      { title: 'Intake', component: Intake },
+      { title: 'Consultation', component: Intake },
       { title: 'Assign Workout', component: AssignWorkout },
-      { title: '30-Day Challenge', component: ManageThirtyDayChallenge },
+      { title: 'Food Log', component: FoodLog },
+      { title: '30 Day Challenge', component: ManageThirtyDayChallenge },
       { title: 'Injury Tracker', component: InjuryTracker },
       { title: 'Progress Pictures', component: ProgressPictures },
       { title: 'Notes', component: Notes },

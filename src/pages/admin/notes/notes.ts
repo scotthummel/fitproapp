@@ -7,16 +7,7 @@ import {EditNote} from "../edit-note/edit-note";
 @Component({
   selector: 'page-new-notes',
   template: `
-    <ion-header>
-      <ion-navbar color="dark">
-        <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title>
-          <img class="logo" src="assets/images/fitpro_menu_bar_icon.png"> FitPro Tracker
-        </ion-title>
-      </ion-navbar>
-    </ion-header>
+    <navbar></navbar>
     <ion-content>
       <ion-card>
 
@@ -101,18 +92,7 @@ export class NewNote {
 @Component({
   selector: 'page-notes-history',
   template: `
-    <ion-header>
-
-      <ion-navbar color="dark">
-        <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title>
-          <img class="logo" src="assets/images/fitpro_menu_bar_icon.png"> FitPro Tracker
-        </ion-title>
-      </ion-navbar>
-
-    </ion-header>
+    <navbar></navbar>
     <ion-content>
       <ion-card>
 

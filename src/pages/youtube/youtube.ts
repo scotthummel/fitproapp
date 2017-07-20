@@ -16,7 +16,6 @@ export class YouTube {
   constructor(public navCtrl: NavController) {}
 
   ionViewDidLoad() {
-    console.log('Hello YoutubePage Page');
   }
 
 }

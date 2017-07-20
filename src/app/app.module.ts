@@ -220,6 +220,9 @@ import {EditInjury} from "../pages/admin/edit-injury/edit-injury";
 import {EditNote} from "../pages/admin/edit-note/edit-note";
 import {Users} from "../pages/admin/users/users";
 import {Register} from "../pages/register/register";
+import {About} from "../pages/about/about";
+import {FoodLog} from "../pages/admin/food-log/food-log";
+import {Navbar} from "../components/navbar/navbar";
 
 
 
@@ -234,8 +237,10 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
+    Navbar,
     MyApp,
     Main,
+    About,
     Login,
     Register,
     Home,
@@ -258,6 +263,7 @@ export const firebaseConfig = {
     EditNote,
     YouTube,
     AssignWorkout,
+    FoodLog,
     ManageThirtyDayChallenge,
     EditThirtyDayChallenge,
     EditDay,
@@ -295,6 +301,7 @@ export const firebaseConfig = {
     Login,
     Register,
     Home,
+    About,
     CalendarPage,
     Intake,
     NewIntake,
@@ -314,6 +321,7 @@ export const firebaseConfig = {
     NotesHistory,
     YouTube,
     AssignWorkout,
+    FoodLog,
     ManageThirtyDayChallenge,
     EditThirtyDayChallenge,
     EditDay,

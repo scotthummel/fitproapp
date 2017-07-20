@@ -6,16 +6,7 @@ import {AlertController} from "ionic-angular";
 @Component({
   selector: 'page-new-picture',
   template: `
-    <ion-header>
-      <ion-navbar color="dark">
-        <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title>
-          <img class="logo" src="assets/images/fitpro_menu_bar_icon.png"> FitPro Tracker
-        </ion-title>
-      </ion-navbar>
-    </ion-header>
+    <navbar></navbar>
     <ion-content>
       <ion-card>
         <ion-card-header class="card-header">
@@ -79,18 +70,7 @@ export class NewPicture {
 @Component({
   selector: 'page-picture-history',
   template: `
-    <ion-header>
-
-      <ion-navbar color="dark">
-        <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title>
-          <img class="logo" src="assets/images/fitpro_menu_bar_icon.png"> FitPro Tracker
-        </ion-title>
-      </ion-navbar>
-
-    </ion-header>
+    <navbar></navbar>
     <ion-content>
       <ion-card>
 
