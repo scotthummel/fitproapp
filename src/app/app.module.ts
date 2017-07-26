@@ -227,6 +227,9 @@ import {ClientPictures} from "../pages/client-pictures/client-pictures";
 import {LiveLiftTracker} from "../pages/admin/live-lift-tracker/live-lift-tracker";
 import {LiftRecords} from "../pages/admin/lift-records/lift-records";
 import {ClientRecords} from "../pages/client-records/client-records";
+import { File } from '@ionic-native/file';
+import { Transfer } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
 
 
 export const firebaseConfig = {
@@ -286,17 +289,28 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp, {}, {
       links: [
         {component: Home, segment: 'home'},
-       // {component: CalendarComponent, segment: 'calendar'},
-        {component: Intake, segment: 'intake'},
+        {component: About, segment: 'about'},
+        {component: CalendarPage, segment: 'calendar'},
+        {component: NewIntake, segment: ''},
+        {component: IntakeHistory, segment: ''},
         {component: LiftTracker, segment: 'lift-tracker'},
-        {component: InjuryTracker, segment: 'injury-tracker'},
-        {component: ProgressPictures, segment: 'progress-pictures'},
+        {component: LiftRecords, segment: 'lift-records'},
+        {component: NewInjury, segment: ''},
+        {component: InjuryHistory, segment: ''},
         {component: ThirtyDayChallenge, segment: 'thirty-day-challenge'},
-        {component: Notes, segment: 'notes'},
+        {component: ClientPictures, segment: 'client-pictures'},
+        {component: ClientRecords, segment: 'client-records'},
+        {component: FoodLog, segment: 'food-log'},
+        {component: NewNote, segment: ''},
+        {component: NotesHistory, segment: ''},
         {component: YouTube, segment: 'youtube'},
         {component: AssignWorkout, segment: 'assign-workout'},
         {component: ManageThirtyDayChallenge, segment: 'manage-thirty-day-challenge'},
-        {component: Register, segment: 'register'}
+        {component: Register, segment: 'register'},
+        {component: Users, segment: 'users'},
+        {component: LiveLiftTracker, segment: 'live-lift-tracker'},
+        {component: NewPicture, segment: ''},
+        {component: PictureHistory, segment: ''},
       ]
     }),
     CKEditorModule
@@ -343,8 +357,10 @@ export const firebaseConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseService,
-    Camera
-    // FitproApi,
+    File,
+    Transfer,
+    Camera,
+    FilePath,
   ]
 })
 export class AppModule {}

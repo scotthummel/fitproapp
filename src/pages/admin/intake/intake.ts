@@ -3,6 +3,7 @@ import {NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {AngularFireAuth} from "angularfire2/auth";
+import {AngularFireDatabase} from "angularfire2/database";
 
 @Component({
   selector: 'page-new-intake',
@@ -18,8 +19,8 @@ import {AngularFireAuth} from "angularfire2/auth";
           <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
           <ion-list radio-group [(ngModel)]="key">
             <ion-item *ngFor="let client of clients" class="item item-radio">
-              <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>
-              <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}}</ion-label>
+              <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}} ({{ client.email}})</ion-label>
+              <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}} ({{client.email}})</ion-label>
               <ion-radio [value]="client.$key" color="dark" (click)="getButton()"></ion-radio>
             </ion-item>
           </ion-list>
@@ -100,7 +101,7 @@ import {AngularFireAuth} from "angularfire2/auth";
                 <ion-col col-12>
                   <ion-item>
                     <ion-label floating>Miscellaneous/Notes</ion-label>
-                    <ion-textarea formControlName="MiscNotes"></ion-textarea>
+                    <ion-textarea formControlName="miscNotes"></ion-textarea>
                   </ion-item>
                 </ion-col>
               </ion-row>  
@@ -136,6 +137,9 @@ export class NewIntake {
       currentRoutine: new FormControl(''),
       pastRoutine: new FormControl(''),
       dietExperience: new FormControl(''),
+      massageExperience: new FormControl(''),
+      yogaExperience: new FormControl(''),
+      miscNotes: new FormControl(''),
       goals: new FormControl('')
     })
   }
@@ -148,11 +152,13 @@ export class NewIntake {
     if (val && val.trim() != '') {
       this.firebaseService.getClients().subscribe(data => {
         this.clients = data.filter((item) => {
-          if (item.hasOwnProperty('firstName')) {
-            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
-          } else {
-            return item.username.includes(val) || item.email.includes(val);
-          }
+         if (!item.hasOwnProperty('profile')) {
+           if (item.hasOwnProperty('firstName')) {
+             return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+           } else {
+             return item.username.includes(val) || item.email.includes(val);
+           }
+         }
         })
       });
     }
@@ -191,14 +197,102 @@ export class NewIntake {
           <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
           <ion-list radio-group [(ngModel)]="key">
             <ion-item *ngFor="let client of clients" class="item item-radio">
-              <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>
-              <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}}</ion-label>
+              <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}} ({{ client.email}})</ion-label>
+              <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}} ({{client.email}})</ion-label>
               <ion-radio [value]="client.$key" color="dark" (click)="getButton()"></ion-radio>
             </ion-item>
           </ion-list>
 
           <div [hidden]="shouldHideButton">
-            <hr />
+            <button ion-button (click)="getIntake(key)">Get Consultation</button>
+            
+            <hr [hidden]="shouldHideIntake" />
+            <ion-list [hidden]="shouldHideIntake">
+              <ion-row>
+                <ion-col col-4>
+                  <ion-item>
+                    <ion-label floating>Age</ion-label>
+                    <ion-input type="number" value="{{ intake?.age }}"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-4>
+                  <ion-item>
+                    <ion-label floating>Height</ion-label>
+                    <ion-input type="text" value="{{ intake?.height }}"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-4>
+                  <ion-item>
+                    <ion-label floating>Weight</ion-label>
+                    <ion-input type="number" value="{{ intake?.weight }}"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Injuries/Conditions/Medications</ion-label>
+                    <ion-textarea value="{{ intake?.injuries }}"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Current Fitness Routine</ion-label>
+                    <ion-textarea value="{{ intake?.currentRoutine }}"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Past Fitness Routine</ion-label>
+                    <ion-textarea value="{{ intake?.pastRoutine }}"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Diet Experience</ion-label>
+                    <ion-textarea value="{{ intake?.dietExperience }}"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Massage Experience</ion-label>
+                    <ion-textarea value="{{ intake?.massageExperience }}"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Yoga Experience</ion-label>
+                    <ion-textarea value="{{ intake?.yogaExperience }}"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Miscellaneous/Notes</ion-label>
+                    <ion-textarea value="{{ intake?.miscNotes }}"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Goals</ion-label>
+                    <ion-textarea value="{{ intake?.goals }}"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-list>
           </div>
 
         </ion-card-content>
@@ -211,8 +305,10 @@ export class IntakeHistory {
 
   public clients;
   public shouldHideButton = true;
+  public shouldHideIntake = true;
+  public intake;
 
-  constructor(public navCtrl: NavController, public firebaseService: FirebaseService) {}
+  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, public afd: AngularFireDatabase) {}
 
   ionViewDidLoad() {
   }
@@ -222,10 +318,12 @@ export class IntakeHistory {
     if (val && val.trim() != '') {
       this.firebaseService.getClients().subscribe(data => {
         this.clients = data.filter((item) => {
-          if (item.hasOwnProperty('firstName')) {
-            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
-          } else {
-            return item.username.includes(val) || item.email.includes(val);
+          if (item.hasOwnProperty('profile')) {
+            if (item.hasOwnProperty('firstName')) {
+              return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+            } else {
+              return item.username.includes(val) || item.email.includes(val);
+            }
           }
         })
       });
@@ -234,6 +332,13 @@ export class IntakeHistory {
 
   getButton() {
     return this.shouldHideButton = false;
+  }
+
+  getIntake(key) {
+    this.shouldHideIntake = false;
+    return this.afd.list('/users/' + key + '/profile').subscribe(intake => {
+      this.intake = intake[0];
+    });
   }
 
 }
