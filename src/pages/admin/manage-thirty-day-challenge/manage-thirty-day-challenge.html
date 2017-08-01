@@ -13,7 +13,11 @@
       <ion-input #name placeholder="Enter Challenge Name"></ion-input>
       <button ion-button (click)="addChallenge(name.value)">Add 30-Day Challenge</button>
 
-      <ion-list>
+      <hr >
+
+      <h2>Challenges</h2>
+
+      <ion-list id="card-sliding-list">
         <ion-item-sliding *ngFor="let challenge of challenges | async">
           <ion-item>
             {{ challenge.name }}

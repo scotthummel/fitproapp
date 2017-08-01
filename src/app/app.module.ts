@@ -221,11 +221,11 @@ import {EditNote} from "../pages/admin/edit-note/edit-note";
 import {Users} from "../pages/admin/users/users";
 import {Register} from "../pages/register/register";
 import {About} from "../pages/about/about";
-import {FoodLog} from "../pages/admin/food-log/food-log";
+import {FoodLog, FoodLogHistory, NewFoodLog} from "../pages/admin/food-log/food-log";
 import {Navbar} from "../components/navbar/navbar";
 import {ClientPictures} from "../pages/client-pictures/client-pictures";
 import {LiveLiftTracker} from "../pages/admin/live-lift-tracker/live-lift-tracker";
-import {LiftRecords} from "../pages/admin/lift-records/lift-records";
+import {LiftRecordHistory, LiftRecords, NewLiftRecord} from "../pages/admin/lift-records/lift-records";
 import {ClientRecords} from "../pages/client-records/client-records";
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
@@ -272,12 +272,16 @@ export const firebaseConfig = {
     ClientRecords,
     AssignWorkout,
     FoodLog,
+    NewFoodLog,
+    FoodLogHistory,
     ManageThirtyDayChallenge,
     EditThirtyDayChallenge,
     EditDay,
     Users,
     LiveLiftTracker,
-    LiftRecords
+    LiftRecords,
+    NewLiftRecord,
+    LiftRecordHistory
   ],
   imports: [
     BrowserModule,
@@ -295,12 +299,16 @@ export const firebaseConfig = {
         {component: IntakeHistory, segment: ''},
         {component: LiftTracker, segment: 'lift-tracker'},
         {component: LiftRecords, segment: 'lift-records'},
+        {component: NewLiftRecord, segment: ''},
+        {component: LiftRecordHistory, segment: ''},
         {component: NewInjury, segment: ''},
         {component: InjuryHistory, segment: ''},
         {component: ThirtyDayChallenge, segment: 'thirty-day-challenge'},
         {component: ClientPictures, segment: 'client-pictures'},
         {component: ClientRecords, segment: 'client-records'},
         {component: FoodLog, segment: 'food-log'},
+        {component: NewFoodLog, segment: ''},
+        {component: FoodLogHistory, segment: ''},
         {component: NewNote, segment: ''},
         {component: NotesHistory, segment: ''},
         {component: YouTube, segment: 'youtube'},
@@ -345,12 +353,16 @@ export const firebaseConfig = {
     ClientRecords,
     AssignWorkout,
     FoodLog,
+    NewFoodLog,
+    FoodLogHistory,
     ManageThirtyDayChallenge,
     EditThirtyDayChallenge,
     EditDay,
     Users,
     LiveLiftTracker,
-    LiftRecords
+    LiftRecords,
+    NewLiftRecord,
+    LiftRecordHistory
   ],
   providers: [
     StatusBar,

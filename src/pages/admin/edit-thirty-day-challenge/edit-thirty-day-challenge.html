@@ -9,16 +9,16 @@
     </ion-card-header>
 
     <ion-card-content>
-      <h1>Update Name</h1>
+      <h2>Update Name</h2>
       <ion-input #name placeholder="Name" [(ngModel)]="challenge.name"></ion-input>
       <button ion-button (click)="updateName(name.value)">Update</button>
 
       <hr />
 
-      <h1>Add Day</h1>
+      <h2>Add Day</h2>
       <ion-input #theme placeholder="Theme"></ion-input>
       <ion-label>One Point</ion-label>
-      <ckeditor #onePt
+      <ckeditor [config]="ckEditorConfig" #onePt
         [(ngModel)]="ckEditorContent">
         <ckbutton [name]="'saveButton'"
                   [command]="'saveCmd'"
@@ -30,7 +30,7 @@
 
       <ion-label>Two Points</ion-label>
 
-      <ckeditor #twoPts
+      <ckeditor [config]="ckEditorConfig" #twoPts
                 [(ngModel)]="ckEditorContent2">
         <ckbutton [name]="'saveButton'"
                   [command]="'saveCmd'"
@@ -42,7 +42,7 @@
 
       <ion-label>Three Points</ion-label>
 
-      <ckeditor #threePts
+      <ckeditor [config]="ckEditorConfig" #threePts
                 [(ngModel)]="ckEditorContent3">
         <ckbutton [name]="'saveButton'"
                   [command]="'saveCmd'"
@@ -55,8 +55,8 @@
 
       <hr />
 
-      <h1 *ngIf="days">Days</h1>
-      <ion-list>
+      <h2 *ngIf="days">Days</h2>
+      <ion-list id="card-sliding-list">
         <ion-item-sliding *ngFor="let day of days">
           <ion-item>
             {{ day.theme }}

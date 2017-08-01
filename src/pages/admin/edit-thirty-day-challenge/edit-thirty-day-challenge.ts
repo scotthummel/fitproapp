@@ -17,6 +17,15 @@ export class EditThirtyDayChallenge {
   ckEditorContent2;
   ckEditorContent3;
 
+  ckEditorConfig = {
+    "toolbarGroups": [
+      { name: "basicstyles", groups: ['Bold', 'Italic', 'Strike']},
+      { name: "paragraph", groups: ['NumberedList', 'BulletedList']},
+      { name: "links", groups: ['Link', 'Unlink']},
+      { name: "styles" }
+      ]
+  };
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService, public afd: AngularFireDatabase, public toastCtrl: ToastController) {
     this.key = navParams.get('key');
     this.firebaseService.authState.subscribe(user => {

@@ -1,18 +1,4 @@
-<navbar></navbar>
-
-<ion-content>
-
-  <ion-card>
-
-    <ion-card-header class="card-header">
-      Lift Records
-    </ion-card-header>
-
-    <ion-card-content>
-
-
-    </ion-card-content>
-
-  </ion-card>
-
-</ion-content>
+<ion-tabs>
+  <ion-tab tabIcon="ribbon" tabTitle="New Lift Record" [root]="newLiftRecord"></ion-tab>
+  <ion-tab tabIcon="book" tabTitle="Lift Record History" [root]="liftRecordHistory"></ion-tab>
+</ion-tabs>

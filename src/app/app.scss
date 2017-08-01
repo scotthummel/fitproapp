@@ -50,3 +50,12 @@ ion-content {
   margin-top: 60px;
 }
 
+ion-list#card-sliding-list ion-item-sliding {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.card-md h2 {
+  font-size: 20px;
+  margin: 12px 0;
+}
+

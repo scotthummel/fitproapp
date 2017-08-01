@@ -16,8 +16,8 @@ import {EditInjury} from "../edit-injury/edit-injury";
           <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
           <ion-list radio-group [(ngModel)]="key">
             <ion-item *ngFor="let client of clients" class="item item-radio">
-              <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>
-              <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}}</ion-label>
+              <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}} ({{ client.email }})</ion-label>
+              <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}} ({{ client.email }})</ion-label>
               <ion-radio [value]="client.$key" color="dark" (click)="getButton()"></ion-radio>
             </ion-item>
           </ion-list>
@@ -107,8 +107,8 @@ export class NewInjury {
           <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
           <ion-list radio-group [(ngModel)]="key">
             <ion-item *ngFor="let client of clients" class="item item-radio">
-              <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>
-              <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}}</ion-label>
+              <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}} ({{ client.email }})</ion-label>
+              <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}} ({{ client.email }})</ion-label>
               <ion-radio [value]="client.$key" color="dark" (click)="getButton()"></ion-radio>
             </ion-item>
           </ion-list>

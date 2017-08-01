@@ -1,19 +1,4 @@
-<navbar></navbar>
-
-<ion-content>
-
-  <ion-card>
-
-    <ion-card-header class="card-header">
-      Food Log
-    </ion-card-header>
-
-    <ion-card-content>
-
-
-    </ion-card-content>
-
-  </ion-card>
-
-</ion-content>
-
+<ion-tabs>
+  <ion-tab tabIcon="restaurant" tabTitle="New Food Log" [root]="newFoodLog"></ion-tab>
+  <ion-tab tabIcon="book" tabTitle="Food Log History" [root]="foodLogHistory"></ion-tab>
+</ion-tabs>
