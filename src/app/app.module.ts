@@ -233,6 +233,8 @@ import { ClientConsultation, ClientInjuries, ClientNotes, ClientRecords } from "
 import { BodyHTML } from "../pipes/body";
 import { PipeModule } from "../pipes/pipe.module";
 import {BlogArticle} from "../pages/blog-article/blog-article";
+import {PlayerService} from "../providers/player-service";
+import {YoutubeService} from "../providers/youtube-service";
 
 
 export const firebaseConfig = {
@@ -384,11 +386,14 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: Window, useValue: window},
     FirebaseService,
     File,
     Transfer,
     Camera,
     FilePath,
+    PlayerService,
+    YoutubeService
   ]
 })
 export class AppModule {}
