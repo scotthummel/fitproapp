@@ -9,7 +9,21 @@
     </ion-card-header>
 
     <ion-card-content>
-as dfa sdfa sdfasdf asdfa sdf asdf asda sdf asd f fads fas df asdf asd f asdf asdf asdf asd fasd  fdas  dsaf asdf asd f asdf asd asdf fasd  fasd fsad f asdf asd fasd f asdf asdf sd fa sadf fds f afds f asdf asd fas d afsd adfs dfs sadf  fads ads f asd fsad f asd adfs dfsa adsf afds fads s asdf fads afds  asd a fds fd aa fds fdas fads fdsa fads fads  fdas fdas fads  fads
+
+      <h1>News</h1>
+
+      <div>
+        <ion-list>
+          <ion-item *ngFor="let post of posts | async">
+            <h2>{{ post.title }}</h2>
+            <div [innerHTML]="post.body | bodyHMTL"></div>
+            <br />
+            <button ion-button (click)="readBlogArticle(post.id)">Read More...</button>
+          </ion-item>
+
+          <hr />
+        </ion-list>
+      </div>
 
     </ion-card-content>
 

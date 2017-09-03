@@ -97,6 +97,10 @@ export class EditThirtyDayChallenge {
     this.navCtrl.push(EditDay, {
       challengeKey: challengeKey,
       dayKey: dayKey
+    }).then(res => {
+
+    }).catch(err => {
+      console.log(err);
     });
   }
 

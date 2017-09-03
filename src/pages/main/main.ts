@@ -20,6 +20,7 @@ import {FoodLog} from "../admin/food-log/food-log";
 import {LiftRecords} from "../admin/lift-records/lift-records";
 import {LiveLiftTracker} from "../admin/live-lift-tracker/live-lift-tracker";
 import {ClientPictures} from "../client-pictures/client-pictures";
+import {ClientRecords} from "../client-records/client-records";
 
 @IonicPage()
 @Component({
@@ -62,7 +63,7 @@ export class Main {
       { title: '30 Day Challenge', component: ThirtyDayChallenge },
       { title: 'YouTube', component: YouTube },
       { title: 'Client Pictures', component: ClientPictures },
-      { title: 'Client Records', component: ClientPictures },
+      { title: 'Client Records', component: ClientRecords },
 
     ];
     this.adminPages = [

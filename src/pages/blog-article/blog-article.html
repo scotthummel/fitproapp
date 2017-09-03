@@ -1,0 +1,25 @@
+<navbar></navbar>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header class="card-header">
+      Blog
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <div style="overflow:scroll; height: 500px;">
+        <h1>{{ (post | async)?.title }}</h1>
+
+        <div [innerHTML]="(post | async)?.body"></div>
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>
+
+

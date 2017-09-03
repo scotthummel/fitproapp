@@ -1,18 +1,5 @@
-<navbar></navbar>
-
-<ion-content>
-
-  <ion-card>
-
-    <ion-card-header class="card-header">
-      Client Records
-    </ion-card-header>
-
-    <ion-card-content>
-
-
-    </ion-card-content>
-
-  </ion-card>
-
-</ion-content>
+<ion-tabs>
+  <ion-tab tabIcon="list-box" tabTitle="Consultation" [root]="consultation"></ion-tab>
+  <ion-tab tabIcon="body" tabTitle="Injuries" [root]="injuries"></ion-tab>
+  <ion-tab tabIcon="book" tabTitle="Notes" [root]="notes"></ion-tab>
+</ion-tabs>

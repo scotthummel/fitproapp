@@ -188,8 +188,8 @@
 // export class AppModule {}
 
 import { FirebaseService } from '../providers/firebase-service';
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
+import {ErrorHandler, NgModule, Pipe, PipeTransform} from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -226,10 +226,13 @@ import {Navbar} from "../components/navbar/navbar";
 import {ClientPictures} from "../pages/client-pictures/client-pictures";
 import {LiveLiftTracker} from "../pages/admin/live-lift-tracker/live-lift-tracker";
 import {LiftRecordHistory, LiftRecords, NewLiftRecord} from "../pages/admin/lift-records/lift-records";
-import {ClientRecords} from "../pages/client-records/client-records";
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
+import { ClientConsultation, ClientInjuries, ClientNotes, ClientRecords } from "../pages/client-records/client-records";
+import { BodyHTML } from "../pipes/body";
+import { PipeModule } from "../pipes/pipe.module";
+import {BlogArticle} from "../pages/blog-article/blog-article";
 
 
 export const firebaseConfig = {
@@ -240,6 +243,7 @@ export const firebaseConfig = {
   storageBucket: "fitpro-c361e.appspot.com",
   messagingSenderId: "1014754908163"
 };
+
 
 @NgModule({
   declarations: [
@@ -270,6 +274,9 @@ export const firebaseConfig = {
     YouTube,
     ClientPictures,
     ClientRecords,
+    ClientConsultation,
+    ClientInjuries,
+    ClientNotes,
     AssignWorkout,
     FoodLog,
     NewFoodLog,
@@ -281,7 +288,8 @@ export const firebaseConfig = {
     LiveLiftTracker,
     LiftRecords,
     NewLiftRecord,
-    LiftRecordHistory
+    LiftRecordHistory,
+    BlogArticle
   ],
   imports: [
     BrowserModule,
@@ -290,6 +298,7 @@ export const firebaseConfig = {
     AngularFireAuthModule,
     AngularFireModule.initializeApp(firebaseConfig),
     NgCalendarModule,
+    PipeModule,
     IonicModule.forRoot(MyApp, {}, {
       links: [
         {component: Home, segment: 'home'},
@@ -306,6 +315,9 @@ export const firebaseConfig = {
         {component: ThirtyDayChallenge, segment: 'thirty-day-challenge'},
         {component: ClientPictures, segment: 'client-pictures'},
         {component: ClientRecords, segment: 'client-records'},
+        {component: ClientConsultation, segment: ''},
+        {component: ClientInjuries, segment: ''},
+        {component: ClientNotes, segment: ''},
         {component: FoodLog, segment: 'food-log'},
         {component: NewFoodLog, segment: ''},
         {component: FoodLogHistory, segment: ''},
@@ -351,6 +363,9 @@ export const firebaseConfig = {
     YouTube,
     ClientPictures,
     ClientRecords,
+    ClientConsultation,
+    ClientInjuries,
+    ClientNotes,
     AssignWorkout,
     FoodLog,
     NewFoodLog,
@@ -362,7 +377,8 @@ export const firebaseConfig = {
     LiveLiftTracker,
     LiftRecords,
     NewLiftRecord,
-    LiftRecordHistory
+    LiftRecordHistory,
+    BlogArticle
   ],
   providers: [
     StatusBar,

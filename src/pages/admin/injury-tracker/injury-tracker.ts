@@ -194,6 +194,10 @@ export class InjuryHistory {
   manageInjury(key) {
     this.navCtrl.push(EditInjury, {
       key: key
+    }).then(res => {
+
+    }).catch(err => {
+      console.log(err);
     });
   }
 

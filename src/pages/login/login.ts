@@ -50,7 +50,11 @@ export class Login {
   }
 
   goToSignup() {
-    this.navCtrl.push(Register);
+    this.navCtrl.push(Register).then(res => {
+
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   resetPassword() {

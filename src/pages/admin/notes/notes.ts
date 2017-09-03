@@ -191,6 +191,10 @@ export class NotesHistory {
   manageNote(key) {
     this.navCtrl.push(EditNote, {
       key: key
+    }).then(res => {
+
+    }).catch(err => {
+      console.log(err);
     });
   }
 }

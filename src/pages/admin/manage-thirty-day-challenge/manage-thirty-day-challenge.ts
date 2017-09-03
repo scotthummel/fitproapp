@@ -44,6 +44,10 @@ export class ManageThirtyDayChallenge {
   manageChallenge(key) {
     this.navCtrl.push(EditThirtyDayChallenge, {
       key: key
+    }).then(res => {
+
+    }).catch(err => {
+      console.log(err);
     });
   }
 
