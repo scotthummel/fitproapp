@@ -1,30 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-//import { CalendarService } from '../../providers/calendar.service';
-
-// /*
-//   Generated class for the Calendar page.
-//
-//   See http://ionicframework.com/docs/v2/components/#navigation for more info on
-//   Ionic pages and navigation.
-// */
-// @IonicPage()
-// @Component({
-//   selector: 'page-calendar',
-//   templateUrl: 'calendar.html'
-// })
-// export class Calendar {
-//
-//   constructor(public navCtrl: NavController) {}
-//
-//   ionViewDidLoad() {
-//     console.log('Hello CalendarPage Page');
-//   }
-//
-// }
+import { EventView } from "../event-view/event-view";
 
 @Component({
-  templateUrl: "calendar.html"
+  templateUrl: "calendar.html",
+  selector: 'page-calendar'
 })
 export class CalendarPage {
   eventSource;
@@ -62,8 +42,8 @@ export class CalendarPage {
     }
   };
 
-  constructor(private navController:NavController) {
-
+  constructor(private navCtrl:NavController) {
+    this.eventSource = this.createRandomEvents();
   }
 
   loadEvents() {
@@ -75,6 +55,9 @@ export class CalendarPage {
   }
 
   onEventSelected(event) {
+    this.navCtrl.push(EventView, {
+      eventId: event.id
+    });
     console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
   }
 
@@ -101,6 +84,7 @@ export class CalendarPage {
   createRandomEvents() {
     var events = [];
     for (var i = 0; i < 50; i += 1) {
+      var id = i;
       var date = new Date();
       var eventType = Math.floor(Math.random() * 2);
       var startDay = Math.floor(Math.random() * 90) - 45;
@@ -114,6 +98,7 @@ export class CalendarPage {
         }
         endTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + endDay));
         events.push({
+          id: id,
           title: 'All Day - ' + i,
           startTime: startTime,
           endTime: endTime,
@@ -125,6 +110,7 @@ export class CalendarPage {
         startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + startDay, 0, date.getMinutes() + startMinute);
         endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + endDay, 0, date.getMinutes() + endMinute);
         events.push({
+          id: id,
           title: 'Event - ' + i,
           startTime: startTime,
           endTime: endTime,

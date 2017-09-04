@@ -235,6 +235,7 @@ import { PipeModule } from "../pipes/pipe.module";
 import {BlogArticle} from "../pages/blog-article/blog-article";
 import {PlayerService} from "../providers/player-service";
 import {YoutubeService} from "../providers/youtube-service";
+import {EventView} from "../pages/event-view/event-view";
 
 
 export const firebaseConfig = {
@@ -291,7 +292,8 @@ export const firebaseConfig = {
     LiftRecords,
     NewLiftRecord,
     LiftRecordHistory,
-    BlogArticle
+    BlogArticle,
+    EventView
   ],
   imports: [
     BrowserModule,
@@ -380,7 +382,8 @@ export const firebaseConfig = {
     LiftRecords,
     NewLiftRecord,
     LiftRecordHistory,
-    BlogArticle
+    BlogArticle,
+    EventView
   ],
   providers: [
     StatusBar,

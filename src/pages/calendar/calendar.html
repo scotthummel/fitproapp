@@ -5,7 +5,7 @@
   <ion-card>
 
     <ion-card-header class="card-header">
-      Calendar
+      Calendar: {{ viewTitle }}
       <ion-buttons end>
         <button ion-button [disabled]="isToday" (click)="today()">Today</button>
         <button ion-button (click)="changeMode('month')">M</button>
