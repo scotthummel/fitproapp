@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { EventView } from "../event-view/event-view";
+import {FirebaseService} from "../../providers/firebase-service";
 
 @Component({
   templateUrl: "calendar.html",
@@ -9,6 +10,7 @@ import { EventView } from "../event-view/event-view";
 export class CalendarPage {
   eventSource;
   viewTitle;
+  challenges;
 
   isToday:boolean;
   calendar = {
@@ -42,12 +44,36 @@ export class CalendarPage {
     }
   };
 
-  constructor(private navCtrl:NavController) {
-    this.eventSource = this.createRandomEvents();
+  constructor(private navCtrl:NavController, public firebaseService: FirebaseService) {
+    // this.eventSource = this.createRandomEvents();
+    this.getEvents();
   }
 
   loadEvents() {
-    this.eventSource = this.createRandomEvents();
+    //this.eventSource = this.createRandomEvents();
+    this.eventSource = this.getEvents();
+  }
+
+  getEvents() {
+    this.firebaseService.getChallengesForCalendar().subscribe(challenges => {
+      this.challenges = challenges;
+
+      let events = [];
+
+      challenges.forEach(challenge => {
+        if (challenge.start) {
+          events.push({
+            id: challenge.$key,
+            title: challenge.name,
+            startTime: new Date(challenge.start),
+            endTime: new Date(challenge.end),
+            allDay: true
+          });
+        }
+      });
+
+      this.eventSource = events;
+    });
   }
 
   onViewTitleChanged(title) {

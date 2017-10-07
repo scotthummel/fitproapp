@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import {NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 //import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { EditThirtyDayChallenge } from "../edit-thirty-day-challenge/edit-thirty-day-challenge";
 import {FirebaseService} from "../../../providers/firebase-service";
 import {Observable} from "rxjs/Observable";
+import { DatePicker } from '@ionic-native/date-picker';
 
 /*
   Generated class for the AssignThirtyDayChallenge page.
@@ -18,6 +19,7 @@ import {Observable} from "rxjs/Observable";
 export class ManageThirtyDayChallenge {
 
   challenges: Observable<any>;
+  startDate: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService, public toastCtrl: ToastController) {
 
@@ -28,7 +30,7 @@ export class ManageThirtyDayChallenge {
   }
 
   addChallenge(name) {
-    this.firebaseService.addChallenge(name);
+    this.firebaseService.addChallenge(name, this.startDate);
 
     let toast = this.toastCtrl.create({
       message: 'Challenge added successfully',
@@ -50,5 +52,4 @@ export class ManageThirtyDayChallenge {
       console.log(err);
     });
   }
-
 }

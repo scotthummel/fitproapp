@@ -19,7 +19,6 @@ ion-card-header {
   background-color: color($colors, primary);
   font-family: 'Oswald', sans-serif;
   font-size: 16px;
-  margin-bottom: 20px;
 }
 
 ion-card-header.card-header {
@@ -65,5 +64,9 @@ ion-list#card-sliding-list ion-item-sliding {
 
 figure img {
   margin: 0 20px 20px -40px;
+}
+
+.split-pane {
+  top: 40px;
 }
 

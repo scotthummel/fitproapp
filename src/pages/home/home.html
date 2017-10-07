@@ -12,9 +12,9 @@
 
       <div>
         <ion-list>
-          <ion-item *ngFor="let post of posts | async">
+          <ion-item *ngFor="let post of posts | async" text-wrap>
             <h1>{{ post.title }}</h1>
-            <div [innerHTML]="post.body | bodyHMTL"></div>
+            <p [innerHTML]="post.body | bodyHMTL"></p>
             <br />
             <ion-buttons end>
               <button ion-button (click)="readBlogArticle(post.id)">Read More...</button>

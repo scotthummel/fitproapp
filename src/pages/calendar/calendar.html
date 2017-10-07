@@ -4,16 +4,23 @@
 
   <ion-card>
 
-    <ion-card-header class="card-header">
-      Calendar: {{ viewTitle }}
-
-      <ion-buttons end>
-        <button ion-button [disabled]="isToday" (click)="today()">Today</button>
-        <button ion-button (click)="changeMode('month')">M</button>
-        <button ion-button (click)="changeMode('week')">W</button>
-        <button ion-button (click)="changeMode('day')">D</button>
-        <button ion-button (click)="loadEvents()">Load Events</button>
-      </ion-buttons>
+    <ion-card-header class="card-header" style="padding:2px;">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            Calendar: {{ viewTitle }}
+          </ion-col>
+          <ion-col>
+            <ion-buttons end>
+              <button ion-button [disabled]="isToday" (click)="today()">Today</button>
+              <button ion-button (click)="changeMode('month')">M</button>
+              <button ion-button (click)="changeMode('week')">W</button>
+              <button ion-button (click)="changeMode('day')">D</button>
+              <!--<button ion-button (click)="loadEvents()">Load Events</button>-->
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-header>
 
     <ion-card-content>

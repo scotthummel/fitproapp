@@ -236,15 +236,15 @@ import {BlogArticle} from "../pages/blog-article/blog-article";
 import {PlayerService} from "../providers/player-service";
 import {YoutubeService} from "../providers/youtube-service";
 import {EventView} from "../pages/event-view/event-view";
-
+import { ENV } from '@app/env'
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyAwkgJMA5sVengiVvHFKW-t7J8HAjAMYuY",
-  authDomain: "fitpro-c361e.firebaseapp.com",
-  databaseURL: "https://fitpro-c361e.firebaseio.com",
-  projectId: "fitpro-c361e",
-  storageBucket: "fitpro-c361e.appspot.com",
-  messagingSenderId: "1014754908163"
+  apiKey: ENV.FIREBASE_API_KEY,
+  authDomain: ENV.FIREBASE_AUTH_DOMAIN,
+  databaseURL: ENV.FIREBASE_URL,
+  projectId: ENV.FIREBASE_PROJECT_ID,
+  storageBucket: ENV.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: ENV.FIREBASE_MESSAGE_ID
 };
 
 

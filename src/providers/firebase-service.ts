@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
+import {AngularFireDatabase, AngularFireDatabaseModule} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 import 'rxjs/add/operator/map';
@@ -45,8 +45,15 @@ export class FirebaseService {
     return this.afd.list('/challenges/');
   }
 
-  addChallenge(name) {
+  getChallengesForCalendar() {
+    return this.afd.list('/challenges/');
+  }
+
+  addChallenge(name, startDate) {
     //return this.afd.list('/challenges').push({name: name});
+    let start = new Date(startDate);
+    let end = new Date(start.setDate(start.getDate() + 30));
+
     return this.afd.list('/challenges', {
       query: {
         orderByChild: 'name',
@@ -54,9 +61,11 @@ export class FirebaseService {
       }
     }).subscribe(challenges => {
       if (!challenges.length) {
-        console.log(challenges);
+        // console.log(challenges);
         this.afd.list('/challenges').push({
-          name: name
+          name: name,
+          start: startDate,
+          end: end.toISOString().slice(0,10)
         });
       }
     });
@@ -65,6 +74,8 @@ export class FirebaseService {
   removeChallenge(key) {
     this.afd.list('/challenges').remove(key);
   }
+
+
 
   getClients() {
     return this.afd.list('/users');
