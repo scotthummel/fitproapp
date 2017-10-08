@@ -22,13 +22,13 @@ export class Users {
     let val = event.target.value;
     if (val && val.trim() != '') {
       this.firebaseService.getClients().subscribe(data => {
-        this.clients = data.filter((item) => {
-          if (item.hasOwnProperty('firstName')) {
-            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
-          } else {
-            return item.username.includes(val) || item.email.includes(val);
-          }
-        })
+        // this.clients = data.filter((item) => {
+        //   if (item.hasOwnProperty('firstName')) {
+        //     return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+        //   } else {
+        //     return item.username.includes(val) || item.email.includes(val);
+        //   }
+        // })
       });
     }
   }

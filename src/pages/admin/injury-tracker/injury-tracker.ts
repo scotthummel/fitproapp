@@ -61,13 +61,13 @@ export class NewInjury {
     let val = event.target.value;
     if (val && val.trim() != '') {
       this.firebaseService.getClients().subscribe(data => {
-        this.clients = data.filter((item) => {
-          if (item.hasOwnProperty('firstName')) {
-            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
-          } else {
-            return item.username.includes(val) || item.email.includes(val);
-          }
-        })
+        // this.clients = data.filter((item) => {
+        //   if (item.hasOwnProperty('firstName')) {
+        //     return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+        //   } else {
+        //     return item.username.includes(val) || item.email.includes(val);
+        //   }
+        // })
       });
     }
   }
@@ -158,11 +158,11 @@ export class InjuryHistory {
     if (val && val.trim() != '') {
       this.firebaseService.getClients().subscribe(data => {
         this.clients = data.filter((item) => {
-          if (item.hasOwnProperty('firstName')) {
-            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
-          } else {
-            return item.username.includes(val) || item.email.includes(val);
-          }
+          // if (item.hasOwnProperty('firstName')) {
+          //   return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+          // } else {
+          //   return item.username.includes(val) || item.email.includes(val);
+          // }
         })
       });
     }
@@ -173,12 +173,7 @@ export class InjuryHistory {
   }
 
   getInjuries(key) {
-    this.afd.list('/injuries', {
-      query: {
-        orderByChild: 'userId',
-        equalTo: key
-      }
-    }).subscribe(items => {
+    this.afd.list('/injuries', ref => ref.orderByChild('userId').equalTo(key)).subscribe(items => {
       let injuries = [];
       items.forEach(item => {
         injuries.push(item);

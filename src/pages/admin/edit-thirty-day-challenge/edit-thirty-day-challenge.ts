@@ -58,29 +58,27 @@ export class EditThirtyDayChallenge {
     toast.present();
   }
 
-  addDay(theme, onePt, twoPts, threePts) {
-    this.afd.list('challenges/' + this.key + '/days', {
-      query: {
-        orderByChild: 'theme',
-        equalTo: theme
-      }}).subscribe(day => {
-      if (!day.length) {
-        this.afd.list('/challenges/' + this.key + '/days').push({
-          theme: theme,
-          onePoint: onePt,
-          twoPoints: twoPts,
-          threePoints: threePts
-        });
-      } else {
-        const ref = this.afd.object('/challenges/' + this.key + '/days/' + day[0].$key);
-        ref.update({
-          theme: theme,
-          onePoint: onePt,
-          twoPoints: twoPts,
-          threePoints: threePts
-        });
-      }
-    });
+  addDay(index, theme, onePt, twoPts, threePts) {
+    this.afd.list('challenges/' + this.key + '/days', ref => ref.orderByChild('theme').equalTo(theme))
+      .subscribe(day => {
+        if (!day.length) {
+          this.afd.list('/challenges/' + this.key + '/days').push({
+            index: index,
+            theme: theme,
+            onePoint: onePt,
+            twoPoints: twoPts,
+            threePoints: threePts
+          });
+        } else {
+          // const ref = this.afd.object('/challenges/' + this.key + '/days/' + day[0].$key);
+          // ref.update({
+          //   theme: theme,
+          //   onePoint: onePt,
+          //   twoPoints: twoPts,
+          //   threePoints: threePts
+          // });
+        }
+      });
 
     let toast = this.toastCtrl.create({
       message: 'Day added successfully',

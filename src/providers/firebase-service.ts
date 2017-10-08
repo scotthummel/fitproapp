@@ -42,7 +42,7 @@ export class FirebaseService {
   }
 
   getChallenges(){
-    return this.afd.list('/challenges/');
+    return this.afd.object('/challenges/');
   }
 
   getChallengesForCalendar() {
@@ -54,12 +54,7 @@ export class FirebaseService {
     let start = new Date(startDate);
     let end = new Date(start.setDate(start.getDate() + 30));
 
-    return this.afd.list('/challenges', {
-      query: {
-        orderByChild: 'name',
-        equalTo: name
-      }
-    }).subscribe(challenges => {
+    return this.afd.list('/challenges', ref => ref.orderByChild('name').equalTo(name)).subscribe(challenges => {
       if (!challenges.length) {
         // console.log(challenges);
         this.afd.list('/challenges').push({
@@ -74,8 +69,6 @@ export class FirebaseService {
   removeChallenge(key) {
     this.afd.list('/challenges').remove(key);
   }
-
-
 
   getClients() {
     return this.afd.list('/users');
@@ -223,14 +216,14 @@ export class FirebaseService {
   addExercises() {
     this.afd.list('/bodyParts').subscribe(parts => {
       parts.forEach(part => {
-        if (part.part == 'Shoulder') {
-          let exercises =  ['Handstand/Pike Push-ups', 'Seated Dumbbell Press', 'Standing Dumbbell press', 'Seated Barbell Press', 'Standing Barbell Press', 'Push Press', 'Arnold Press'];
-          this.afd.list('/exercises').push({ partId : part.$key}).then(exercise => {
-            exercises.forEach(ex => {
-              this.afd.list('/exercises/' + exercise.key + '/exerciseList').push({exercise: ex});
-            });
-          });
-        }
+        // if (part.part == 'Shoulder') {
+        //   let exercises =  ['Handstand/Pike Push-ups', 'Seated Dumbbell Press', 'Standing Dumbbell press', 'Seated Barbell Press', 'Standing Barbell Press', 'Push Press', 'Arnold Press'];
+        //   this.afd.list('/exercises').push({ partId : part.$key}).then(exercise => {
+        //     exercises.forEach(ex => {
+        //       this.afd.list('/exercises/' + exercise.key + '/exerciseList').push({exercise: ex});
+        //     });
+        //   });
+        // }
         // if (part.part == 'Core/Abs') {
         //   this.afd.list('/exercises').push({ partId: part.$key, exercises: ['Landmine Abs', 'Plank', 'Hanging Leg Raises', 'Ab Rollouts', 'Crunches', 'Obstacle Leg Raises', 'Bicycle Abs']});
         // }
@@ -243,18 +236,18 @@ export class FirebaseService {
         // if (part.part == 'Bicep') {
         //   this.afd.list('/exercises').push({ partId: part.$key, exercises: ['Single Arm Preacher Curls', 'Bilateral Preacher Curls', 'Seated Incline Dumbbell Curl', 'Hammer Curl', 'Dumbbell Curl, Regular', 'Rope Cable Curls', 'Terry Pulls', 'EZ Bar Curl', 'Rainbow Curl', 'Spider Curl', 'Reverse Curl', '21\'s']});
         // }
-        if (part.part == 'Chest') {
-          let exercises = [{group: 'Benches', groupExercises: ['Flat Dumbbell Bench', 'Incline Dumbbell Bench', 'Decline Dumbbell Bench', 'Flat Barbell Bench', 'Incline Barbell Bench', 'Decline Barbell Bench', 'Push-ups – All Variations']}, {group: 'Flyes', groupExercises: ['FitPro Flyes', 'Down Cable Flyes', 'Up Cable Flyes', 'Flat Bench Dumbbell Flyes', 'Incline Bench Dumbbell Flyes', 'Decline Bench Dumbbell Flyes']}, {group: 'Dips', groupExercises: ['Full Dips', 'Half Dips', 'Bench Dips']}, {group: 'Other', groupExercises: ['Corner Throw']}];
-          this.afd.list('/exercises').push({ partId: part.$key}).then(exercise => {
-            exercises.forEach(ex => {
-              this.afd.list('/exercises/' + exercise.key + '/exerciseList/').push({group: ex.group}).then(group => {
-                ex.groupExercises.forEach(e => {
-                  this.afd.list('/exercises/' + exercise.key + '/exerciseList/' + group.key + '/groupExercises').push({exercise: e});
-                });
-              });
-            });
-          });
-        }
+        // if (part.part == 'Chest') {
+        //   let exercises = [{group: 'Benches', groupExercises: ['Flat Dumbbell Bench', 'Incline Dumbbell Bench', 'Decline Dumbbell Bench', 'Flat Barbell Bench', 'Incline Barbell Bench', 'Decline Barbell Bench', 'Push-ups – All Variations']}, {group: 'Flyes', groupExercises: ['FitPro Flyes', 'Down Cable Flyes', 'Up Cable Flyes', 'Flat Bench Dumbbell Flyes', 'Incline Bench Dumbbell Flyes', 'Decline Bench Dumbbell Flyes']}, {group: 'Dips', groupExercises: ['Full Dips', 'Half Dips', 'Bench Dips']}, {group: 'Other', groupExercises: ['Corner Throw']}];
+        //   this.afd.list('/exercises').push({ partId: part.$key}).then(exercise => {
+        //     exercises.forEach(ex => {
+        //       this.afd.list('/exercises/' + exercise.key + '/exerciseList/').push({group: ex.group}).then(group => {
+        //         ex.groupExercises.forEach(e => {
+        //           this.afd.list('/exercises/' + exercise.key + '/exerciseList/' + group.key + '/groupExercises').push({exercise: e});
+        //         });
+        //       });
+        //     });
+        //   });
+        // }
       });
     });
   }

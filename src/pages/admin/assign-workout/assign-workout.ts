@@ -156,9 +156,9 @@ export class AssignWorkout {
       this.firebaseService.getClients().subscribe(data => {
         this.clients = data.filter((item) => {
           if (item.hasOwnProperty('firstName')) {
-            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+            //return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
           } else {
-            return item.username.includes(val) || item.email.includes(val);
+            //return item.username.includes(val) || item.email.includes(val);
           }
         })
       });
@@ -166,17 +166,12 @@ export class AssignWorkout {
   }
 
   getExercises(bodyPartId) {
-    this.afd.list('/exercises', {
-      query: {
-        orderByChild: 'partId',
-        equalTo: bodyPartId
-      }
-    }).subscribe(exercises => {
+    this.afd.list('/exercises', ref => ref.orderByChild('partId').equalTo(bodyPartId)).subscribe(exercises => {
       let exs = [];
-      for (let ex in exercises[0].exerciseList){
-        exs.push(exercises[0].exerciseList[ex]);
-      }
-      this.exercises = exs;
+      // for (let ex in exercises[0].exerciseList){
+      //   exs.push(exercises[0].exerciseList[ex]);
+      // }
+      // this.exercises = exs;
     });
   }
 

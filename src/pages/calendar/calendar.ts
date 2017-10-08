@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { EventView } from "../event-view/event-view";
-import {FirebaseService} from "../../providers/firebase-service";
+import { FirebaseService } from "../../providers/firebase-service";
 
 @Component({
   templateUrl: "calendar.html",
@@ -10,7 +10,6 @@ import {FirebaseService} from "../../providers/firebase-service";
 export class CalendarPage {
   eventSource;
   viewTitle;
-  challenges;
 
   isToday:boolean;
   calendar = {
@@ -45,35 +44,37 @@ export class CalendarPage {
   };
 
   constructor(private navCtrl:NavController, public firebaseService: FirebaseService) {
-    // this.eventSource = this.createRandomEvents();
     this.getEvents();
   }
 
-  loadEvents() {
-    //this.eventSource = this.createRandomEvents();
-    this.eventSource = this.getEvents();
-  }
-
   getEvents() {
-    this.firebaseService.getChallengesForCalendar().subscribe(challenges => {
-      this.challenges = challenges;
+      this.firebaseService.getChallengesForCalendar().subscribe(challenges => {
+        let events = [];
 
-      let events = [];
+        challenges.forEach(challenge => {
+            if (challenge.start) {
+              for (let i = 0; i < 30; i++) {
+                let start = new Date(challenge.start + '  GMT-0700');
+                let startDate = new Date(start.setDate(start.getDate() + i)).toISOString().slice(0,10);
+                let end = new Date(startDate);
+                let endDate = end.setDate(end.getDate() +1);
 
-      challenges.forEach(challenge => {
-        if (challenge.start) {
-          events.push({
-            id: challenge.$key,
-            title: challenge.name,
-            startTime: new Date(challenge.start),
-            endTime: new Date(challenge.end),
-            allDay: true
-          });
-        }
+                events.push({
+                  id: challenge.$key,
+                  index: i + 1,
+                  date: start,
+                  title: challenge.name,
+                  type: 'challenges',
+                  startTime: new Date(startDate),
+                  endTime: new Date(endDate),
+                  allDay: true
+                });
+              }
+            }
+        });
+
+        this.eventSource = events;
       });
-
-      this.eventSource = events;
-    });
   }
 
   onViewTitleChanged(title) {
@@ -82,9 +83,12 @@ export class CalendarPage {
 
   onEventSelected(event) {
     this.navCtrl.push(EventView, {
-      eventId: event.id
+      eventId: event.id,
+      index: event.index,
+      date: event.date,
+      type: event.type,
+      pageTitle: event.title
     });
-    console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
   }
 
   changeMode(mode) {
@@ -96,8 +100,8 @@ export class CalendarPage {
   }
 
   onTimeSelected(ev) {
-    console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
-      (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
+    //console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
+    //  (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
   }
 
   onCurrentDateChanged(event:Date) {
@@ -105,46 +109,6 @@ export class CalendarPage {
     today.setHours(0, 0, 0, 0);
     event.setHours(0, 0, 0, 0);
     this.isToday = today.getTime() === event.getTime();
-  }
-
-  createRandomEvents() {
-    var events = [];
-    for (var i = 0; i < 50; i += 1) {
-      var id = i;
-      var date = new Date();
-      var eventType = Math.floor(Math.random() * 2);
-      var startDay = Math.floor(Math.random() * 90) - 45;
-      var endDay = Math.floor(Math.random() * 2) + startDay;
-      var startTime;
-      var endTime;
-      if (eventType === 0) {
-        startTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + startDay));
-        if (endDay === startDay) {
-          endDay += 1;
-        }
-        endTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + endDay));
-        events.push({
-          id: id,
-          title: 'All Day - ' + i,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: true
-        });
-      } else {
-        var startMinute = Math.floor(Math.random() * 24 * 60);
-        var endMinute = Math.floor(Math.random() * 180) + startMinute;
-        startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + startDay, 0, date.getMinutes() + startMinute);
-        endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + endDay, 0, date.getMinutes() + endMinute);
-        events.push({
-          id: id,
-          title: 'Event - ' + i,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: false
-        });
-      }
-    }
-    return events;
   }
 
   onRangeChanged(ev) {

@@ -26,7 +26,7 @@ export class ManageThirtyDayChallenge {
   }
 
   ionViewDidLoad() {
-    this.challenges = this.firebaseService.getChallenges();
+    //this.challenges = this.firebaseService.getChallenges();
   }
 
   addChallenge(name) {

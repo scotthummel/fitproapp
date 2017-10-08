@@ -6,12 +6,31 @@
   <ion-card>
 
     <ion-card-header class="card-header">
-      Event
+      {{ pageTitle }}: {{ date }}
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content padding>
+      <ion-list>
+        <ion-item *ngFor="let workout of workouts | async" text-wrap>
+          <h1>{{ workout.theme}} </h1>
 
+          <br />
 
+          <h2>One Point</h2>
+          <div [innerHTML]="workout.onePoint"></div>
+
+          <hr />
+
+          <h2>Two Points</h2>
+          <div [innerHTML]="workout.twoPoints"></div>
+
+          <hr />
+
+          <h2>Three Points</h2>
+          <div [innerHTML]="workout.threePoints"></div>
+
+        </ion-item>
+      </ion-list>
     </ion-card-content>
 
   </ion-card>

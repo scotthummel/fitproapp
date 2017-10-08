@@ -64,13 +64,13 @@ export class NewNote {
     let val = event.target.value;
     if (val && val.trim() != '') {
       this.firebaseService.getClients().subscribe(data => {
-        this.clients = data.filter((item) => {
-          if (item.hasOwnProperty('firstName')) {
-            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
-          } else {
-            return item.username.includes(val) || item.email.includes(val);
-          }
-        })
+        // this.clients = data.filter((item) => {
+        //   if (item.hasOwnProperty('firstName')) {
+        //     return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+        //   } else {
+        //     return item.username.includes(val) || item.email.includes(val);
+        //   }
+        // })
       });
     }
   }
@@ -154,13 +154,13 @@ export class NotesHistory {
     let val = event.target.value;
     if (val && val.trim() != '') {
       this.firebaseService.getClients().subscribe(data => {
-        this.clients = data.filter((item) => {
-          if (item.hasOwnProperty('firstName')) {
-            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
-          } else {
-            return item.username.includes(val) || item.email.includes(val);
-          }
-        })
+        // this.clients = data.filter((item) => {
+        //   if (item.hasOwnProperty('firstName')) {
+        //     return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+        //   } else {
+        //     return item.username.includes(val) || item.email.includes(val);
+        //   }
+        // })
       });
     }
   }
@@ -170,12 +170,7 @@ export class NotesHistory {
   }
 
   getNotes(key) {
-    this.afd.list('/notes', {
-      query: {
-        orderByChild: 'userId',
-        equalTo: key
-      }
-    }).subscribe(items => {
+    this.afd.list('/notes', ref => ref.orderByChild('userId').equalTo(key)).subscribe(items => {
       let notes = [];
       items.forEach(item => {
         notes.push(item);
