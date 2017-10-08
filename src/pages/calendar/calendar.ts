@@ -2,14 +2,19 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { EventView } from "../event-view/event-view";
 import { FirebaseService } from "../../providers/firebase-service";
+import {Observable} from "rxjs/Observable";
+import {AngularFireAuth} from "angularfire2/auth";
+import {AngularFireDatabase} from "angularfire2/database";
 
 @Component({
   templateUrl: "calendar.html",
   selector: 'page-calendar'
 })
-export class CalendarPage {
+export class CalendarPage extends FirebaseService {
   eventSource;
   viewTitle;
+  user: firebase.User;
+  authState: Observable<firebase.User>;
 
   isToday:boolean;
   calendar = {
@@ -43,38 +48,14 @@ export class CalendarPage {
     }
   };
 
-  constructor(private navCtrl:NavController, public firebaseService: FirebaseService) {
+  constructor(private navCtrl:NavController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
+    super(afAuth, afd);
+
     this.getEvents();
   }
 
   getEvents() {
-      this.firebaseService.getChallengesForCalendar().subscribe(challenges => {
-        let events = [];
-
-        challenges.forEach(challenge => {
-            if (challenge.start) {
-              for (let i = 0; i < 30; i++) {
-                let start = new Date(challenge.start + '  GMT-0700');
-                let startDate = new Date(start.setDate(start.getDate() + i)).toISOString().slice(0,10);
-                let end = new Date(startDate);
-                let endDate = end.setDate(end.getDate() +1);
-
-                events.push({
-                  id: challenge.$key,
-                  index: i + 1,
-                  date: start,
-                  title: challenge.name,
-                  type: 'challenges',
-                  startTime: new Date(startDate),
-                  endTime: new Date(endDate),
-                  allDay: true
-                });
-              }
-            }
-        });
-
-        this.eventSource = events;
-      });
+    this.getChallengesForCalendar();
   }
 
   onViewTitleChanged(title) {
@@ -116,7 +97,7 @@ export class CalendarPage {
   }
 
   markDisabled = (date:Date) => {
-    var current = new Date();
+    let current = new Date();
     current.setHours(0, 0, 0);
     return date < current;
   };

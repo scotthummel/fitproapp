@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {AngularFireDatabase} from "angularfire2/database";
-import "rxjs/add/operator/map";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/observable/of";
 
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ export class EventView {
   months = ['January', 'February', 'March', 'April', 'May','June', 'July', 'August', 'September', 'October', 'November','December'];
   eventId;
   workouts;
+  noWorkouts;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afd: AngularFireDatabase) {
     this.pageTitle = navParams.get('pageTitle');
@@ -25,7 +27,21 @@ export class EventView {
   }
 
   getWorkout(index) {
-    this.workouts = this.afd.list('/challenges/' + this.eventId + '/days', ref => ref.orderByChild('index').equalTo(index.toString()));
+    console.log(index);
+    let observable = this.afd.list('/challenges/' + this.eventId + '/days', {
+      query: {
+        orderByChild: 'index',
+        equalTo: index.toString()
+      }
+    });
+
+    observable.subscribe(items => {
+      if (items.length) {
+        this.workouts = Observable.of(items);
+      } else {
+        this.noWorkouts = true;
+      }
+    })
   }
 
   ionViewDidLoad() {

@@ -10,7 +10,7 @@
     </ion-card-header>
 
     <ion-card-content padding>
-      <ion-list>
+      <ion-list *ngIf="workouts">
         <ion-item *ngFor="let workout of workouts | async" text-wrap>
           <h1>{{ workout.theme}} </h1>
 
@@ -31,6 +31,13 @@
 
         </ion-item>
       </ion-list>
+      <div *ngIf="noWorkouts">
+        <h1>Challenge Details Not Available</h1>
+
+        <br />
+
+        <p>Please check back later. We apologize for the inconvenience.</p>
+      </div>
     </ion-card-content>
 
   </ion-card>

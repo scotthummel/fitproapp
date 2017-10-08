@@ -1,30 +1,5 @@
-<navbar></navbar>
-
-<ion-content>
-
-  <ion-card>
-
-    <ion-card-header class="card-header">
-      Trainers/Clients
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
-      <ion-list radio-group [(ngModel)]="key">
-        <ion-item *ngFor="let client of clients" class="item item-radio">
-          <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>
-          <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}}</ion-label>
-          <ion-radio [value]="client.$key" color="dark" (click)="getButton()"></ion-radio>
-        </ion-item>
-      </ion-list>
-
-      <div [hidden]="shouldHideButton">
-        <hr />
-      </div>
-
-    </ion-card-content>
-
-  </ion-card>
-
-</ion-content>
+<ion-tabs>
+  <ion-tab tabIcon="person" tabTitle="Users" [root]="users"></ion-tab>
+  <ion-tab tabIcon="ribbon" tabTitle="Challenges" [root]="challenges"></ion-tab>
+</ion-tabs>
 

@@ -5,6 +5,9 @@ import { ENV } from '@app/env'
 import { HomeModule} from "./home.module";
 import {DomSanitizer} from "@angular/platform-browser";
 import {BlogArticle} from "../blog-article/blog-article";
+import BaseClass from "../../classes/base-class";
+import {AngularFireAuth} from "angularfire2/auth";
+import {AngularFireDatabase} from "angularfire2/database";
 //import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 

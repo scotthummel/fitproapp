@@ -218,7 +218,7 @@ import { NgCalendarModule } from 'ionic2-calendar';
 import { Camera } from '@ionic-native/camera';
 import {EditInjury} from "../pages/admin/edit-injury/edit-injury";
 import {EditNote} from "../pages/admin/edit-note/edit-note";
-import {Users} from "../pages/admin/users/users";
+import {Challenges, Clients, Users} from "../pages/admin/users/users";
 import {Register} from "../pages/register/register";
 import {About} from "../pages/about/about";
 import {FoodLog, FoodLogHistory, NewFoodLog} from "../pages/admin/food-log/food-log";
@@ -287,13 +287,15 @@ export const firebaseConfig = {
     ManageThirtyDayChallenge,
     EditThirtyDayChallenge,
     EditDay,
-    Users,
     LiveLiftTracker,
     LiftRecords,
     NewLiftRecord,
     LiftRecordHistory,
     BlogArticle,
-    EventView
+    EventView,
+    Clients,
+    Users,
+    Challenges
   ],
   imports: [
     BrowserModule,
@@ -331,7 +333,9 @@ export const firebaseConfig = {
         {component: AssignWorkout, segment: 'assign-workout'},
         {component: ManageThirtyDayChallenge, segment: 'manage-thirty-day-challenge'},
         {component: Register, segment: 'register'},
+        {component: Clients, segment: 'clients'},
         {component: Users, segment: 'users'},
+        {component: Challenges, segment: 'challenges'},
         {component: LiveLiftTracker, segment: 'live-lift-tracker'},
         {component: NewPicture, segment: ''},
         {component: PictureHistory, segment: ''},
@@ -377,13 +381,15 @@ export const firebaseConfig = {
     ManageThirtyDayChallenge,
     EditThirtyDayChallenge,
     EditDay,
-    Users,
     LiveLiftTracker,
     LiftRecords,
     NewLiftRecord,
     LiftRecordHistory,
     BlogArticle,
-    EventView
+    EventView,
+    Clients,
+    Users,
+    Challenges
   ],
   providers: [
     StatusBar,

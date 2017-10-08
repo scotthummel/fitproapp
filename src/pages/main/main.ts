@@ -14,7 +14,7 @@ import { ManageThirtyDayChallenge } from "../admin/manage-thirty-day-challenge/m
 import {FirebaseService} from "../../providers/firebase-service";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
-import {Users} from "../admin/users/users";
+import {Clients} from "../admin/users/users";
 import {About} from "../about/about";
 import {FoodLog} from "../admin/food-log/food-log";
 import {LiftRecords} from "../admin/lift-records/lift-records";
@@ -76,7 +76,7 @@ export class Main {
       { title: 'Injury Tracker', component: InjuryTracker },
       { title: 'Progress Pictures', component: ProgressPictures },
       { title: 'Notes', component: Notes },
-      { title: 'Trainers/Clients', component: Users },
+      { title: 'Trainers/Clients', component: Clients },
     ];
   }
 

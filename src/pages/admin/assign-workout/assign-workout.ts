@@ -150,21 +150,6 @@ export class AssignWorkout {
       return true;
   }
 
-  getClients(event){
-    let val = event.target.value;
-    if (val && val.trim() != '') {
-      this.firebaseService.getClients().subscribe(data => {
-        this.clients = data.filter((item) => {
-          if (item.hasOwnProperty('firstName')) {
-            //return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
-          } else {
-            //return item.username.includes(val) || item.email.includes(val);
-          }
-        })
-      });
-    }
-  }
-
   getExercises(bodyPartId) {
     this.afd.list('/exercises', ref => ref.orderByChild('partId').equalTo(bodyPartId)).subscribe(exercises => {
       let exs = [];

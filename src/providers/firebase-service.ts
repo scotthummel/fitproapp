@@ -1,40 +1,23 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import {AngularFireDatabase, AngularFireDatabaseModule} from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
 import 'rxjs/add/operator/map';
+import BaseClass from "../classes/base-class";
+import {AngularFireAuth} from "angularfire2/auth";
+import {AngularFireDatabase} from "angularfire2/database";
+import {Observable, ObservableInput} from "rxjs/Observable";
+import "rxjs/add/observable/of";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
-export class FirebaseService {
-  user: firebase.User;
+export class FirebaseService extends BaseClass {
+  user;
   authState: Observable<firebase.User>;
+  clients;
+  eventSource;
 
-  constructor(private afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
-    this.authState = afAuth.authState;
+  constructor(public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
+    super(afAuth, afd);
 
-    this.authState.subscribe(user => {
-      this.user = user;
-    });
-  }
-
-  signUp(email, password, firstName, lastName) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-    .then( newUser => {
-      this.afd.list('/users').update(newUser.uid, {email: email, firstName: firstName, lastName: lastName});
-    });
-  }
-
-  loginUser(email, password) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
-  }
-
-  logoutUser() {
-    return this.afAuth.auth.signOut();
-  }
-
-  resetPassword(email) {
-    return this.afAuth.auth.sendPasswordResetEmail(email);
+    this.user = this.afAuth.app.auth().currentUser;
   }
 
   saveIntake(user, values) {
@@ -42,11 +25,53 @@ export class FirebaseService {
   }
 
   getChallenges(){
-    return this.afd.object('/challenges/');
+    return this.afd.list('/challenges/');
   }
 
   getChallengesForCalendar() {
-    return this.afd.list('/challenges/');
+    const observable = this.afd.list('challenges');
+    this.afd.list('userChallenges/' + this.user.uid + '/challenges', {
+      query: {
+        orderByChild: 'challengeId'
+      }
+    }).subscribe(userChallenges => {
+      observable.subscribe(challenges => {
+        let data = [];
+        userChallenges.forEach(user => {
+          data.push(challenges.filter(item => {
+            return item.$key === user.challengeId;
+          }));
+        });
+
+        let events = [];
+
+        data.forEach(challenges => {
+          challenges.forEach(userChallenge => {
+            if (userChallenge.start) {
+              for (let i = 0; i < 30; i++) {
+                let start = new Date(userChallenge.start + '  GMT-0700');
+                let startDate = new Date(start.setDate(start.getDate() + i)).toISOString().slice(0,10);
+                let end = new Date(startDate);
+                let endDate = end.setDate(end.getDate() +1);
+
+                events.push({
+                  id: userChallenge.$key,
+                  index: i + 1,
+                  date: start,
+                  title: userChallenge.name,
+                  type: 'challenges',
+                  startTime: new Date(startDate),
+                  endTime: new Date(endDate),
+                  allDay: true
+                });
+              }
+            }
+          })
+        });
+
+        this.eventSource = events;
+      });
+    });
   }
 
   addChallenge(name, startDate) {
@@ -70,8 +95,23 @@ export class FirebaseService {
     this.afd.list('/challenges').remove(key);
   }
 
-  getClients() {
+  getUsers() {
     return this.afd.list('/users');
+  }
+
+  getClients(event){
+    let val = event.target.value;
+    if (val && val.trim() != '') {
+      this.getUsers().subscribe(data => {
+        this.clients =  data.filter((item) => {
+          if (item.hasOwnProperty('firstName')) {
+            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+          } else {
+            return item.username.includes(val) || item.email.includes(val);
+          }
+        })
+      });
+    }
   }
 
   addNote(key, note, category) {
@@ -90,6 +130,10 @@ export class FirebaseService {
 
   deleteNote(key) {
     this.afd.list('/notes').remove(key);
+  }
+
+  addChallengeForUser(key){
+    return this.afd.list('/userChallenges/' + this.user.uid + '/challenges/').push({challengeId : key });
   }
 
   addBodyParts() {
