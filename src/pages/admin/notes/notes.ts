@@ -3,6 +3,8 @@ import {IonicPage, NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {AngularFireDatabase} from "angularfire2/database";
 import {EditNote} from "../edit-note/edit-note";
+import {AngularFireAuth} from "angularfire2/auth";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'page-new-notes',
@@ -27,42 +29,65 @@ import {EditNote} from "../edit-note/edit-note";
 
           <div [hidden]="shouldHideButton">
             <hr />
-            <ion-item>
-              <ion-label>Category</ion-label>
-              <ion-select [(ngModel)]="category">
-                <ion-option value="Massage">Massage</ion-option>
-                <ion-option value="Chiropractic">Chiropractic</ion-option>
-                <ion-option value="Lift">Lift</ion-option>
-                <ion-option value="Cardio">Cardio</ion-option>
-                <ion-option value="Body Measurements">Body Measurements</ion-option>
-              </ion-select>
-            </ion-item>
-            <ion-item>
-              <ion-label>Note</ion-label>
-              <ion-textarea #note placeholder="Note"></ion-textarea>
-            </ion-item>
-            <button ion-button (click)="addNote(key, note.value, category)">Add Note</button>
+            <br />
+            <form [formGroup]="notesForm">
+              <ion-item>
+                <ion-label>Category</ion-label>
+                <ion-select formControlName="category">
+                  <ion-option value="Massage">Massage</ion-option>
+                  <ion-option value="Chiropractic">Chiropractic</ion-option>
+                  <ion-option value="Lift">Lift</ion-option>
+                  <ion-option value="Cardio">Cardio</ion-option>
+                  <ion-option value="Body Measurements">Body Measurements</ion-option>
+                </ion-select>
+              </ion-item>
+              <ion-item *ngIf="!notesForm.controls.category.required && (notesForm.controls.category.dirty || submitAttempt)">
+                <div class="text-danger">Category is required.</div>
+              </ion-item>
+              <ion-item>
+                <ion-label stacked>Note</ion-label>
+                <ion-textarea formControlName="note" placeholder="Note"></ion-textarea>
+              </ion-item>
+              <ion-item *ngIf="!notesForm.controls.note.required && (notesForm.controls.note.dirty || submitAttempt)">
+                <div class="text-danger">Note is required.</div>
+              </ion-item>
+              <button ion-button (click)="addNote(key)">Add Note</button>
+            </form>
           </div>  
         </ion-card-content>
-
       </ion-card>
     </ion-content>
   `
 
 })
-export class NewNote {
+export class NewNote extends FirebaseService {
 
   public clients;
   public shouldHideButton = true;
+  public notesForm;
+  public submitAttempt;
 
-  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, public toastCtrl: ToastController) {}
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public fb: FormBuilder) {
+    super(afAuth, afd);
+
+    this.notesForm = fb.group({
+      category: ['', Validators.required],
+      note: ['', Validators.required]
+    });
+  }
 
   getButton() {
     return this.shouldHideButton = false;
   }
 
-  addNote(key, note, category) {
-    this.firebaseService.addNote(key, note, category);
+  addNote(key) {
+    this.submitAttempt = true;
+
+    if (!this.notesForm.valid) {
+      return false;
+    }
+
+    this.addNoteForUser(key, this.notesForm.value.note, this.notesForm.value.category);
 
     let toast = this.toastCtrl.create({
       message: 'Note added successfully',

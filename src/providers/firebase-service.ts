@@ -114,18 +114,36 @@ export class FirebaseService extends BaseClass {
     }
   }
 
-  addNote(key, note, category) {
-    return this.afd.list('/notes').push({userId: key, note: note, category: category, datestamp: new Date().toLocaleString() });
+  addNoteForUser(key, note, category) {
+    return this.afd.list('/notes').push({userId: key, note: note, category: category, datestamp: new Date().toISOString().slice(0, 10) });
   }
 
-  addInjury(key, bodyPartId, injury) {
+  getNotesForUser(){
+    return this.afd.list('/notes', {
+      query: {
+        orderByChild: 'userId',
+        equalTo: this.user.uid
+      }
+    })
+  }
+
+  addInjuryForUser(key, bodyPartId, injury) {
     this.afd.object('/bodyParts/' + bodyPartId).subscribe(bodyPart => {
-      return this.afd.list('/injuries').push({userId: key, bodyPartId: bodyPartId, bodyPart: bodyPart.part, injury: injury, datestamp: new Date().toLocaleString() });
+      return this.afd.list('/injuries').push({userId: key, bodyPartId: bodyPartId, bodyPart: bodyPart.part, injury: injury, datestamp: new Date().toISOString().slice(0, 10) });
     });
   }
 
   deleteInjury(key) {
     this.afd.list('/injuries').remove(key);
+  }
+
+  getInjuriesForUser(){
+    return this.afd.list('/injuries', {
+      query: {
+        orderByChild: 'userId',
+        equalTo: this.user.uid
+      }
+    })
   }
 
   deleteNote(key) {

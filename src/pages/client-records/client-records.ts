@@ -65,23 +65,31 @@ export class ClientConsultation {
         Client Injuries
       </ion-card-header>
 
-      <ion-card-content>
-
-
+      <ion-card-content padding>
+        <div *ngIf="injuries">
+          <ion-list>
+            <ion-item *ngFor="let injury of injuries" text-wrap>
+              <strong>{{ injury.bodyPart }}, {{ injury.datestamp }}:</strong> {{ injury.injury }}
+            </ion-item>
+          </ion-list>
+        </div>
       </ion-card-content>
 
     </ion-card>
 
   </ion-content>`,
 })
-export class ClientInjuries {
+export class ClientInjuries extends FirebaseService {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public injuries;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
+    super(afAuth, afd);
+
+    this.getInjuriesForUser().subscribe(injuries => {
+      this.injuries = injuries;
+    });
   }
-
-  ionViewDidLoad() {
-  }
-
 }
 
 @IonicPage()
@@ -97,8 +105,14 @@ export class ClientInjuries {
         Client Notes
       </ion-card-header>
 
-      <ion-card-content>
-
+      <ion-card-content padding>
+        <div *ngIf="notes">
+          <ion-list>
+            <ion-item *ngFor="let note of notes" text-wrap>
+              <strong>{{ note.category }}, {{ note.datestamp }}:</strong> {{ note.note }}
+            </ion-item>
+          </ion-list>
+        </div>
 
       </ion-card-content>
 
@@ -106,14 +120,17 @@ export class ClientInjuries {
 
   </ion-content>`,
 })
-export class ClientNotes {
+export class ClientNotes extends FirebaseService {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public notes;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
+    super(afAuth, afd);
+
+    this.getNotesForUser().subscribe(notes => {
+      this.notes = notes;
+    });
   }
-
-  ionViewDidLoad() {
-  }
-
 }
 
 @IonicPage()

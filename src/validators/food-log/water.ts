@@ -12,19 +12,19 @@ export class WaterValidator {
 
     if(control.value % 1 !== 0){
       return {
-        "error_text": "Please enter a number"
+        "error_text": "Please enter a whole number"
       };
     }
 
-    if(control.value < 18){
-      return {
-        "too young": true
-      };
-    }
+    // if(control.value < 18){
+    //   return {
+    //     "too young": true
+    //   };
+    // }
 
     if (control.value > 120){
       return {
-        "not realistic": true
+        "error_text": "Please enter a number less than 120"
       };
     }
 

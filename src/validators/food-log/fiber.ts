@@ -12,7 +12,7 @@ export class FiberValidator {
 
     if(control.value % 1 !== 0){
       return {
-        "error_text": "Please enter a number"
+        "error_text": "Please enter a whole number"
       };
     }
 

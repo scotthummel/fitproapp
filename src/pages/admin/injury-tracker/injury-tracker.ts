@@ -3,6 +3,8 @@ import {AlertController, NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {AngularFireDatabase} from "angularfire2/database";
 import {EditInjury} from "../edit-injury/edit-injury";
+import {AngularFireAuth} from "angularfire2/auth";
+import {FormBuilder, Validators} from "@angular/forms";
 @Component({
   selector: 'page-new-injury',
   template: `
@@ -23,14 +25,29 @@ import {EditInjury} from "../edit-injury/edit-injury";
           </ion-list>
 
           <div [hidden]="shouldHideButton">
+            <hr />
+            
+            <br />
+            
+            <form [formGroup]="injuryForm">
               <ion-item>
                 <ion-label>Body Part</ion-label>
-                <ion-select [(ngModel)]="bodyPart">
+                <ion-select formControlName="bodyPart">
                   <ion-option *ngFor="let part of bodyParts" value="{{ part.$key }}">{{ part.part}}</ion-option>
                 </ion-select>
               </ion-item>
-            <ion-textarea #injury placeholder="Describe injury"></ion-textarea>
-            <button ion-button (click)="addInjury(key, bodyPart, injury.value)">Add Injury</button>
+              <ion-item *ngIf="!injuryForm.controls.bodyPart.required && (injuryForm.controls.bodyPart.dirty || submitAttempt)">
+                <div class="text-danger">Body part is required.</div>
+              </ion-item>
+              <ion-item>
+                <ion-label stacked>Injury</ion-label>
+                <ion-textarea formControlName="injury" placeholder="Describe injury"></ion-textarea>
+              </ion-item>
+              <ion-item *ngIf="!injuryForm.controls.injury.required && (injuryForm.controls.injury.dirty || submitAttempt)">
+                <div class="text-danger">Injury is required.</div>
+              </ion-item>
+              <button ion-button (click)="addInjury(key)">Add Injury</button>
+            </form>
           </div>
 
         </ion-card-content>
@@ -38,13 +55,22 @@ import {EditInjury} from "../edit-injury/edit-injury";
     </ion-content>
   `
 })
-export class NewInjury {
+export class NewInjury extends FirebaseService {
 
   public shouldHideButton = true;
   public bodyParts;
   public clients;
+  public injuryForm;
+  public submitAttempt;
 
-  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, public afd: AngularFireDatabase, public toastCtrl: ToastController) {}
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public fb: FormBuilder) {
+    super(afAuth, afd);
+
+    this.injuryForm = fb.group({
+      bodyPart: ['', Validators.required],
+      injury: ['', Validators.required]
+    });
+  }
 
   ionViewDidLoad() {
     this.afd.list('/bodyParts')
@@ -65,9 +91,14 @@ export class NewInjury {
    // this.firebaseService.addBodyParts();
   }
 
-  addInjury(key, bodyPart, injury) {
-    console.log(key, bodyPart, injury);
-    this.firebaseService.addInjury(key, bodyPart, injury);
+  addInjury(key) {
+    this.submitAttempt = true;
+
+    if (!this.injuryForm.valid) {
+      return false;
+    }
+
+    this.addInjuryForUser(key, this.injuryForm.value.bodyPart, this.injuryForm.value.injury);
 
     let toast = this.toastCtrl.create({
       message: 'Injury added successfully',
