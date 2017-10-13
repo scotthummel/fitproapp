@@ -24,6 +24,10 @@ export class FirebaseService extends BaseClass {
     return this.afd.list('/users/' + user.uid + '/profile/').push(values);
   }
 
+  getIntakeForUser(){
+    return this.afd.list('/users/' + this.user.uid + '/profile/')
+  }
+
   getChallenges(){
     return this.afd.list('/challenges/');
   }

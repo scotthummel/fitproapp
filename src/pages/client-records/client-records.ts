@@ -37,18 +37,35 @@ export class ClientRecords {
         Client Consultation
       </ion-card-header>
 
-      <ion-card-content>
-
-
+      <ion-card-content padding>
+        <h1>Client Consultatation</h1>
+        
+        <div *ngIf="details">
+          <div *ngFor="let detail of details">
+            <p><strong>Age: </strong>{{ detail.age }}</p>
+            <p><strong>Current Routine: </strong>{{ detail.currentRoutine }}</p>
+            <p><strong>Past Routine: </strong>{{ detail.pastRoutine }}</p>
+            <p><strong>Diet Experience: </strong>{{ detail.dietExperience }}</p>
+            <p><strong>Goals: </strong>{{ detail.goals }}</p>
+            <p><strong>Height: </strong>{{ detail.height }}</p>
+            <p><strong>Weight: </strong>{{ detail.weight }}</p>
+            <p><strong>Injuries: </strong>{{ detail.injuries }}</p>
+          </div>
+        </div>
       </ion-card-content>
-
     </ion-card>
-
   </ion-content>`,
 })
-export class ClientConsultation {
+export class ClientConsultation extends FirebaseService {
+  private details;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
+    super(afAuth, afd);
+
+    this.getIntakeForUser().subscribe(details => {
+      this.details = details;
+      console.log(details);
+    })
   }
 }
 
