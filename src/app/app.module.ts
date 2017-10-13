@@ -229,7 +229,10 @@ import {LiftRecordHistory, LiftRecords, NewLiftRecord} from "../pages/admin/lift
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
-import { ClientConsultation, ClientInjuries, ClientNotes, ClientRecords } from "../pages/client-records/client-records";
+import {
+  ClientConsultation, ClientFood, ClientInjuries, ClientNotes,
+  ClientRecords
+} from "../pages/client-records/client-records";
 import { BodyHTML } from "../pipes/body";
 import { PipeModule } from "../pipes/pipe.module";
 import {BlogArticle} from "../pages/blog-article/blog-article";
@@ -280,6 +283,7 @@ export const firebaseConfig = {
     ClientConsultation,
     ClientInjuries,
     ClientNotes,
+    ClientFood,
     AssignWorkout,
     FoodLog,
     NewFoodLog,
@@ -324,6 +328,7 @@ export const firebaseConfig = {
         {component: ClientConsultation, segment: ''},
         {component: ClientInjuries, segment: ''},
         {component: ClientNotes, segment: ''},
+        {component: ClientFood, segment: ''},
         {component: FoodLog, segment: 'food-log'},
         {component: NewFoodLog, segment: ''},
         {component: FoodLogHistory, segment: ''},
@@ -374,6 +379,7 @@ export const firebaseConfig = {
     ClientConsultation,
     ClientInjuries,
     ClientNotes,
+    ClientFood,
     AssignWorkout,
     FoodLog,
     NewFoodLog,

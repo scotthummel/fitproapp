@@ -136,6 +136,14 @@ export class FirebaseService extends BaseClass {
     return this.afd.list('/userChallenges/' + this.user.uid + '/challenges/').push({challengeId : key });
   }
 
+  addFoodLog(log, key) {
+    return this.afd.list('/food/' + key + '/logs/').push({foodLog: {datestamp: new Date().toLocaleString(), log: log }});
+  }
+
+  getFoodLogForUser() {
+    return this.afd.list('/food/' + this.user.uid + '/logs');
+  }
+
   addBodyParts() {
     let parts = [
       {
