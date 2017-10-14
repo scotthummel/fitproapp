@@ -6,23 +6,30 @@
       Assign Workout
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content padding>
       <form [formGroup]="workout">
         <ion-searchbar (ionInput)="getClients($event)"></ion-searchbar>
         <ion-list radio-group formControlName="key">
           <ion-item *ngFor="let client of clients" class="item item-radio">
-            <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}}</ion-label>
-            <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}}</ion-label>
-            <ion-radio [value]="client.$key" color="dark" (click)="getParts()"></ion-radio>
+            <ion-label *ngIf="client.hasOwnProperty('firstName')">{{ client.firstName }} {{client.lastName}} ({{ client.email }})</ion-label>
+            <ion-label *ngIf="client.hasOwnProperty('username')">{{ client.username}} ({{ client.email }})</ion-label>
+            <ion-radio [value]="client.$key" color="dark" (click)="getDatepicker()"></ion-radio>
           </ion-item>
         </ion-list>
+
+        <div [hidden]="shouldHideDate">
+          <ion-item>
+            <ion-label>Workout Date</ion-label>
+            <ion-datetime displayFormat="M/D/YYYY" pickerFormat="M D YYYY" formControlName="due_at" [(ngModel)]="today" (ionChange)="getParts()"></ion-datetime>
+          </ion-item>
+        </div>
 
         <div [hidden]="shouldHideParts">
           <ion-list>
             <ion-item>
               <ion-label>Body Part</ion-label>
-              <ion-select formControlName="part" [(ngModel)]="bodyPart" (ionChange)="getExerciseSelect()" cancelText="Cancel" okText="Choose">
-                <ion-option *ngFor="let part of parts" value="{{ part.$key }}" checked="true">{{ part.part }}</ion-option>
+              <ion-select formControlName="part" (ionChange)="getExerciseSelect()" cancelText="Cancel" okText="Choose">
+                <ion-option *ngFor="let part of parts" value="{{ part.$key }}">{{ part.part }}</ion-option>
               </ion-select>
             </ion-item>
           </ion-list>
@@ -32,24 +39,19 @@
           <ion-list>
             <ion-item>
               <ion-label>Exercises</ion-label>
-              <ion-select formControlName="ex" [(ngModel)]="exercise" (ionChange)="getRepSchemeSelector()" cancelText="Cancel" okText="Choose">
-                <ion-option *ngFor="let ex of exercises" value="{{ ex.$key }}" checked="true">{{ ex.exercise }}</ion-option>
+              <ion-select formControlName="ex" (ionChange)="getRepSchemeSelector()" cancelText="Cancel" okText="Choose">
+                <ion-option *ngFor="let ex of exercises" [value]="ex.$key">{{ ex.exercise }}</ion-option>
               </ion-select>
             </ion-item>
           </ion-list>
-
-          <ion-item>
-            <ion-label>Workout Date</ion-label>
-            <ion-datetime displayFormat="M/D/YYYY" pickerFormat="M D YYYY" formControlName="due_at" [(ngModel)]="dueAt"></ion-datetime>
-          </ion-item>
         </div>
 
         <div formGroupName="rep_scheme">
             <div [hidden]="shouldHideRepSchemeSelector">
                 <ion-list>
                     <ion-item>
-                        <ion-label>Rep Scheme</ion-label>
-                        <ion-select formControlName="scheme" [(ngModel)]="repScheme" (ionChange)="getRepScheme()" cancelText="Cancel" okText="Choose">
+                        <ion-label stacked>Rep Scheme</ion-label>
+                        <ion-select formControlName="rep_pattern" (ionChange)="getRepScheme()" cancelText="Cancel" okText="Choose">
                             <ion-option value="chose_cluster_reps">Cluster Reps</ion-option>
                             <ion-option value="chose_countdown">Countdown</ion-option>
                             <ion-option value="chose_drop_set">Drop Set</ion-option>
@@ -66,16 +68,22 @@
             <div>
               <ion-grid>
                 <ion-row [hidden]="shouldHideReps">
-                  <ion-col width-50>
+                  <ion-col>
                     <ion-item>
                       <ion-label stacked>Sets</ion-label>
-                      <ion-input formControlName="sets" type="text" [(ngModel)]="sets"></ion-input>
+                      <ion-input formControlName="sets" type="text"></ion-input>
                     </ion-item>
                   </ion-col>
-                  <ion-col width-50>
+                  <ion-col>
                     <ion-item>
                       <ion-label stacked>Reps</ion-label>
-                      <ion-input formControlName="reps" type="text" [(ngModel)]="reps"></ion-input>
+                      <ion-input formControlName="reps" type="text"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label stacked>Weight</ion-label>
+                      <ion-input formControlName="weight" type="text"></ion-input>
                     </ion-item>
                   </ion-col>
                 </ion-row>
@@ -84,48 +92,57 @@
                   <ion-col width-50>
                     <ion-item>
                       <ion-label stacked>Reps (DropSet)</ion-label>
-                      <ion-input formControlName="drop_reps" type="text" [(ngModel)]="dropSetReps"></ion-input>
+                      <ion-input formControlName="drop_reps" type="text"></ion-input>
                     </ion-item>
                   </ion-col>
                   <ion-col width-50>
                     <ion-item>
                       <ion-label stacked>Weight (Drop Set)</ion-label>
-                      <ion-input formControlName="drop_weight" type="text" [(ngModel)]="dropSetWeight"></ion-input>
+                      <ion-input formControlName="drop_weight" type="text"></ion-input>
                     </ion-item>
                   </ion-col>
               </ion-row>
             </ion-grid>
 
               <ion-item [hidden]="shouldHideCountdown">
-                <ion-label>Countdown</ion-label>
-                <ion-textarea formControlName="countdown" [(ngModel)]="countdown"></ion-textarea>
+                <ion-label stacked>Countdown</ion-label>
+                <ion-textarea formControlName="countdown"></ion-textarea>
               </ion-item>
 
               <ion-item [hidden]="shouldHidePyramid">
-                <ion-label>Pyramid</ion-label>
-                <ion-textarea formControlName="pyramid" [(ngModel)]="pyramid" validatePyramid="rep_scheme.scheme"></ion-textarea>
+                <ion-label stacked>Pyramid</ion-label>
+                <ion-textarea formControlName="pyramid"></ion-textarea>
               </ion-item>
 
               <ion-grid [hidden]="shouldHideCluster">
                 <ion-row>
-                  <ion-col width-50>
+                  <ion-col>
                     <ion-item>
                       <ion-label stacked>Cluster Reps</ion-label>
-                      <ion-input formControlName="cluster_reps" type="text" [(ngModel)]="clusterReps" validateCluster="rep_scheme.scheme"></ion-input>
+                      <ion-input formControlName="cluster_reps" type="text"></ion-input>
+                    </ion-item>
+                    <ion-item *ngIf="workout.get('rep_scheme').hasError('chose_cluster_reps') && workout.get('rep_scheme.cluster_reps').dirty">
+                      <div class="text-danger">{{ workout.get('rep_scheme').errors.chose_cluster_reps }}</div>
+                    </ion-item>
+                    <ion-item *ngIf="workout.get('rep_scheme.cluster_reps').hasError('required')">
+                      <div class="text-danger">Cluster reps is required.</div>
+                    </ion-item>
+                    <ion-item *ngIf="workout.get('rep_scheme.cluster_reps').hasError('number')">
+                      <div class="text-danger">Please enter a whole number.</div>
                     </ion-item>
                   </ion-col>
-                  <ion-col width-50>
+                  <ion-col>
                     <ion-item>
                       <ion-label stacked>Cluster Weight</ion-label>
-                      <ion-input formControlName="cluster_weight" type="text" [(ngModel)]="clusterWeight"></ion-input>
+                      <ion-input formControlName="cluster_weight" type="text"></ion-input>
                     </ion-item>
                   </ion-col>
                 </ion-row>
               </ion-grid>
 
               <ion-item [hidden]="shouldHideLadders">
-                <ion-label>Ladders</ion-label>
-                <ion-textarea formControlName="ladders" [(ngModel)]="ladders"></ion-textarea>
+                <ion-label stacked>Ladders</ion-label>
+                <ion-textarea formControlName="ladders"></ion-textarea>
               </ion-item>
 
               <ion-grid [hidden]="shouldHidePartial">
@@ -133,32 +150,31 @@
                   <ion-col width-50>
                     <ion-item>
                       <ion-label stacked>Partial Reps</ion-label>
-                      <ion-input formControlName="partial_reps" type="text" [(ngModel)]="partialReps"></ion-input>
+                      <ion-input formControlName="partial_reps" type="text"></ion-input>
                     </ion-item>
                   </ion-col>
                   <ion-col width-50>
                     <ion-item>
                       <ion-label stacked>Partial Reps Weight</ion-label>
-                      <ion-input formControlName="partial_weight" type="text" [(ngModel)]="partialWeight"></ion-input>
+                      <ion-input formControlName="partial_weight" type="text"></ion-input>
                     </ion-item>
                   </ion-col>
                 </ion-row>
               </ion-grid>
 
               <ion-item [hidden]="shouldHideEccentric">
-                <ion-label>Eccentric</ion-label>
-                <ion-textarea formControlName="eccentric" [(ngModel)]="eccentric"></ion-textarea>
+                <ion-label stacked>Eccentric</ion-label>
+                <ion-textarea formControlName="eccentric"></ion-textarea>
               </ion-item>
 
               <ion-item [hidden]="shouldHidePeak">
-                <ion-label>Peak Contraction</ion-label>
-                <ion-textarea formControlName="peak_contraction" [(ngModel)]="peakContraction"></ion-textarea>
+                <ion-label stacked>Peak Contraction</ion-label>
+                <ion-textarea formControlName="peak_contraction"></ion-textarea>
               </ion-item>
 
             </div>
-
-        </div>
-        <button ion-button (click)="assignWorkout(workout.value)" block [disabled]="!workout.valid">Assign Workout</button>
+          </div>
+        <button ion-button (click)="assignWorkout(key)" block>Assign Workout</button>
       </form>
     </ion-card-content>
 

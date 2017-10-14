@@ -16,17 +16,16 @@ export class ClusterValidator implements Validator {
   @Input() validateCluster: string;
 
   validate(control: AbstractControl): { [key: string]: any } {
-    //   let schemeControl = control.root.get('rep_scheme.scheme');
-    //   let scheme = schemeControl.value;
-    //   let field = control.root.get('rep_scheme.cluster_reps');
-    //   let value = field.value
-    //   console.log(scheme, value);
-      //
-    //   if (value == undefined || value == '') {
-    //       return {validateCluster:false}
-    //   }
-      //
-    //   schemeControl.updateValueAndValidity();
+      let schemeControl = control.root.get('rep_scheme.rep_pattern');
+      let field = control.root.get('rep_scheme.cluster_reps');
+      let value = field.value;
+      console.log('test2', value);
+
+      if (value == undefined || value == '') {
+          return {validateCluster:false}
+      }
+
+      schemeControl.updateValueAndValidity();
       return null;
   }
 }

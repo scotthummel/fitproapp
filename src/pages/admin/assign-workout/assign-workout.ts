@@ -1,21 +1,23 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import {NavController, LoadingController, App} from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {AngularFireDatabase} from "angularfire2/database";
+import {AngularFireAuth} from "angularfire2/auth";
 //import * as _ from 'lodash';
 
 @Component({
   selector: 'assign-workout',
   templateUrl: 'assign-workout.html'
 })
-export class AssignWorkout {
+export class AssignWorkout extends FirebaseService {
 
   public users;
   public exercises;
   public user;
   private workout : FormGroup;
   public parts;
+  public shouldHideDate = true;
   public shouldHideParts = true;
   public shouldHideExercises = true;
   public shouldHideRepSchemeSelector = true;
@@ -32,9 +34,10 @@ export class AssignWorkout {
   public exercise;
   public sets;
   public reps;
+  public weight;
   public dropSetReps;
   public dropSetWeight;
-  public clusterReps;
+  public cluster_reps;
   public clusterWeight;
   public partialReps;
   public partialWeight;
@@ -43,69 +46,82 @@ export class AssignWorkout {
   public ladders;
   public eccentric;
   public peakContraction;
-  public scheme
+  public rep_pattern;
   public repScheme;
   public dueAt;
   public formChanges;
   public repSchemeGroup;
   public clients;
+  public today = new Date().toISOString();
 
   constructor(
       public navCtrl: NavController,
-      public loadingController: LoadingController,
-      // public fitpro: FitproApi,
-      // public storage: Storage,
       private fb: FormBuilder,
-      private firebaseService: FirebaseService,
-      private afd: AngularFireDatabase
+      public afd: AngularFireDatabase,
+      public afAuth: AngularFireAuth,
+      public app: App
   ) {
+    super(afAuth, afd, app);
+
     this.workout = this.fb.group({
       key: new FormControl(''),
-      user_id: new FormControl('', Validators.required),
+      //user_id: new FormControl('', Validators.required),
       part: new FormControl('', Validators.required),
       ex: new FormControl('', Validators.required),
       due_at: new FormControl('', Validators.required),
       rep_scheme: this.fb.group({
-          scheme: new FormControl('', Validators.required),
-          sets: new FormControl(''),
-          reps: new FormControl(''),
-          drop_reps: new FormControl(''),
-          drop_weight: new FormControl(''),
-          cluster_reps: new FormControl(''),
-          cluster_weight: new FormControl(''),
-          partial_reps: new FormControl(''),
-          partial_weight: new FormControl(''),
-          countdown: new FormControl(''),
-          pyramid: new FormControl(''),
-          ladders: new FormControl(''),
-          eccentric: new FormControl(''),
-          peak_contraction: new FormControl('')
+        rep_pattern: new FormControl('', Validators.required),
+        sets: new FormControl(''),
+        reps: new FormControl(''),
+        weight: new FormControl(''),
+        drop_reps: new FormControl(''),
+        drop_weight: new FormControl(''),
+        cluster_reps: new FormControl(''),
+        cluster_weight: new FormControl(''),
+        partial_reps: new FormControl(''),
+        partial_weight: new FormControl(''),
+        countdown: new FormControl(''),
+        pyramid: new FormControl(''),
+        ladders: new FormControl(''),
+        eccentric: new FormControl(''),
+        peak_contraction: new FormControl('')
+        //}, { validator: this.validateRepScheme})
       })
-      //}, {validator: this.validateRepScheme})
     });
 
-  //   this.formChanges = this.workout.valueChanges;
-  //   this.formChanges.debounceTime(400).subscribe(data => {
-  //       //console.log(data);
-  //   });
+    let form = this.workout;
+    this.workout.valueChanges.subscribe(data => {
+      if (form.get('rep_scheme.rep_pattern').value == 'chose_cluster_reps') {
+        if (data.rep_scheme.cluster_reps == '') {
+          form.get('rep_scheme.cluster_reps').setErrors({required: true});
+        }
+        if (isNaN(data.rep_scheme.cluster_reps) || data.rep_scheme.cluster_reps % 1 !== 0) {
+          form.get('rep_scheme.cluster_reps').setErrors({number: true});
+        }
+      }
+    });
    }
-  //
-  validateRepScheme(group) {
-      let scheme = group.controls.scheme.value;
+
+   validateRepScheme(group) {
+      let scheme = group.controls.rep_pattern.value;
       let cluster_reps = group.controls.cluster_reps.value;
       let cluster_weight = group.controls.cluster_weight.value;
-      let dropset_reps = group.controls.dropset_reps.value;
-      let dropset_weight = group.controls.dropset_weight.value;
+      let dropset_reps = group.controls.drop_reps.value;
+      let dropset_weight = group.controls.drop_weight.value;
       let countdown = group.controls.countdown.value;
       let eccentric = group.controls.eccentric.value;
       let ladders = group.controls.ladders.value;
       let peak = group.controls.peak_contraction.value;
       let pyramid = group.controls.pyramid.value;
       let reps = group.controls.reps.value;
+      let sets = group.controls.sets.value;
       let weight = group.controls.weight.value;
 
-      if (scheme == 'chose_cluster_reps' && cluster_reps !== '' && cluster_reps !== undefined && cluster_weight !== '' && cluster_weight !== undefined) {
-          return null;
+      if (scheme == 'chose_cluster_reps' && cluster_reps == '') {
+        console.log(scheme);
+        return {
+          "chose_cluster_reps": "Please enter a number"
+        };
       }
 
       if (scheme == 'chose_countdown' && countdown !== '' && countdown !== undefined) {
@@ -146,22 +162,18 @@ export class AssignWorkout {
     this.getBodyParts();
   }
 
-  formFilled() {
-      return true;
-  }
-
   getExercises(bodyPartId) {
     this.afd.list('/exercises', ref => ref.orderByChild('partId').equalTo(bodyPartId)).subscribe(exercises => {
       let exs = [];
-      // for (let ex in exercises[0].exerciseList){
-      //   exs.push(exercises[0].exerciseList[ex]);
-      // }
-      // this.exercises = exs;
+      for (let ex in exercises[0].exerciseList){
+        exs.push(exercises[0].exerciseList[ex]);
+      }
+      this.exercises = exs;
     });
   }
 
-  assignWorkout(values) {
-
+  assignWorkout(key) {
+     console.log(this.workout.value)
   }
 
   getBodyParts() {
@@ -170,13 +182,17 @@ export class AssignWorkout {
     });
   }
 
+  getDatepicker() {
+    return this.shouldHideDate = false;
+  }
+
   getParts() {
     return this.shouldHideParts = false;
   }
 
   getExerciseSelect() {
     this.getExercises(this.bodyPart);
-    return this.shouldHideExercises = false;
+    this.shouldHideExercises = false;
   }
 
   getRepSchemeSelector() {
@@ -184,7 +200,7 @@ export class AssignWorkout {
   }
 
   getRepScheme() {
-      switch(this.repScheme) {
+      switch(this.workout.value.rep_scheme.rep_pattern) {
           case 'chose_sets':
             this.resetSchemes();
             this.shouldHideReps = false;
