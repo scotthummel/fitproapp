@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, ToastController} from 'ionic-angular';
+import {App, IonicPage, NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {AngularFireDatabase} from "angularfire2/database";
 import {EditNote} from "../edit-note/edit-note";
@@ -67,8 +67,8 @@ export class NewNote extends FirebaseService {
   public notesForm;
   public submitAttempt;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public fb: FormBuilder) {
-    super(afAuth, afd);
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public fb: FormBuilder, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
+    super(afAuth, afd, app);
 
     this.notesForm = fb.group({
       category: ['', Validators.required],

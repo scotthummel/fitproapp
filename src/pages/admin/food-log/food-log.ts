@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {App, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
@@ -169,8 +169,8 @@ export class NewFoodLog extends FirebaseService {
   public foodLogForm;
   public submitAttempt = false;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public fb: FormBuilder) {
-    super(afAuth, afd);
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public fb: FormBuilder, public app: App) {
+    super(afAuth, afd, app);
 
     this.foodLogForm = fb.group({
       timing: ['', Validators.compose([Validators.required, TimingValidator.isValid])],
@@ -250,8 +250,8 @@ export class FoodLogHistory extends FirebaseService {
   public clients;
   public shouldHideButton = true;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
-    super(afAuth, afd);
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
+    super(afAuth, afd, app);
   }
 
   getButton() {

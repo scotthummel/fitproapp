@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {App, NavController} from 'ionic-angular';
 import { EventView } from "../event-view/event-view";
 import { FirebaseService } from "../../providers/firebase-service";
 import {Observable} from "rxjs/Observable";
@@ -48,8 +48,8 @@ export class CalendarPage extends FirebaseService {
     }
   };
 
-  constructor(private navCtrl:NavController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
-    super(afAuth, afd);
+  constructor(public navCtrl:NavController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
+    super(afAuth, afd, app);
 
     this.getEvents();
   }

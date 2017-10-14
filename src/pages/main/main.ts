@@ -32,6 +32,7 @@ export class Main {
   public pages;
   public adminPages;
   public isAdmin;
+  public isClient;
   public root: any = Home;
   public user;
   public client;
@@ -41,7 +42,42 @@ export class Main {
       this.user = user;
       this.afd.object('users/' + user.uid).subscribe(client => {
         this.client = client;
-        this.isAdmin = client.hasOwnProperty('isAdmin');
+        this.isClient = client.roles.client;
+        this.isAdmin = client.roles.admin;
+
+        if (this.isClient) {
+          this.pages = [
+            { title: 'Home', component: Home },
+            { title: 'About', component: About },
+            { title: 'Calendar', component: CalendarPage },
+            { title: 'Lift Tracker', component: LiftTracker },
+            { title: '30 Day Challenge', component: ThirtyDayChallenge },
+            { title: 'YouTube', component: YouTube },
+            { title: 'Client Pictures', component: ClientPictures },
+            { title: 'Client Records', component: ClientRecords },
+          ];
+        } else {
+          this.pages = [
+            { title: 'Home', component: Home },
+            { title: 'About', component: About },
+            { title: 'Client Pictures', component: ClientPictures },
+            { title: 'Client Records', component: ClientRecords },
+          ];
+        }
+
+        this.adminPages = [
+          { title: 'Consultation', component: Intake },
+          { title: 'Assign Workout', component: AssignWorkout },
+          { title: 'Lift Tracker', component: LiveLiftTracker },
+          { title: 'Lift Records', component: LiftRecords },
+          { title: 'Food Log', component: FoodLog },
+          { title: '30 Day Challenge', component: ManageThirtyDayChallenge },
+          { title: 'Injury Tracker', component: InjuryTracker },
+          { title: 'Progress Pictures', component: ProgressPictures },
+          { title: 'Notes', component: Notes },
+          { title: 'Trainers/Clients', component: Clients },
+        ];
+
       });
     });
   }
@@ -53,31 +89,4 @@ export class Main {
   logout() {
     this.firebaseService.logoutUser();
   }
-
-  ionViewDidLoad() {
-    this.pages = [
-      { title: 'Home', component: Home },
-      { title: 'About', component: About },
-      { title: 'Calendar', component: CalendarPage },
-      { title: 'Lift Tracker', component: LiftTracker },
-      { title: '30 Day Challenge', component: ThirtyDayChallenge },
-      { title: 'YouTube', component: YouTube },
-      { title: 'Client Pictures', component: ClientPictures },
-      { title: 'Client Records', component: ClientRecords },
-
-    ];
-    this.adminPages = [
-      { title: 'Consultation', component: Intake },
-      { title: 'Assign Workout', component: AssignWorkout },
-      { title: 'Lift Tracker', component: LiveLiftTracker },
-      { title: 'Lift Records', component: LiftRecords },
-      { title: 'Food Log', component: FoodLog },
-      { title: '30 Day Challenge', component: ManageThirtyDayChallenge },
-      { title: 'Injury Tracker', component: InjuryTracker },
-      { title: 'Progress Pictures', component: ProgressPictures },
-      { title: 'Notes', component: Notes },
-      { title: 'Trainers/Clients', component: Clients },
-    ];
-  }
-
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, NavController, ToastController} from 'ionic-angular';
+import {AlertController, App, NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {AngularFireDatabase} from "angularfire2/database";
 import {EditInjury} from "../edit-injury/edit-injury";
@@ -63,8 +63,8 @@ export class NewInjury extends FirebaseService {
   public injuryForm;
   public submitAttempt;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public fb: FormBuilder) {
-    super(afAuth, afd);
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public fb: FormBuilder, public app: App) {
+    super(afAuth, afd, app);
 
     this.injuryForm = fb.group({
       bodyPart: ['', Validators.required],

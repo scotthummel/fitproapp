@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {App, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FirebaseService} from "../../providers/firebase-service";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
@@ -59,8 +59,8 @@ export class ClientRecords {
 export class ClientConsultation extends FirebaseService {
   private details;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
-    super(afAuth, afd);
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
+    super(afAuth, afd, app);
 
     this.getIntakeForUser().subscribe(details => {
       this.details = details;
@@ -100,8 +100,8 @@ export class ClientInjuries extends FirebaseService {
 
   public injuries;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
-    super(afAuth, afd);
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
+    super(afAuth, afd, app);
 
     this.getInjuriesForUser().subscribe(injuries => {
       this.injuries = injuries;
@@ -141,8 +141,8 @@ export class ClientNotes extends FirebaseService {
 
   public notes;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
-    super(afAuth, afd);
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
+    super(afAuth, afd, app);
 
     this.getNotesForUser().subscribe(notes => {
       this.notes = notes;
@@ -238,8 +238,8 @@ export class ClientNotes extends FirebaseService {
 export class ClientFood extends FirebaseService {
   public foodLogs;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
-    super(afAuth, afd);
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
+    super(afAuth, afd, app);
 
     this.getFoodLogForUser().subscribe(logs => {
       let foodLogs = [];

@@ -190,7 +190,7 @@
 import { FirebaseService } from '../providers/firebase-service';
 import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {ErrorHandler, NgModule, Pipe, PipeTransform} from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import {IonicApp, IonicErrorHandler, IonicModule, NavController} from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
@@ -240,6 +240,7 @@ import {PlayerService} from "../providers/player-service";
 import {YoutubeService} from "../providers/youtube-service";
 import {EventView} from "../pages/event-view/event-view";
 import { ENV } from '@app/env'
+import {NotClient} from "../pages/not-client/not-client";
 
 export const firebaseConfig = {
   apiKey: ENV.FIREBASE_API_KEY,
@@ -299,7 +300,8 @@ export const firebaseConfig = {
     EventView,
     Clients,
     Users,
-    Challenges
+    Challenges,
+    NotClient
   ],
   imports: [
     BrowserModule,
@@ -395,7 +397,8 @@ export const firebaseConfig = {
     EventView,
     Clients,
     Users,
-    Challenges
+    Challenges,
+    NotClient
   ],
   providers: [
     StatusBar,

@@ -3,9 +3,8 @@ import 'rxjs/add/operator/map';
 import BaseClass from "../classes/base-class";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
-import {Observable, ObservableInput} from "rxjs/Observable";
-import "rxjs/add/observable/of";
-import {Subject} from "rxjs/Subject";
+import {Observable} from "rxjs/Observable";
+import {App} from "ionic-angular";
 
 @Injectable()
 export class FirebaseService extends BaseClass {
@@ -14,8 +13,8 @@ export class FirebaseService extends BaseClass {
   clients;
   eventSource;
 
-  constructor(public afAuth: AngularFireAuth, public afd: AngularFireDatabase) {
-    super(afAuth, afd);
+  constructor(public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
+    super(afAuth, afd, app);
 
     this.user = this.afAuth.app.auth().currentUser;
   }
@@ -164,6 +163,23 @@ export class FirebaseService extends BaseClass {
 
   getFoodLogForUser() {
     return this.afd.list('/food/' + this.user.uid + '/logs');
+  }
+
+  getRolesForUser(key) {
+    return this.afd.list('/users/' + key + '/roles');
+  }
+
+  assignRolesToUser(key, formValues) {
+    if (formValues.client === undefined) {
+      formValues.client = false;
+    }
+    if (formValues.trainer === undefined) {
+      formValues.trainer = false;
+    }
+    if (formValues.admin === undefined) {
+      formValues.admin = false;
+    }
+    this.afd.list('/users').update(key, {roles: formValues});
   }
 
   addBodyParts() {
