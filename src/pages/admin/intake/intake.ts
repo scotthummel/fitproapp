@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, ToastController} from 'ionic-angular';
+import {App, NavController, ToastController} from 'ionic-angular';
 import {FirebaseService} from "../../../providers/firebase-service";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {AngularFireAuth} from "angularfire2/auth";
@@ -14,8 +14,7 @@ import {AngularFireDatabase} from "angularfire2/database";
         <ion-card-header class="card-header">
           New Consultation
         </ion-card-header>  
-        <ion-card-content>
-
+        <ion-card-content padding>
           <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
           <ion-list radio-group [(ngModel)]="key">
             <ion-item *ngFor="let client of clients" class="item item-radio">
@@ -32,8 +31,8 @@ import {AngularFireDatabase} from "angularfire2/database";
               <ion-row>
                 <ion-col col-4>
                   <ion-item>
-                    <ion-label floating>Age</ion-label>
-                    <ion-input type="number" formControlName="age"></ion-input>
+                    <ion-label floating>Birthday</ion-label>
+                    <ion-datetime displayFormat="M/D/YYYY" pickerFormat="M D YYYY" formControlName="birthday"></ion-datetime>
                   </ion-item>
                 </ion-col>
                 <ion-col col-4>
@@ -122,15 +121,17 @@ import {AngularFireDatabase} from "angularfire2/database";
     </ion-content>
   `
 })
-export class NewIntake {
+export class NewIntake extends FirebaseService {
 
   public clients;
   public shouldHideButton = true;
   public intake;
 
-  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, private fb: FormBuilder, private afAuth: AngularFireAuth, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private fb: FormBuilder, public toastCtrl: ToastController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
+    super(afAuth, afd, app);
+
     this.intake = this.fb.group({
-      age: new FormControl('', Validators.required),
+      birthday: new FormControl('', Validators.required),
       height: new FormControl('',  Validators.required),
       weight: new FormControl('',  Validators.required),
       injuries: new FormControl(''),
@@ -150,11 +151,11 @@ export class NewIntake {
 
   completeIntake(values) {
     this.afAuth.authState.subscribe(user => {
-      this.firebaseService.saveIntake(user, values);
+      this.saveIntake(user, values);
     });
 
     let toast = this.toastCtrl.create({
-      message: 'Intake completed successfully',
+      message: 'Consultation completed successfully',
       duration: 3000
     });
     toast.present();
@@ -172,7 +173,7 @@ export class NewIntake {
           Consultation History
         </ion-card-header>
 
-        <ion-card-content>
+        <ion-card-content padding>
 
           <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
           <ion-list radio-group [(ngModel)]="key">
@@ -281,14 +282,16 @@ export class NewIntake {
     </ion-content>
   `
 })
-export class IntakeHistory {
+export class IntakeHistory extends FirebaseService {
 
   public clients;
   public shouldHideButton = true;
   public shouldHideIntake = true;
   public intake;
 
-  constructor(public navCtrl: NavController, public firebaseService: FirebaseService, public afd: AngularFireDatabase) {}
+  constructor(public navCtrl: NavController, public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
+    super(afAuth, afd, app);
+  }
 
   ionViewDidLoad() {
   }
