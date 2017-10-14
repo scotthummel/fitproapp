@@ -21,6 +21,7 @@ import {LiftRecords} from "../admin/lift-records/lift-records";
 import {LiveLiftTracker} from "../admin/live-lift-tracker/live-lift-tracker";
 import {ClientPictures} from "../client-pictures/client-pictures";
 import {ClientRecords} from "../client-records/client-records";
+import {Settings} from "../settings/settings";
 
 @IonicPage()
 @Component({
@@ -39,7 +40,8 @@ export class Main {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService, private afAuth: AngularFireAuth, private afd: AngularFireDatabase) {
     this.afAuth.authState.subscribe(user => {
-      this.user = user;
+
+
       this.afd.object('users/' + user.uid).subscribe(client => {
         this.client = client;
         this.isClient = client.roles.client;
@@ -55,6 +57,7 @@ export class Main {
             { title: 'YouTube', component: YouTube },
             { title: 'Client Pictures', component: ClientPictures },
             { title: 'Client Records', component: ClientRecords },
+            { title: 'Settings', component: Settings }
           ];
         } else {
           this.pages = [
@@ -62,6 +65,7 @@ export class Main {
             { title: 'About', component: About },
             { title: 'Client Pictures', component: ClientPictures },
             { title: 'Client Records', component: ClientRecords },
+            { title: 'Settings', component: Settings }
           ];
         }
 

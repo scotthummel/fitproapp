@@ -1,0 +1,50 @@
+<navbar></navbar>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header class="card-header">
+      Settings
+    </ion-card-header>
+
+    <ion-card-content padding>
+
+      <h1>User Information</h1>
+
+      <form [formGroup]="settingsForm">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label stacked>First Name</ion-label>
+                <ion-input placeholder="Enter first name" formControlName="firstName" [(ngModel)]="firstName"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label stacked>First Name</ion-label>
+                <ion-input placeholder="Enter last name" formControlName="lastName" [(ngModel)]="lastName"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label stacked>Email Address</ion-label>
+                <ion-input placeholder="Enter email address" formControlName="email" [(ngModel)]="email"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <button ion-button (click)="updateInfo()">Update</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

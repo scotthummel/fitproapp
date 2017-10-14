@@ -11,6 +11,7 @@ export class FirebaseService extends BaseClass {
   user;
   authState: Observable<firebase.User>;
   clients;
+  trainers;
   eventSource;
 
   constructor(public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
@@ -108,13 +109,45 @@ export class FirebaseService extends BaseClass {
       this.getUsers().subscribe(data => {
         this.clients =  data.filter((item) => {
           if (item.hasOwnProperty('firstName')) {
-            return item.firstName.includes(val) || item.lastName.includes(val) || item.email.includes(val);
+            return item.firstName.toLowerCase().includes(val) || item.lastName.toLowerCase().includes(val) || item.email.toLowerCase().includes(val);
           } else {
-            return item.username.includes(val) || item.email.includes(val);
+            return item.username.toLowerCase().includes(val) || item.email.toLowerCase().includes(val);
           }
-        })
+        });
       });
     }
+  }
+
+  getTrainers() {
+    return this.afd.list('/users' , {
+      query: {
+        orderByChild: 'roles/trainer',
+        equalTo: true
+      }
+    });
+  }
+
+  getTrainersForSearch(event) {
+    let val = event.target.value;
+    if (val && val.trim() != '') {
+      this.getTrainers().subscribe(data => {
+        this.trainers =  data.filter((item) => {
+          if (item.hasOwnProperty('firstName')) {
+              return item.firstName.toLowerCase().includes(val) || item.lastName.toLowerCase().includes(val) || item.email.toLowerCase().includes(val);
+          } else {
+            return item.username.toLowerCase().includes(val) || item.email.toLowerCase().includes(val);
+          }
+        });
+      });
+    }
+  }
+
+  getClientsForTrainer(key) {
+    return this.afd.list('users/' + key + '/clients', {
+      query: {
+        orderByChild: 'userId'
+      }
+    });
   }
 
   addNoteForUser(key, note, category) {
@@ -180,6 +213,14 @@ export class FirebaseService extends BaseClass {
       formValues.admin = false;
     }
     this.afd.list('/users').update(key, {roles: formValues});
+  }
+
+  updateUserInfo(userInfo) {
+    this.afd.list('/users').update(this.user.uid, {email: userInfo.email, firstName: userInfo.firstName, lastName: userInfo.lastName});
+  }
+
+  assignUserToTrainer(trainerKey, userKey) {
+    this.afd.list('/users/' + trainerKey + '/clients').push({userId: userKey});
   }
 
   addBodyParts() {

@@ -218,7 +218,7 @@ import { NgCalendarModule } from 'ionic2-calendar';
 import { Camera } from '@ionic-native/camera';
 import {EditInjury} from "../pages/admin/edit-injury/edit-injury";
 import {EditNote} from "../pages/admin/edit-note/edit-note";
-import {Challenges, Clients, Users} from "../pages/admin/users/users";
+import {AssignClients, Challenges, Clients, ClientTrainers, Users} from "../pages/admin/users/users";
 import {Register} from "../pages/register/register";
 import {About} from "../pages/about/about";
 import {FoodLog, FoodLogHistory, NewFoodLog} from "../pages/admin/food-log/food-log";
@@ -241,6 +241,7 @@ import {YoutubeService} from "../providers/youtube-service";
 import {EventView} from "../pages/event-view/event-view";
 import { ENV } from '@app/env'
 import {NotClient} from "../pages/not-client/not-client";
+import {Settings} from "../pages/settings/settings";
 
 export const firebaseConfig = {
   apiKey: ENV.FIREBASE_API_KEY,
@@ -299,9 +300,12 @@ export const firebaseConfig = {
     BlogArticle,
     EventView,
     Clients,
+    AssignClients,
+    ClientTrainers,
     Users,
     Challenges,
-    NotClient
+    NotClient,
+    Settings
   ],
   imports: [
     BrowserModule,
@@ -341,6 +345,7 @@ export const firebaseConfig = {
         {component: ManageThirtyDayChallenge, segment: 'manage-thirty-day-challenge'},
         {component: Register, segment: 'register'},
         {component: Clients, segment: 'clients'},
+        {component: AssignClients, segment: 'assign-clients'},
         {component: Users, segment: 'users'},
         {component: Challenges, segment: 'challenges'},
         {component: LiveLiftTracker, segment: 'live-lift-tracker'},
@@ -396,9 +401,12 @@ export const firebaseConfig = {
     BlogArticle,
     EventView,
     Clients,
+    AssignClients,
+    ClientTrainers,
     Users,
     Challenges,
-    NotClient
+    NotClient,
+    Settings
   ],
   providers: [
     StatusBar,
