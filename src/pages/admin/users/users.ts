@@ -278,7 +278,6 @@ export class AssignClients extends FirebaseService {
           <ion-radio [value]="trainee.$key" color="dark"></ion-radio>
         </ion-item>
       </ion-list>   
-
     </form>
   </div>
 
@@ -308,7 +307,7 @@ export class ClientTrainers extends FirebaseService {
       clients.forEach(client => {
         this.afd.object('users/' + client.userId).subscribe(trainee => {
           this.trainees[i] = trainee;
-        })
+        });
       });
     });
     return this.shouldHideButton = false;

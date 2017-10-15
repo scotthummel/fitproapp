@@ -23,6 +23,7 @@ import {ClientPictures} from "../client-pictures/client-pictures";
 import {ClientRecords} from "../client-records/client-records";
 import {Settings} from "../settings/settings";
 import {TeamTraining} from "../team-training/team-training";
+import {ManageTeamTraining} from "../admin/manage-team-training/manage-team-training";
 
 @IonicPage()
 @Component({
@@ -82,6 +83,7 @@ export class Main {
           { title: 'Injury Tracker', component: InjuryTracker },
           { title: 'Progress Pictures', component: ProgressPictures },
           { title: 'Notes', component: Notes },
+          { title: 'Team Training', component: ManageTeamTraining },
           { title: 'Trainers/Clients', component: Clients },
         ];
 

@@ -39,7 +39,7 @@ export class FoodLog {
         New Food Log
       </ion-card-header>
 
-      <ion-card-content>
+      <ion-card-content padding>
         <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
         <ion-list radio-group [(ngModel)]="key">
           <ion-item *ngFor="let client of clients" class="item item-radio">
@@ -209,7 +209,7 @@ export class NewFoodLog extends FirebaseService {
         Food Log History
       </ion-card-header>
 
-      <ion-card-content>
+      <ion-card-content padding>
         <ion-searchbar (ionInput)="getClients($event)" placeholder="Search for client"></ion-searchbar>
         <ion-list radio-group [(ngModel)]="key">
           <ion-item *ngFor="let client of clients" class="item item-radio">

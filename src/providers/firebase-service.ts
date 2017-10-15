@@ -15,6 +15,7 @@ export class FirebaseService extends BaseClass {
   eventSource;
   trainee;
   teamTraining;
+  teamTrainees = [];
 
   constructor(public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
     super(afAuth, afd, app);
@@ -77,6 +78,19 @@ export class FirebaseService extends BaseClass {
 
         this.getTeamTrainingForCalendar('2017-10-14', events);
       });
+    });
+  }
+
+  getTeamTrainingClients(date) {
+    console.log(date);
+    this.afd.list('/teamTraining/' + date).subscribe(trainings => {
+      let i = 0;
+      this.teamTrainees = [];
+      trainings.forEach(training => {
+        this.afd.object('users/' + training.userId).subscribe(trainee => {
+          this.teamTrainees[i] = trainee;
+        });
+      })
     });
   }
 

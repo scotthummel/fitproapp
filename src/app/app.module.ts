@@ -244,6 +244,7 @@ import {NotClient} from "../pages/not-client/not-client";
 import {Settings} from "../pages/settings/settings";
 import {TeamTraining} from "../pages/team-training/team-training";
 import {TrainingView} from "../pages/training-view/training-view";
+import {ManageTeamTraining, TeamTrainingUsers} from "../pages/admin/manage-team-training/manage-team-training";
 
 export const firebaseConfig = {
   apiKey: ENV.FIREBASE_API_KEY,
@@ -308,6 +309,8 @@ export const firebaseConfig = {
     ClientTrainers,
     Users,
     Challenges,
+    ManageTeamTraining,
+    TeamTrainingUsers,
     NotClient,
     Settings
   ],
@@ -354,6 +357,8 @@ export const firebaseConfig = {
         {component: Users, segment: 'users'},
         {component: Challenges, segment: 'challenges'},
         {component: LiveLiftTracker, segment: 'live-lift-tracker'},
+        {component: ManageTeamTraining, segment: 'manage-team-training'},
+        {component: TeamTrainingUsers, segment: ''},
         {component: NewPicture, segment: ''},
         {component: PictureHistory, segment: ''},
       ]
@@ -413,6 +418,8 @@ export const firebaseConfig = {
     Users,
     Challenges,
     NotClient,
+    ManageTeamTraining,
+    TeamTrainingUsers,
     Settings
   ],
   providers: [
