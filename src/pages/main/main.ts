@@ -22,6 +22,7 @@ import {LiveLiftTracker} from "../admin/live-lift-tracker/live-lift-tracker";
 import {ClientPictures} from "../client-pictures/client-pictures";
 import {ClientRecords} from "../client-records/client-records";
 import {Settings} from "../settings/settings";
+import {TeamTraining} from "../team-training/team-training";
 
 @IonicPage()
 @Component({
@@ -53,7 +54,8 @@ export class Main {
             { title: 'About', component: About },
             { title: 'Calendar', component: CalendarPage },
             { title: 'Lift Tracker', component: LiftTracker },
-            { title: '30 Day Challenge', component: ThirtyDayChallenge },
+            //{ title: '30 Day Challenge', component: ThirtyDayChallenge },
+            { title: 'Team Training', component: TeamTraining },
             { title: 'YouTube', component: YouTube },
             { title: 'Client Pictures', component: ClientPictures },
             { title: 'Client Records', component: ClientRecords },
@@ -63,6 +65,7 @@ export class Main {
           this.pages = [
             { title: 'Home', component: Home },
             { title: 'About', component: About },
+            { title: 'Team Training', component: TeamTraining },
             { title: 'Client Pictures', component: ClientPictures },
             { title: 'Client Records', component: ClientRecords },
             { title: 'Settings', component: Settings }

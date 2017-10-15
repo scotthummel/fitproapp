@@ -1,0 +1,18 @@
+page-team-training {
+  .monthview-secondary-with-event[_ngcontent-c1] {
+    background-color: #eee;
+  }
+
+  .monthview-selected[_ngcontent-c1] {
+    background-color: #999;
+  }
+
+  .monthview-selected[_ngcontent-c1].monthview-primary-with-event[_ngcontent-c1] {
+    background-color: color($colors, primary);
+  }
+
+  .monthview-primary-with-event[_ngcontent-c1],
+  .calendar-event-inner[_ngcontent-c0] {
+    background-color: #000;
+  }
+}

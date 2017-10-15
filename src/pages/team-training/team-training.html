@@ -1,0 +1,56 @@
+<navbar></navbar>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header class="card-header" style="padding:2px;">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            Team Training: {{ viewTitle }}
+          </ion-col>
+          <ion-col>
+            <ion-buttons end>
+              <button ion-button [disabled]="isToday" (click)="today()">Today</button>
+              <button ion-button (click)="changeMode('month')">M</button>
+              <button ion-button (click)="changeMode('week')">W</button>
+              <button ion-button (click)="changeMode('day')">D</button>
+              <!--<button ion-button (click)="loadEvents()">Load Events</button>-->
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <calendar [eventSource]="eventSource"
+                [calendarMode]="calendar.mode"
+                [currentDate]="calendar.currentDate"
+                (onCurrentDateChanged)="onCurrentDateChanged($event)"
+                (onEventSelected)="onEventSelected($event)"
+                (onTitleChanged)="onViewTitleChanged($event)"
+                (onTimeSelected)="onTimeSelected($event)"
+                step="30"
+                allDayLabel="All Day"
+      >
+      </calendar>
+
+      <div [hidden]="shouldHideCount">
+        <div *ngIf="count > 0 && count <= 4; else notAvailable">
+          <p>There are currently {{ count }} {{ slots }} open for this day. Click below to book.</p>
+
+          <button ion-button (click)="bookTraining(trainingDate)">Book Now!</button>
+        </div>
+        <ng-template #notAvailable>
+          <p>There are no open time slots for this date. We're sorry.</p>
+        </ng-template>
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>
+

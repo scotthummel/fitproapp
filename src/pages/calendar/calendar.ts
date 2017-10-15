@@ -5,6 +5,7 @@ import { FirebaseService } from "../../providers/firebase-service";
 import {Observable} from "rxjs/Observable";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
+import {TrainingView} from "../training-view/training-view";
 
 @Component({
   templateUrl: "calendar.html",
@@ -56,6 +57,7 @@ export class CalendarPage extends FirebaseService {
 
   getEvents() {
     this.getChallengesForCalendar();
+    //this.getTeamTrainingForCalendar(this.calendar.currentDate);
   }
 
   onViewTitleChanged(title) {
@@ -63,13 +65,23 @@ export class CalendarPage extends FirebaseService {
   }
 
   onEventSelected(event) {
-    this.navCtrl.push(EventView, {
-      eventId: event.id,
-      index: event.index,
-      date: event.date,
-      type: event.type,
-      pageTitle: event.title
-    });
+    if (event.type == 'challenges') {
+      this.navCtrl.push(EventView, {
+        eventId: event.id,
+        index: event.index,
+        date: event.date,
+        type: event.type,
+        pageTitle: event.title
+      });
+    } else if (event.type == 'team-training') {
+      this.navCtrl.push(TrainingView, {
+        eventId: event.id,
+        index: event.index,
+        date: event.date,
+        type: event.type,
+        pageTitle: event.title
+      });
+    }
   }
 
   changeMode(mode) {

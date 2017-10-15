@@ -13,6 +13,8 @@ export class FirebaseService extends BaseClass {
   clients;
   trainers;
   eventSource;
+  trainee;
+  teamTraining;
 
   constructor(public afAuth: AngularFireAuth, public afd: AngularFireDatabase, public app: App) {
     super(afAuth, afd, app);
@@ -56,7 +58,7 @@ export class FirebaseService extends BaseClass {
                 let start = new Date(userChallenge.start + '  GMT-0700');
                 let startDate = new Date(start.setDate(start.getDate() + i)).toISOString().slice(0,10);
                 let end = new Date(startDate);
-                let endDate = end.setDate(end.getDate() +1);
+                let endDate = end.setDate(end.getDate() + 1);
 
                 events.push({
                   id: userChallenge.$key,
@@ -66,15 +68,47 @@ export class FirebaseService extends BaseClass {
                   type: 'challenges',
                   startTime: new Date(startDate),
                   endTime: new Date(endDate),
-                  allDay: true
+                  allDay: false
                 });
               }
             }
           })
         });
 
-        this.eventSource = events;
+        this.getTeamTrainingForCalendar('2017-10-14', events);
       });
+    });
+  }
+
+  getTeamTrainingForCalendar(currentDate, events) {
+    let date = new Date(currentDate);
+    let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+    return this.afd.list('/teamTraining', {
+      query: {
+        orderByKey: true,
+        startAt: firstDay.toISOString().slice(0,10),
+        endAt: lastDay.toISOString().slice(0,10),
+      }
+    }).subscribe(trainings => {
+      let teamTraining = [];
+      let i = 0;
+      trainings.forEach(training => {
+        teamTraining.push({
+          id: training.$key,
+          index: i + 1,
+          date: new Date(training.$key + '  GMT-0700'),
+          title: 'Team Training',
+          type: 'team-training',
+          startTime: new Date(training.$key),
+          endTime: new Date(training.$key),
+          allDay: false
+        });
+      });
+
+      this.eventSource = events.concat(teamTraining);
+      console.log(this.eventSource);
     });
   }
 
@@ -221,6 +255,19 @@ export class FirebaseService extends BaseClass {
 
   assignUserToTrainer(trainerKey, userKey) {
     this.afd.list('/users/' + trainerKey + '/clients').push({userId: userKey});
+  }
+
+  checkTeamTrainingAvailability(date) {
+    return this.afd.list('/teamTraining/' + date);
+  }
+
+  bookTeamTraining(date) {
+    return this.afd.list('/teamTraining/' + date, ref => ref.orderByChild('userId').equalTo(this.user.id)).subscribe(trainee => {
+      this.trainee = trainee;
+      if (!trainee.length) {
+        this.afd.list('/teamTraining/' + date).push({userId: this.user.uid});
+      }
+    });
   }
 
   addBodyParts() {

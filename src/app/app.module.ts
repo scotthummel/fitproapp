@@ -242,6 +242,8 @@ import {EventView} from "../pages/event-view/event-view";
 import { ENV } from '@app/env'
 import {NotClient} from "../pages/not-client/not-client";
 import {Settings} from "../pages/settings/settings";
+import {TeamTraining} from "../pages/team-training/team-training";
+import {TrainingView} from "../pages/training-view/training-view";
 
 export const firebaseConfig = {
   apiKey: ENV.FIREBASE_API_KEY,
@@ -280,6 +282,7 @@ export const firebaseConfig = {
     NotesHistory,
     EditNote,
     YouTube,
+    TeamTraining,
     ClientPictures,
     ClientRecords,
     ClientConsultation,
@@ -299,6 +302,7 @@ export const firebaseConfig = {
     LiftRecordHistory,
     BlogArticle,
     EventView,
+    TrainingView,
     Clients,
     AssignClients,
     ClientTrainers,
@@ -341,6 +345,7 @@ export const firebaseConfig = {
         {component: NewNote, segment: ''},
         {component: NotesHistory, segment: ''},
         {component: YouTube, segment: 'youtube'},
+        {component: TeamTraining, segment: 'team-training'},
         {component: AssignWorkout, segment: 'assign-workout'},
         {component: ManageThirtyDayChallenge, segment: 'manage-thirty-day-challenge'},
         {component: Register, segment: 'register'},
@@ -381,6 +386,7 @@ export const firebaseConfig = {
     EditNote,
     NotesHistory,
     YouTube,
+    TeamTraining,
     ClientPictures,
     ClientRecords,
     ClientConsultation,
@@ -400,6 +406,7 @@ export const firebaseConfig = {
     LiftRecordHistory,
     BlogArticle,
     EventView,
+    TrainingView,
     Clients,
     AssignClients,
     ClientTrainers,
